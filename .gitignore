@@ -1,2 +1,5 @@
 GrabImageURLs/bin/
 GrabImageURLs/obj/
+ExtractProductItems/bin/
+ExtractProductItems/obj/
+ExtractProductItems/files.txt.csv
