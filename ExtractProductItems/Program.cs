@@ -160,8 +160,7 @@ namespace ExtractProductItems
 
                     }
                 }
-
-                
+              
                 reader.Close();
                 dataStream.Close();
             }
@@ -169,7 +168,7 @@ namespace ExtractProductItems
             return retVal;
         }
 
-        static string ExtractProductHierarchy(string searchContent, int startIndex, out int endIndex)
+        static string ExtractProductHierarchy(string searchContent, int startIndex, out int endIndex, string strInputFilePath)
         {
             string bcrumbs = "<div id=\"bcrumbs\">";
             string classLink = "class=\"link\">";
@@ -177,33 +176,46 @@ namespace ExtractProductItems
 
             string category = null;
             string subCategory = "";
+            int productNameStartIndex = 0;
+            int tempIndex = 0;
             endIndex = -1;
-            // Return null if bcrumbs is empty: see www.americanretailsupply.com\10264\1533\Avery-Dennison-One-Line-Price-Gun\PB-1-Labels.html
-            if (searchContent.IndexOf("<div id=\"bcrumbs\"></div>") != -1)
+            // Allocate to Missing Category if bcrumbs is empty: see www.americanretailsupply.com\10264\1533\Avery-Dennison-One-Line-Price-Gun\PB-1-Labels.html
+            if ((endIndex = searchContent.IndexOf("<div id=\"bcrumbs\"></div>")) != -1)
             {
-                return category;
+                Console.WriteLine("***WARNING***: Found BLANK BREAD CRUMB file: " + strInputFilePath);
+                category = "Default Category/Missing Category";
+                productNameStartIndex = searchContent.IndexOf("<tr><td class=\"textcol\"><h1>", endIndex);
+                productNameStartIndex += "<tr><td class=\"textcol\"><h1>".Length;
+                tempIndex = searchContent.IndexOf("</h1>", productNameStartIndex); ; // used for Product Name
             }
-
-            int tempIndex = searchContent.IndexOf(bcrumbs, startIndex);
-            if (tempIndex >= 0)
+            else
             {
-                category = "Default Category";
-                endIndex = searchContent.IndexOf("</span></div>", tempIndex);
-                int productNameStartIndex = searchContent.IndexOf("<span class=\"active\">", tempIndex);
-                while (tempIndex < productNameStartIndex - 7)
+                tempIndex = searchContent.IndexOf(bcrumbs, startIndex);
+                if (tempIndex >= 0)
                 {
-                    startIndex = searchContent.IndexOf(classLink, tempIndex) + lenClassLink;
-                    tempIndex = searchContent.IndexOf("</a>", startIndex);
-                    subCategory = searchContent.Substring(startIndex, tempIndex - startIndex);
-                    // Replace / with space
-                    subCategory = subCategory.Replace("/", " ");
-                    // Remove Leading and trailing spaces
-                    subCategory = subCategory.Trim();
-                    category += "/" + subCategory;
+                    category = "Default Category";
+                    endIndex = searchContent.IndexOf("</span></div>", tempIndex);
+                    productNameStartIndex = searchContent.IndexOf("<span class=\"active\">", tempIndex);
+                    while (tempIndex < productNameStartIndex - 7)
+                    {
+                        startIndex = searchContent.IndexOf(classLink, tempIndex) + lenClassLink;
+                        tempIndex = searchContent.IndexOf("</a>", startIndex);
+                        subCategory = searchContent.Substring(startIndex, tempIndex - startIndex);
+                        // Replace / with space
+                        subCategory = subCategory.Replace("/", " ");
+                        subCategory = subCategory.Replace("\"", "\"\"");
+                        // Remove Leading and trailing spaces
+                        subCategory = subCategory.Trim();
+                        category += "/" + subCategory;
+                    }
+                    productNameStartIndex += "<span class=\"active\">".Length;
+                    tempIndex = endIndex; // used for Product Name
                 }
+            }
+            if (category != null)
+            {
                 // Append product name now
-                startIndex = productNameStartIndex + "<span class=\"active\">".Length;
-                category += "/" + searchContent.Substring(startIndex, endIndex - startIndex).Replace("/", " ");
+                category += "/" + searchContent.Substring(productNameStartIndex, tempIndex - productNameStartIndex).Replace("/", " ").Replace("\"", "\"\"").Trim();
                 // Remove Home/
                 category = category.Replace("Home/", "");
                 // Replace , with ;
@@ -212,6 +224,7 @@ namespace ExtractProductItems
                 category = category.Replace("   ", " ");
                 // Replace double spaces with single space;
                 category = category.Replace("  ", " ");
+
             }
             return category;
         }
@@ -343,6 +356,68 @@ namespace ExtractProductItems
                 }
             }
             return itemRow;
+        }
+
+        static string ExtractSwatchImageUrl(string searchContent, ref int lastPointer, ref string swatchImageDownloadUrl)
+        {
+            string imageUrl = null;
+            int endIndex = -1;
+            string strToFind = "class=\"swatch\" src=\"";
+            swatchImageDownloadUrl = null;
+            int tempIndex = searchContent.IndexOf(strToFind, lastPointer);
+            if (tempIndex >= 0)
+            {
+                // now find the index of /img
+                tempIndex = searchContent.IndexOf("/img", tempIndex);
+                // find ?
+                endIndex = searchContent.IndexOf("?", tempIndex);
+                imageUrl = searchContent.Substring(tempIndex, endIndex - tempIndex);
+                // Get the swatchImageDownloadUrl also....
+                endIndex = searchContent.IndexOf("/img", tempIndex + 4);
+                swatchImageDownloadUrl = "http:/" + searchContent.Substring(tempIndex, endIndex - tempIndex) + "/img";
+                tempIndex = searchContent.IndexOf("?", tempIndex);
+                endIndex = searchContent.IndexOf(",size[", tempIndex);
+                swatchImageDownloadUrl += searchContent.Substring(tempIndex, endIndex - tempIndex) + ",size[300x300],qual[80]&call=url[file:std.image]";
+                lastPointer = endIndex;
+            }
+            return imageUrl;
+        }
+
+        static string ExtractSwatchNameFromControl(string searchContent, ref int lastPointer)
+        {
+            string swatchName = null;
+            int endIndex = -1;
+            string strToFind = "<p class=\"swatch-text\">";
+            int tempIndex = searchContent.IndexOf(strToFind, lastPointer);
+            if (tempIndex >= 0)
+            {
+                tempIndex += strToFind.Length;
+                endIndex = searchContent.IndexOf("</p>", tempIndex);
+                swatchName = searchContent.Substring(tempIndex, endIndex - tempIndex);
+                lastPointer = endIndex;
+            }
+            return swatchName;
+        }
+
+        static string ExtractNextSwatch(string searchContent, ref int lastPointer, ref string swatchImageUrl, ref string swatchName, ref string swatchImageDownloadUrl)
+        {
+            string swatchControlId = null;
+            swatchImageDownloadUrl = null;
+            // Find id=\"ctl00_Main_Swatch, then find ending quote
+            string strToFind = "id=\"ctl00_Main_Swatch";
+            int tempIndex = searchContent.IndexOf(strToFind, lastPointer);
+            if (tempIndex >= 0)
+            {
+                tempIndex += 4; // id="
+                lastPointer = searchContent.IndexOf("\"", tempIndex);
+                swatchControlId = searchContent.Substring(tempIndex, lastPointer - tempIndex).Trim();
+            }
+            if (swatchControlId != null)
+            {
+                swatchImageUrl = ExtractSwatchImageUrl(searchContent, ref lastPointer, ref swatchImageDownloadUrl);
+                swatchName = ExtractSwatchNameFromControl(searchContent, ref lastPointer);
+            }
+            return swatchControlId;
         }
 
         enum ProductHeaderType
@@ -533,6 +608,10 @@ namespace ExtractProductItems
                 headerType = ProductHeaderType.SKU_DescriptionHxWxL_1;
             }
             else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Description</td><td>1+</td>"))
+            {
+                headerType = ProductHeaderType.SKU_Description_1;
+            }
+            else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Description</td><td>5+</td>"))
             {
                 headerType = ProductHeaderType.SKU_Description_1;
             }
@@ -805,6 +884,10 @@ namespace ExtractProductItems
                 headerType = ProductHeaderType.SKU_Size_1;
             }
             else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Size (WxH)</td><td>1+</td><td"))
+            {
+                headerType = ProductHeaderType.SKU_Size_1;
+            }
+            else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Box Size</td><td>1+</td><td"))
             {
                 headerType = ProductHeaderType.SKU_Size_1;
             }
@@ -1219,6 +1302,7 @@ namespace ExtractProductItems
             itemSku = null;
             itemImageUrl = null;
             itemPrice = null; // Item not found
+            string itemImageDownloadUrl = null;
 
             int endIndex = -1;
             int tempIndex = -1;
@@ -1234,7 +1318,14 @@ namespace ExtractProductItems
                 {
                     endIndex = searchContent.IndexOf("?", tempIndex);
                     itemImageUrl = searchContent.Substring(tempIndex, endIndex - tempIndex).Replace(".eetoolset.com", "");
+                    // Get the itemImageDownloadUrl also....
+                    endIndex = searchContent.IndexOf("/img", tempIndex+4);
+                    itemImageDownloadUrl = "http:/" + searchContent.Substring(tempIndex, endIndex - tempIndex) + "/img";
+                    tempIndex = searchContent.IndexOf("?", tempIndex);
+                    endIndex = searchContent.IndexOf(",size[", tempIndex);
+                    itemImageDownloadUrl += searchContent.Substring(tempIndex, endIndex - tempIndex) + ",size[300x300],qual[80]&call=url[file:std.image]";
                 }
+
                 // Still get the SKU, so start search from start of the item row
                 strToFind = "<td class=\"txt-left\">";
                 tempIndex = searchContent.IndexOf(strToFind);
@@ -1244,6 +1335,11 @@ namespace ExtractProductItems
                     endIndex = searchContent.IndexOf("</td>", tempIndex);
                     itemSku = searchContent.Substring(tempIndex, endIndex - tempIndex);
                     fRet = true;
+                }
+                if (itemImageDownloadUrl != null)
+                {
+                    DownloadRemoteImageFile(itemImageDownloadUrl, "D:\\ARS\\product_images\\items\\" + itemSku + "_base.jpg");
+                    itemImageUrl = "/items/" + itemSku + "_base.jpg";
                 }
             }
             else
@@ -2024,6 +2120,7 @@ namespace ExtractProductItems
                     if (itemImageUrl == null)
                     {
                         itemImageUrl = productImageUrl;
+                        productImageUrl = "";
                     }
                     else
                     {
@@ -2031,7 +2128,7 @@ namespace ExtractProductItems
                     }
                     // outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes");
                     // Append SKU to Product Name, to make it unique
-                    output = String.Format("{0},\"{1}\",\"{2}\",{3},\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\"",
+                    output = String.Format("{0},\"{1}\",\"{2}\",{3},\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\"",
                         sku,
                         productCategory.Replace("\"", "\"\""),
                         productName.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " ") + " - " + sku,
@@ -2039,7 +2136,8 @@ namespace ExtractProductItems
                         shortDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                         productDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                         itemImageUrl, itemImageUrl, itemImageUrl,
-                        attributes.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " ")
+                        attributes.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
+                        productImageUrl
                         );
 
                     // append link and close file
@@ -2054,8 +2152,74 @@ namespace ExtractProductItems
             return fRet;
         }
 
+        static string DownloadSwatchContent(string hostUrl, string swatchControlId)
+        {
+            string swatchContent = null;
+            string postData = String.Format("ctl00$SM1=ctl00$Main$SwatchPanel|{0}&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=&{0}.x=34&{0}.y=28",
+                swatchControlId);
+
+            // postData = String.Format("ctl00$SM1=ctl00$Main$SwatchPanel|{0}&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMjAyNzg2MTA2Ng9kFgJmD2QWBAIBD2QWBGYPZBYCZg9kFgICAQ8WAh4EVGV4dAUaQmFieSBhbmQgSnV2ZW5pbGUgR2lmdHdyYXBkAgEPZBYEAgEPFgIfAGVkAgMPFgIfAAWCAVJldGFpbCBzdG9yZSBmaXh0dXJlcyBzdG9yZSBzdXBwbGllcyBwYWNrYWdpbmcgcHJpY2UgbWFya2luZyBkaXNwbGF5IGZpeHR1cmVzIGFuZCBwb2ludCBvZiBzYWxlIGNvbXB1dGVyIHN5c3RlbXMgZm9yIFJldGFpbCBTdG9yZXNkAgMQZGQWBAICDw9kFgIeCW9ua2V5ZG93bgWuAWlmKGV2ZW50LndoaWNoIHx8IGV2ZW50LmtleUNvZGUpe2lmICgoZXZlbnQud2hpY2ggPT0gMTMpIHx8IChldmVudC5rZXlDb2RlID09IDEzKSkge2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjdGwwMF9TZWFyY2hCdXR0b24nKS5jbGljaygpO3JldHVybiBmYWxzZTt9fSBlbHNlIHtyZXR1cm4gdHJ1ZX07IGQCAw8PFgIeCEltYWdlVXJsBTMvVGVtcGxhdGVzL0FtZXJpY2FuUmV0YWlsU3VwcGx5VjIvSW1hZ2VzL3NwYWNlci5naWYWAh4Hb25jbGljawWHAWlmKGdldElEKCdjdGwwMF9TZWFyY2hQaHJhc2UnKS52YWx1ZSA9PSAnJykgeyBhbGVydCgnUGxlYXNlIGVudGVyIGEgc2VhcmNoIHRlcm0nKTsgZ2V0SUQoJ2N0bDAwX1NlYXJjaFBocmFzZScpLmZvY3VzKCk7IHJldHVybiBmYWxzZTsgfWQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFg8FEmN0bDAwJFNlYXJjaEJ1dHRvbgUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQxNDM4BRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0MzkFGGN0bDAwJE1haW4kU3dhdGNoMTA0MTQ0MAUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQxNDQxBRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0NDMFGGN0bDAwJE1haW4kU3dhdGNoMTA0MTQ0NAUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQxNDM1BRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0MzMFGGN0bDAwJE1haW4kU3dhdGNoMTA0MTQzNwUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQxNDM0BRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0MzEFGGN0bDAwJE1haW4kU3dhdGNoMTA0MTQ0MgUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQzNDY0BRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0MzaYbrTK9Vv77xdrtXIqERebur3KrQ%3D%3D&__VIEWSTATEGENERATOR=986F59E2&ctl00$SearchPhrase=keyword%20search&ctl00$Main$Quantity1756633=1&ctl00$Main$Quantity1756635=1&ctl00$Main$Quantity1756634=1&ctl00$Main$Quantity1756638=1&ctl00$Main$Quantity1756637=1&ctl00$Main$Quantity1756636=1&{0}.x=21&{0}.y=26", "ctl00$Main$Swatch1041443");
+            postData = String.Format("ctl00$SM1=ctl00$Main$SwatchPanel|{0}&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMjAyNzg2MTA2Ng9kFgJmD2QWBAIBD2QWBGYPZBYCZg9kFgICAQ8WAh4EVGV4dAUaQmFieSBhbmQgSnV2ZW5pbGUgR2lmdHdyYXBkAgEPZBYEAgEPFgIfAGVkAgMPFgIfAAWCAVJldGFpbCBzdG9yZSBmaXh0dXJlcyBzdG9yZSBzdXBwbGllcyBwYWNrYWdpbmcgcHJpY2UgbWFya2luZyBkaXNwbGF5IGZpeHR1cmVzIGFuZCBwb2ludCBvZiBzYWxlIGNvbXB1dGVyIHN5c3RlbXMgZm9yIFJldGFpbCBTdG9yZXNkAgMQZGQWBAICDw9kFgIeCW9ua2V5ZG93bgWuAWlmKGV2ZW50LndoaWNoIHx8IGV2ZW50LmtleUNvZGUpe2lmICgoZXZlbnQud2hpY2ggPT0gMTMpIHx8IChldmVudC5rZXlDb2RlID09IDEzKSkge2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdjdGwwMF9TZWFyY2hCdXR0b24nKS5jbGljaygpO3JldHVybiBmYWxzZTt9fSBlbHNlIHtyZXR1cm4gdHJ1ZX07IGQCAw8PFgIeCEltYWdlVXJsBTMvVGVtcGxhdGVzL0FtZXJpY2FuUmV0YWlsU3VwcGx5VjIvSW1hZ2VzL3NwYWNlci5naWYWAh4Hb25jbGljawWHAWlmKGdldElEKCdjdGwwMF9TZWFyY2hQaHJhc2UnKS52YWx1ZSA9PSAnJykgeyBhbGVydCgnUGxlYXNlIGVudGVyIGEgc2VhcmNoIHRlcm0nKTsgZ2V0SUQoJ2N0bDAwX1NlYXJjaFBocmFzZScpLmZvY3VzKCk7IHJldHVybiBmYWxzZTsgfWQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFg8FEmN0bDAwJFNlYXJjaEJ1dHRvbgUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQxNDM4BRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0MzkFGGN0bDAwJE1haW4kU3dhdGNoMTA0MTQ0MAUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQxNDQxBRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0NDMFGGN0bDAwJE1haW4kU3dhdGNoMTA0MTQ0NAUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQxNDM1BRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0MzMFGGN0bDAwJE1haW4kU3dhdGNoMTA0MTQzNwUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQxNDM0BRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0MzEFGGN0bDAwJE1haW4kU3dhdGNoMTA0MTQ0MgUYY3RsMDAkTWFpbiRTd2F0Y2gxMDQzNDY0BRhjdGwwMCRNYWluJFN3YXRjaDEwNDE0MzaYbrTK9Vv77xdrtXIqERebur3KrQ%3D%3D&__VIEWSTATEGENERATOR=986F59E2&ctl00$SearchPhrase=keyword%20search&ctl00$Main$Quantity1756633=1&ctl00$Main$Quantity1756635=1&ctl00$Main$Quantity1756634=1&ctl00$Main$Quantity1756638=1&ctl00$Main$Quantity1756637=1&ctl00$Main$Quantity1756636=1&{0}.x=21&{0}.y=26", 
+                swatchControlId);
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    client.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)");
+                    client.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    client.Headers.Add("X-MicrosoftAjax", "Delta=true");
+                    //client.Headers.Add("Origin", "chrome-extension://apcedakaoficjlofohhcmkkljehnmebp");
+                    //client.Headers.Add("Accept", "*/*");
+                    //client.Headers.Add("Accept-Encoding", "gzip, deflate");
+                    //client.Headers.Add("Accept-Language", "en-US,en;q=0.8");
+                    //client.Headers.Add("Cookie", "shopperId8=283a69b0-a08e-400f-b6ae-6a06d88160e4; ASP.NET_SessionId=2jjygg55s3tz5mbxxjj1wnyt; __utma=57035450.947927119.1434389616.1477291505.1477356088.50; __utmc=57035450; __utmz=57035450.1476242357.40.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); Cache:LoginTriggerPage=SecurePage");
+                    swatchContent = client.UploadString(hostUrl, postData);
+                    
+                    //Console.WriteLine(swatchContent);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.Out.WriteLine("****EXCEPTION****" + ex.Message);
+            }
+            return swatchContent;
+        }
+
         static string hardCodedItemFieldsHeader = ",store_view_code,attribute_set_code,product_type,weight,product_online,tax_class_name,visibility,qty,out_of_stock_qty,website_id,product_websites";
         static string hardCodedItemFieldsValues = ",,Default,simple,1.0,1,Taxable Goods,\"Catalog, Search\",1,0,1,base";
+
+        public static void DownloadRemoteImageFile(string uri, string fileName)
+        {
+            return; // comment this line to run this function
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            // Check that the remote file was found. The ContentType
+            // check is performed since a request for a non-existent
+            // image file might be redirected to a 404-page, which would
+            // yield the StatusCode "OK", even though the image was not
+            // found.
+            if ((response.StatusCode == HttpStatusCode.OK ||
+                response.StatusCode == HttpStatusCode.Moved ||
+                response.StatusCode == HttpStatusCode.Redirect) &&
+                response.ContentType.StartsWith("image", StringComparison.OrdinalIgnoreCase))
+            {
+
+                // if the remote file was found, download oit
+                using (Stream inputStream = response.GetResponseStream())
+                using (Stream outputStream = File.OpenWrite(fileName))
+                {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    do
+                    {
+                        bytesRead = inputStream.Read(buffer, 0, buffer.Length);
+                        outputStream.Write(buffer, 0, bytesRead);
+                    } while (bytesRead != 0);
+                }
+            }
+        }
 
         static void Main(string[] args)
         {
@@ -2109,7 +2273,7 @@ namespace ExtractProductItems
                     // Erase outfile file in write mode and write headers
                     using (StreamWriter outputFile = new StreamWriter(args[0] + "-" + currentSubFileCounter.ToString() + ".csv"))
                     {
-                        outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes");
+                        outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes,additional_images");
                         outputFile.WriteLine(hardCodedItemFieldsHeader);
                     }
                     subTotalItemsCount = 0;
@@ -2130,10 +2294,10 @@ namespace ExtractProductItems
                     }
 
                     int lastPointer = 0;
-                    string productCategory = ExtractProductHierarchy(fileContents, lastPointer, out lastPointer);
-                    if (productCategory == null) // we will skip this file.
+                    string productCategory = ExtractProductHierarchy(fileContents, 0, out lastPointer, strFilePath);
+                    if (productCategory == null)
                     {
-                        Console.WriteLine("***WARNING***: Skipping BLANK BREAD CRUMB file: " + strFilePath);
+                        Console.WriteLine("***ERROR***: Found CORRUPTED BREAD CRUMB file: " + strFilePath);
                         continue;
                     }
                     string productDescription = ExtractProductDescription(fileContents, lastPointer, ref lastPointer);
@@ -2170,8 +2334,49 @@ namespace ExtractProductItems
                     // Route the swatch page to a different function..... ctl00_Main_SwatchPanel
                     else if ((lastPointer = fileContents.IndexOf("<div id=\"ctl00_Main_SwatchPanel\">")) != -1)
                     {
-                        Console.WriteLine("***WARNING***: Skipping SWATCHES file: " + strFilePath);
-                        continue;
+                        lastPointer += "<div id=\"ctl00_Main_SwatchPanel\">".Length;
+                        string swatchControlId = null;
+                        string swatchImageUrl = "";
+                        string swatchImageDownloadUrl = null;
+                        string swatchName = "";
+                        int swatchItemsCount = 0;
+                        //Console.WriteLine("***WARNING***: Skipping SWATCHES file: " + strFilePath);
+                        // Find the host URL
+                        // <form name="aspnetForm" method="post" action="
+                        string strTofind = "<form name=\"aspnetForm\" method=\"post\" action=\"";
+                        string hostUrl = "";
+                        int tempIndex = fileContents.IndexOf(strTofind);
+                        if (tempIndex > 0)
+                        {
+                            tempIndex += strTofind.Length;
+                            int endIndex = fileContents.IndexOf("\"", tempIndex);
+                            hostUrl = fileContents.Substring(tempIndex, endIndex - tempIndex);
+                        }
+                        while ((swatchControlId = ExtractNextSwatch(fileContents, ref lastPointer, ref swatchImageUrl, ref swatchName, ref swatchImageDownloadUrl)) != null)
+                        {
+                            //Console.WriteLine(String.Format("Swatch Id: {0}. Image: {1}. Name={2}", swatchControlId, swatchImageUrl, swatchName));
+                            string swatchContent = DownloadSwatchContent(hostUrl, swatchControlId.Replace("_", "$"));
+                            // TODO- Get better image and Extract <div class="units"> content to create productText
+                            // string productName = ExtractSwatchNameAndText(fileContents, lastPointer, out lastPointer, out productText);
+                            int swatchLocationPointer = 0;
+                            swatchItemsCount = 0;
+                            // Download image
+                            if (swatchImageDownloadUrl != null)
+                            {
+                                swatchImageUrl = swatchControlId.Replace("ctl00_Main_", "") + "_base.jpg";
+                                DownloadRemoteImageFile(swatchImageDownloadUrl, "D:\\ARS\\product_images\\swatches\\" + swatchImageUrl);
+                                swatchImageUrl = "/swatches/" + swatchImageUrl;
+                            }
+                            itemImageCount++; // For the swatch images
+                            if (ExtractItemsFromContents(swatchContent, strFilePath, args[0] + "-" + currentSubFileCounter.ToString() + ".csv",
+                                productCategory, swatchName, productDescription, swatchImageUrl.Replace(".eetoolset.com", ""), null,
+                                ref swatchItemsCount, ref itemImageCount, swatchLocationPointer))
+                            {
+                                productItemsCount += swatchItemsCount;
+                            }
+                        }
+                        subTotalItemsCount += productItemsCount;
+                        totalItemsCount += productItemsCount;
                     }
                 }
                 catch (Exception ex)
