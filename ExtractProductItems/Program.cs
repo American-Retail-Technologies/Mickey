@@ -11,6 +11,14 @@ namespace ExtractProductItems
 {
     class Program
     {
+        // This dictionary is used to check if the SKU was already added.
+        private static Dictionary<string, int> skuDictionary = new Dictionary<string, int>();
+        // Set one of these flags to true to downoad the latest content
+        //private static bool fUpdateProductPageCache = false; // TODO: Implement later to get latest file, if required.
+        private static bool fUpdateItemImageCache = false;
+        private static bool fUpdateSwatchImageCache = false;
+        private static bool fUpdateSwatchContentCache = false;
+
         static string FindDetailsPageLink(string searchContent, int startIndex, out int endIndex)
         {
             string href = "href";
@@ -169,7 +177,76 @@ namespace ExtractProductItems
             return retVal;
         }
 
-        static string ExtractProductHierarchy(string searchContent, int startIndex, out int endIndex, string strInputFilePath)
+                            
+        static bool ExtractMetaTags(string searchContent, out string metaTitle, out string metaKeywords, out string metaDescription, string strInputFilePath)
+        {
+            bool fRet = true;
+            metaTitle = "";
+            metaKeywords = "";
+            metaDescription = "";
+            int startIndex = 0;
+            int endIndex = -1;
+            string strToFind = "<head><title>";
+            int tempIndex = searchContent.IndexOf(strToFind, startIndex);
+            if (tempIndex >= 0)
+            {
+                startIndex = tempIndex + strToFind.Length;
+                strToFind = "</title>";
+                endIndex = searchContent.IndexOf(strToFind, startIndex);
+                if (endIndex > startIndex)
+                {
+                    metaTitle = searchContent.Substring(startIndex, endIndex - startIndex).Trim();
+                }
+            }
+            strToFind = "<meta name=\"keywords\" content=\"";
+            tempIndex = searchContent.IndexOf(strToFind, startIndex);
+            if (tempIndex >= 0)
+            {
+                startIndex = tempIndex + strToFind.Length;
+                strToFind = "\">";
+                endIndex = searchContent.IndexOf(strToFind, startIndex);
+                if (endIndex > startIndex)
+                {
+                    metaKeywords = searchContent.Substring(startIndex, endIndex - startIndex).Trim();
+                }
+            }
+            strToFind = "<meta name=\"description\" content=\"";
+            tempIndex = searchContent.IndexOf(strToFind, startIndex);
+            if (tempIndex >= 0)
+            {
+                startIndex = tempIndex + strToFind.Length;
+                strToFind = "\">";
+                endIndex = searchContent.IndexOf(strToFind, startIndex);
+                if (endIndex > startIndex)
+                {
+                    metaDescription = searchContent.Substring(startIndex, endIndex - startIndex).Trim();
+                }
+            }
+
+            return fRet;
+        }
+
+        static string ExtractSubCategoryTable(string searchContent, int startIndex, string strInputFilePath)
+        {
+            string subCategoryTable = null;
+            string strToFind = "<table class=";
+            int tempIndex = searchContent.IndexOf(strToFind, startIndex);
+            if (tempIndex >= 0)
+            {
+                startIndex = tempIndex;
+                strToFind = "</table>";
+                tempIndex = searchContent.IndexOf(strToFind, startIndex);
+                if (tempIndex > startIndex)
+                {
+                    tempIndex += strToFind.Length;
+                    subCategoryTable = searchContent.Substring(startIndex, tempIndex - startIndex).Trim();
+                }
+            }
+
+            return subCategoryTable;
+        }
+
+        static string ExtractProductHierarchy(string searchContent, int startIndex, out int endIndex, out string categoryName, string strInputFilePath)
         {
             string bcrumbs = "<div id=\"bcrumbs\">";
             string classLink = "class=\"link\">";
@@ -180,6 +257,7 @@ namespace ExtractProductItems
             int productNameStartIndex = 0;
             int tempIndex = 0;
             endIndex = -1;
+            categoryName = "";
             // Allocate to Missing Category if bcrumbs is empty: see www.americanretailsupply.com\10264\1533\Avery-Dennison-One-Line-Price-Gun\PB-1-Labels.html
             if ((endIndex = searchContent.IndexOf("<div id=\"bcrumbs\"></div>")) != -1)
             {
@@ -188,6 +266,7 @@ namespace ExtractProductItems
                 productNameStartIndex = searchContent.IndexOf("<tr><td class=\"textcol\"><h1>", endIndex);
                 productNameStartIndex += "<tr><td class=\"textcol\"><h1>".Length;
                 tempIndex = searchContent.IndexOf("</h1>", productNameStartIndex); ; // used for Product Name
+                categoryName = "Missing Category";
             }
             else
             {
@@ -215,7 +294,8 @@ namespace ExtractProductItems
             if (category != null)
             {
                 // Append product name now
-                category += "/" + searchContent.Substring(productNameStartIndex, tempIndex - productNameStartIndex).Replace("/", " ").Trim();
+                categoryName = searchContent.Substring(productNameStartIndex, tempIndex - productNameStartIndex).Replace("/", " ").Trim();
+                category += "/" + categoryName;
                 // Remove Home/
                 category = category.Replace("Home/", "");
                 // Replace , with ;
@@ -236,7 +316,7 @@ namespace ExtractProductItems
             if (descriptionIndex >= 0)
             {
                 descriptionIndex += "<div class=\"Content \" >".Length;
-                endIndex = searchContent.IndexOf("</div></td>", descriptionIndex);
+                endIndex = searchContent.IndexOf("</div>", descriptionIndex);
                 description = searchContent.Substring(descriptionIndex, endIndex - descriptionIndex);
             }
             return description;
@@ -338,7 +418,6 @@ namespace ExtractProductItems
             endIndex = -1;
             // Find next mid OR mid2 and use that.....
             int tempIndex = -1;
-            string strToFind = "";
             int indexMid2 = searchContent.IndexOf("<tr class=\"mid2\">", startIndex);
             int indexMid = searchContent.IndexOf("<tr class=\"mid\">", startIndex);
 
@@ -372,7 +451,6 @@ namespace ExtractProductItems
             }
             if (tempIndex >= 0)
             {
-                strToFind = "</tr>";
                 endIndex = searchContent.IndexOf("</tr>", tempIndex);
                 itemRow = searchContent.Substring(tempIndex, endIndex - tempIndex).Trim();
             }
@@ -1357,10 +1435,10 @@ namespace ExtractProductItems
                     itemSku = searchContent.Substring(tempIndex, endIndex - tempIndex).Trim();
                     fRet = true;
                 }
+
                 if (itemImageDownloadUrl != null)
                 {
-                    bool fUseCache = true;
-                    DownloadRemoteImageFile(itemImageDownloadUrl, strBaseFolder + "product_images\\items\\" + itemSku + "_base.jpg", fUseCache);
+                    DownloadRemoteImageFile(itemImageDownloadUrl, strBaseFolder + "product_images\\items\\" + itemSku + "_base.jpg", fUpdateItemImageCache);
                     itemImageUrl = "/items/" + itemSku + "_base.jpg";
                 }
             }
@@ -1376,6 +1454,18 @@ namespace ExtractProductItems
                     itemSku = searchContent.Substring(tempIndex, endIndex - tempIndex);
                     fRet = true;
                 }
+            }
+            // Check if itemSku already exists, set it to null and return false
+            int value = 0;
+            if (!skuDictionary.TryGetValue(itemSku, out value))
+            {
+                skuDictionary.Add(itemSku, value);
+            }
+            else
+            {
+                itemSku = null;
+                Console.WriteLine("****INFO**** ITEM ALREADY PRESENT: " + itemSku);
+                return false;
             }
 
             // Append attribute values to short description. This will depend on headerType
@@ -2193,12 +2283,12 @@ namespace ExtractProductItems
             return productFileContents;
         }
 
-        static string DownloadSwatchContent(string hostUrl, string swatchControlId, string viewState, string filePath, bool fUseCache)
+        static string DownloadSwatchContent(string hostUrl, string swatchControlId, string viewState, string filePath)
         {
             string swatchContent = null;
             string postData = null;
 
-            if (fUseCache && File.Exists(filePath))
+            if (!fUpdateSwatchContentCache && File.Exists(filePath))
             {
                 swatchContent = File.ReadAllText(filePath);
                 return swatchContent;
@@ -2240,11 +2330,8 @@ namespace ExtractProductItems
 
                     swatchContent = client.UploadString(hostUrl + "?randomNumber=" + random.Next().ToString(), postData);
 
-                    if (fUseCache)
-                    {
-                        // write the content to file
-                        File.WriteAllText(filePath, swatchContent);
-                    }
+                    // write the content to the Cache
+                    File.WriteAllText(filePath, swatchContent);
 
                     //Console.WriteLine(swatchControlId + " swatch: " + hostUrl + "\n" +postData + "\n" + swatchContent);
                 }
@@ -2259,9 +2346,9 @@ namespace ExtractProductItems
         static string hardCodedItemFieldsHeader = ",store_view_code,attribute_set_code,product_type,weight,product_online,tax_class_name,visibility,qty,out_of_stock_qty,website_id,product_websites";
         static string hardCodedItemFieldsValues = ",,Default,simple,1.0,1,Taxable Goods,\"Catalog, Search\",1,0,1,base";
 
-        public static void DownloadRemoteImageFile(string uri, string fileName, bool fUseCache)
+        public static void DownloadRemoteImageFile(string uri, string fileName, bool fUpdateCache)
         {
-            if (File.Exists(fileName) && fUseCache)
+            if (File.Exists(fileName) && !fUpdateCache)
             {
                 return;
             }
@@ -2306,7 +2393,8 @@ namespace ExtractProductItems
             int subTotalItemsCount = 0;
             int productItemsCount = 0;
             int currentSubFileCounter = 0;
-            const int MAX_ITEMS_IN_ONE_FILE = 300;
+            int categoryCounter = 0;
+            const int MAX_ITEMS_IN_ONE_FILE = 500;
 
             if (args.Length > 0)
             {
@@ -2327,6 +2415,11 @@ namespace ExtractProductItems
             {
                 // Read all lines into a string Array
                 productFileNames = File.ReadAllLines(args[0]);
+                // Erase categories outfile file in write mode and write headers
+                using (StreamWriter outputFile = new StreamWriter(args[0] + "-categories.csv"))
+                {
+                    outputFile.WriteLine("category,description,meta_title,meta_keywords,meta_description,image_url");
+                }
             }
             catch (Exception ex)
             {
@@ -2340,6 +2433,12 @@ namespace ExtractProductItems
                 string output = "";
                 string fileContents = "";
                 string strFilePath = strFolder + fileName;
+
+                string categoryDescription = "";
+                string categoryName = "No Category"; // Last portion of the bread-crumb
+                string metaTitle = "";
+                string metaKeywords = "";
+                string metaDescription = ""; 
 
                 if (productCount == 0 || subTotalItemsCount >= MAX_ITEMS_IN_ONE_FILE)
                 {
@@ -2368,7 +2467,7 @@ namespace ExtractProductItems
                     }
 
                     int lastPointer = 0;
-                    string productCategory = ExtractProductHierarchy(fileContents, 0, out lastPointer, strFilePath);
+                    string productCategory = ExtractProductHierarchy(fileContents, 0, out lastPointer, out categoryName, strFilePath);
                     if (productCategory == null)
                     {
                         Console.WriteLine("***ERROR***: Found CORRUPTED BREAD CRUMB file: " + strFilePath);
@@ -2378,7 +2477,7 @@ namespace ExtractProductItems
                     if (productDescription == null)
                     {
                         Console.WriteLine("***WARNING***: Product Description was missing in file: " + strFilePath);
-                        productDescription = productCategory;
+                        productDescription = "No Description";
                     }
 
                     string productImageUrl = ExtractProductImageUrl(fileContents, lastPointer, out lastPointer);
@@ -2414,7 +2513,6 @@ namespace ExtractProductItems
                         string swatchImageDownloadUrl = null;
                         string swatchName = "";
                         int swatchItemsCount = 0;
-                        //Console.WriteLine("***WARNING***: Skipping SWATCHES file: " + strFilePath);
                         // Find the host URL
                         // <form name="aspnetForm" method="post" action="
                         string strTofind = "<form name=\"aspnetForm\" method=\"post\" action=\"";
@@ -2443,8 +2541,7 @@ namespace ExtractProductItems
                             //Console.WriteLine(String.Format("Swatch Id: {0}. Image: {1}. Name={2}", swatchControlId, swatchImageUrl, swatchName));
                             string swatchContent = null;
                             string swatchContentFilePath = strFolder + "product_images\\swatch_content\\" + swatchControlId.Replace("ctl00_Main_", "") + ".txt";
-                            bool fUseSwatchContentCache = true;
-                            swatchContent = DownloadSwatchContent(hostUrl, swatchControlId.Replace("_", "$"), viewState, swatchContentFilePath, fUseSwatchContentCache);
+                            swatchContent = DownloadSwatchContent(hostUrl, swatchControlId.Replace("_", "$"), viewState, swatchContentFilePath);
                             if (swatchContent.Contains("Error.aspx"))
                             {
                                 Console.WriteLine(String.Format("****SWATCHES ERROR DOWNLOADING**** Swatch Id: {0}. Name: {1}. Content: {2} in file: {3}",
@@ -2475,9 +2572,8 @@ namespace ExtractProductItems
                             // Download image
                             if (swatchImageDownloadUrl != null)
                             {
-                                bool fUseImagesCache = true;
                                 swatchImageUrl = "/swatches/" + swatchControlId.Replace("ctl00_Main_", "") + "_base.jpg";
-                                DownloadRemoteImageFile(swatchImageDownloadUrl, strFolder + "product_images" + swatchImageUrl.Replace("/", "\\"), fUseImagesCache);
+                                DownloadRemoteImageFile(swatchImageDownloadUrl, strFolder + "product_images" + swatchImageUrl.Replace("/", "\\"), fUpdateSwatchImageCache);
                             }
                             itemImageCount++; // For the swatch images
                             if (ExtractItemsFromContents(swatchContent, strFilePath, args[0] + "-" + currentSubFileCounter.ToString() + ".csv",
@@ -2489,6 +2585,34 @@ namespace ExtractProductItems
                         }
                         subTotalItemsCount += productItemsCount;
                         totalItemsCount += productItemsCount;
+                        categoryDescription = productDescription;
+                    }
+                    // Route for the Category page if it contains "</select> per page</span><div class="
+                    else if ((lastPointer = fileContents.IndexOf("</select> per page</span><div class=")) != -1)
+                    {
+                        // extract the table with image links and append that to product description.
+                        categoryCounter++;
+                        string subCategoryTable = ExtractSubCategoryTable(fileContents, lastPointer, strFilePath);
+                        if (subCategoryTable != null)
+                        {
+                            categoryDescription = productDescription + subCategoryTable.Replace("\n"," ").Replace("\r", " ").Trim();
+                        }
+                        else
+                        {
+                            categoryDescription = productDescription;
+                        }
+                    }
+                    // Now write that to the category pages.
+                    ExtractMetaTags(fileContents, out metaTitle, out metaKeywords, out metaDescription, strFilePath);
+                    using (StreamWriter outputFile = new StreamWriter(args[0] + "-categories.csv", true))
+                    {
+                        outputFile.WriteLine(String.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
+                            productCategory.Replace("\"", "\"\""), 
+                            categoryDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "), 
+                            metaTitle.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "), 
+                            metaKeywords.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "), 
+                            metaDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "), 
+                            ""));
                     }
                 }
                 catch (Exception ex)
@@ -2496,11 +2620,12 @@ namespace ExtractProductItems
                     output = output + "FAIL";
                     Console.WriteLine("Failed to process fileName - " + fileName + ". Exception: " + ex.Message);
                 }
-                Console.WriteLine(String.Format("{0} SubFile. {1} File. {2} sub item count. {3} product images. {4} item images. {5} total items. Filename: {6}",
-                    currentSubFileCounter, productCount, subTotalItemsCount, productImageCount, itemImageCount, totalItemsCount, fileName));
+                Console.WriteLine(String.Format("{7} Categories. {0} SubFile. {1} File. {2} sub item count. {3} product images. {4} item images. {5} total items. Filename: {6}",
+                    currentSubFileCounter, productCount, subTotalItemsCount, productImageCount, itemImageCount, totalItemsCount, fileName, categoryCounter));
             }
 
-            Console.WriteLine(String.Format("{0} files. {1} Items read. {2} product images, {3} Item images, {4} sub files.", productCount, totalItemsCount, productImageCount, itemImageCount, currentSubFileCounter));
+            Console.WriteLine(String.Format("{5} Categories. {0} files. {1} Items read. {2} product images, {3} Item images, {4} sub files.", 
+                productCount, totalItemsCount, productImageCount, itemImageCount, currentSubFileCounter, categoryCounter));
             Console.WriteLine("Processing complete. Press any key to exit.");
             Console.ReadLine();
         }
