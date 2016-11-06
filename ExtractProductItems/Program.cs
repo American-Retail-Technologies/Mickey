@@ -203,7 +203,7 @@ namespace ExtractProductItems
             if (tempIndex >= 0)
             {
                 startIndex = tempIndex + strToFind.Length;
-                strToFind = "\">";
+                strToFind = "\"";
                 endIndex = searchContent.IndexOf(strToFind, startIndex);
                 if (endIndex > startIndex)
                 {
@@ -215,7 +215,7 @@ namespace ExtractProductItems
             if (tempIndex >= 0)
             {
                 startIndex = tempIndex + strToFind.Length;
-                strToFind = "\">";
+                strToFind = "\"";
                 endIndex = searchContent.IndexOf(strToFind, startIndex);
                 if (endIndex > startIndex)
                 {
@@ -2238,18 +2238,22 @@ namespace ExtractProductItems
                     {
                         itemImageCount++;
                     }
-                    // outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes");
+                    // 11/05/2016: Add url_key
+                    // outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes,url_key");
                     // Append SKU to Product Name, to make it unique
-                    output = String.Format("{0},\"{1}\",\"{2}\",{3},\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\"",
+                    string item_name = productName.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " ") + " - " + sku;
+                    string item_url_key = item_name.Replace(" - ","-").Replace("&", "").Replace(",", "").Replace("/", "").Replace("  ", " ").Replace(" ", "-").ToLower();
+                    output = String.Format("{0},\"{1}\",\"{2}\",{3},\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\"",
                         sku,
                         productCategory.Replace("\"", "\"\""),
-                        productName.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " ") + " - " + sku,
+                        item_name,
                         itemPrice,
                         shortDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                         productDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                         itemImageUrl, itemImageUrl, itemImageUrl,
                         attributes.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
-                        productImageUrl
+                        productImageUrl,
+                        item_url_key
                         );
 
                     // append link and close file
@@ -2446,15 +2450,13 @@ namespace ExtractProductItems
                     // Erase outfile file in write mode and write headers
                     using (StreamWriter outputFile = new StreamWriter(args[0] + "-" + currentSubFileCounter.ToString() + ".csv"))
                     {
-                        outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes,additional_images");
+                        outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes,additional_images,url_key");
                         outputFile.WriteLine(hardCodedItemFieldsHeader);
                     }
                     subTotalItemsCount = 0;
                 }
                 productCount++;
-                productImageCount = 0;
                 productItemsCount = 0;
-
 
                 try
                 {
@@ -2502,6 +2504,7 @@ namespace ExtractProductItems
                         {
                             subTotalItemsCount += productItemsCount;
                             totalItemsCount += productItemsCount;
+                            categoryDescription = productDescription;
                         }
                     }
                     // Route the swatch page to a different function..... ctl00_Main_SwatchPanel
@@ -2591,11 +2594,31 @@ namespace ExtractProductItems
                     else if ((lastPointer = fileContents.IndexOf("</select> per page</span><div class=")) != -1)
                     {
                         // extract the table with image links and append that to product description.
-                        categoryCounter++;
                         string subCategoryTable = ExtractSubCategoryTable(fileContents, lastPointer, strFilePath);
                         if (subCategoryTable != null)
                         {
-                            categoryDescription = productDescription + subCategoryTable.Replace("\n"," ").Replace("\r", " ").Trim();
+                            // replace ALL occurences of ".eetoolset.com/img????.jpg?set" with ".eetoolset.com/img?set"
+                            string strTofind = ".eetoolset.com/img";
+                            int tempIndex = subCategoryTable.IndexOf(strTofind);
+                            int endIndex = -1;
+                            while (tempIndex > 0)
+                            {
+                                tempIndex += strTofind.Length;
+                                endIndex = subCategoryTable.IndexOf("?set", tempIndex);
+                                if (endIndex > tempIndex)
+                                {
+                                    subCategoryTable = subCategoryTable.Remove(tempIndex, endIndex - tempIndex);
+                                }
+                                tempIndex = subCategoryTable.IndexOf(strTofind, endIndex);
+                            }
+                            // use online eporia images until we can crate an image server
+                            subCategoryTable = subCategoryTable.Replace("<img src=\"../Templates/AmericanRetailSupplyV2", "<img src=\"http://www.americanretailsupply.com/Templates/AmericanRetailSupplyV2");
+                            subCategoryTable = subCategoryTable.Replace("<img src=\"../../", "<img src=\"http://");
+                            subCategoryTable = subCategoryTable.Replace("&amp;", "&");
+                            subCategoryTable = subCategoryTable.Replace(" href=\"../", " href=\"");
+                            subCategoryTable = subCategoryTable.Replace(" href=\"", " href=\"/");
+                            subCategoryTable = subCategoryTable.Replace("\n", " ").Replace("\r", " ").Trim();
+                            categoryDescription = productDescription + subCategoryTable;
                         }
                         else
                         {
@@ -2603,16 +2626,20 @@ namespace ExtractProductItems
                         }
                     }
                     // Now write that to the category pages.
-                    ExtractMetaTags(fileContents, out metaTitle, out metaKeywords, out metaDescription, strFilePath);
-                    using (StreamWriter outputFile = new StreamWriter(args[0] + "-categories.csv", true))
+                    if (categoryDescription != "")
                     {
-                        outputFile.WriteLine(String.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
-                            productCategory.Replace("\"", "\"\""), 
-                            categoryDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "), 
-                            metaTitle.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "), 
-                            metaKeywords.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "), 
-                            metaDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "), 
-                            ""));
+                        ExtractMetaTags(fileContents, out metaTitle, out metaKeywords, out metaDescription, strFilePath);
+                        using (StreamWriter outputFile = new StreamWriter(args[0] + "-categories.csv", true))
+                        {
+                            outputFile.WriteLine(String.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
+                                productCategory.Replace("\"", "\"\""),
+                                categoryDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
+                                metaTitle.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
+                                metaKeywords.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
+                                metaDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
+                                ""));
+                        }
+                        categoryCounter++;
                     }
                 }
                 catch (Exception ex)
