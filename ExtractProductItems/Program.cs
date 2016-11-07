@@ -300,6 +300,8 @@ namespace ExtractProductItems
                 category = category.Replace("Home/", "");
                 // Replace , with ;
                 category = category.Replace(",", ";");
+                // Remove | 
+                category = category.Replace("|", "");
                 // Replace triple spaces with single space;
                 category = category.Replace("   ", " ");
                 // Replace double spaces with single space;
