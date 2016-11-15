@@ -321,6 +321,16 @@ namespace ExtractProductItems
                 endIndex = searchContent.IndexOf("</div>", descriptionIndex);
                 description = searchContent.Substring(descriptionIndex, endIndex - descriptionIndex);
             }
+            // Fix the links in the descirption
+            description = description.Replace("../../../../rs6.eporia.com", "http://yoosh.co/ars_files/rs6.eporia.com");
+            description = description.Replace("../../../../resources.myeporia.com", "http://yoosh.co/ars_files/resources.myeporia.com");
+            description = description.Replace("../../../../is1.eporia.com", "http://yoosh.co/ars_files/is1.eporia.com");
+            description = description.Replace("../../../../is7.eporia.com", "http://yoosh.co/ars_files/is7.eporia.com");
+            description = description.Replace("../../../../is10.eporia.com", "http://yoosh.co/ars_files/is10.eporia.com");
+            description = description.Replace("../../../../is30.eporia.com", "http://yoosh.co/ars_files/is30.eporia.com");
+            description = description.Replace("../../../../ais.eporia.com", "http://yoosh.co/ars_files/ais.eporia.com");
+            // This was found in 3 categories:
+            description = description.Replace("../../is7.eporia.com", "http://yoosh.co/ars_files/is7.eporia.com");
             return description;
         }
 
@@ -2219,6 +2229,7 @@ namespace ExtractProductItems
                 string itemPrice = null;
                 string attributes = ""; // set to blank
                 string output = "";
+                string additionalImage = productImageUrl;
 
                 GetItemData(itemRow, headerType, out sku, ref shortDescription, out itemImageUrl, out itemPrice, ref attributes, strBaseFolder);
                 if (sku != null)
@@ -2233,8 +2244,8 @@ namespace ExtractProductItems
                     // use product image if item image is null
                     if (itemImageUrl == null)
                     {
-                        itemImageUrl = productImageUrl;
-                        productImageUrl = "";
+                        itemImageUrl = additionalImage;
+                        additionalImage = "";
                     }
                     else
                     {
@@ -2243,6 +2254,9 @@ namespace ExtractProductItems
                     // 11/05/2016: Add url_key
                     // outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes,url_key");
                     // Append SKU to Product Name, to make it unique
+                    // 11/15/2016 Replace "54V5417-*" with "54V5417-z". * is not allowed in sku. 
+                    // There ae only 3 skus - 54V5417-*14102B-26, 54V5417-*18132B-261, 54V5417-*26182B-261
+                    sku = sku.Replace("54V5417-*", "54V5417-z");
                     string item_name = productName.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " ") + " - " + sku;
                     string item_url_key = item_name.Replace(" - ","-").Replace("&", "").Replace(",", "").Replace("/", "").Replace("  ", " ").Replace(" ", "-").ToLower();
                     output = String.Format("{0},\"{1}\",\"{2}\",{3},\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\"",
@@ -2254,7 +2268,7 @@ namespace ExtractProductItems
                         productDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                         itemImageUrl, itemImageUrl, itemImageUrl,
                         attributes.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
-                        productImageUrl,
+                        additionalImage,
                         item_url_key
                         );
 
@@ -2400,7 +2414,7 @@ namespace ExtractProductItems
             int productItemsCount = 0;
             int currentSubFileCounter = 0;
             int categoryCounter = 0;
-            const int MAX_ITEMS_IN_ONE_FILE = 500;
+            const int MAX_ITEMS_IN_ONE_FILE = 50000;
 
             if (args.Length > 0)
             {
