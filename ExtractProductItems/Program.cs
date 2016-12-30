@@ -2256,9 +2256,10 @@ namespace ExtractProductItems
                     // Append SKU to Product Name, to make it unique
                     // 11/15/2016 Replace "54V5417-*" with "54V5417-z". * is not allowed in sku. 
                     // There ae only 3 skus - 54V5417-*14102B-26, 54V5417-*18132B-261, 54V5417-*26182B-261
+                    sku = sku.Trim();
                     sku = sku.Replace("54V5417-*", "54V5417-z");
                     string item_name = productName.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " ") + " - " + sku;
-                    string item_url_key = item_name.Replace(" - ","-").Replace("&", "").Replace(",", "").Replace("/", "").Replace("  ", " ").Replace(" ", "-").ToLower();
+                    string item_url_key = item_name.Replace(" - ","-").Replace("&", "").Replace(",", "").Replace("/", "").Replace("  ", " ").Trim().Replace(" ", "-").ToLower();
                     output = String.Format("{0},\"{1}\",\"{2}\",{3},\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\"",
                         sku,
                         productCategory.Replace("\"", "\"\""),
@@ -2414,7 +2415,7 @@ namespace ExtractProductItems
             int productItemsCount = 0;
             int currentSubFileCounter = 0;
             int categoryCounter = 0;
-            const int MAX_ITEMS_IN_ONE_FILE = 50000;
+            const int MAX_ITEMS_IN_ONE_FILE = 4300;
 
             if (args.Length > 0)
             {
