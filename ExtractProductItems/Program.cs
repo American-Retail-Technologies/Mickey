@@ -19,6 +19,16 @@ namespace ExtractProductItems
         private static bool fUpdateSwatchImageCache = false;
         private static bool fUpdateSwatchContentCache = false;
 
+        // Based on http://www.codeproject.com/Articles/13503/Stripping-Accents-from-Latin-Characters-A-Foray-in
+        private static string LatinToAscii(string inString)
+        {
+            var newStringBuilder = new StringBuilder();
+            newStringBuilder.Append(inString.Normalize(NormalizationForm.FormKD)
+                                            .Where(x => x < 128)
+                                            .ToArray());
+            return newStringBuilder.ToString();
+        }
+
         static string FindDetailsPageLink(string searchContent, int startIndex, out int endIndex)
         {
             string href = "href";
@@ -2204,6 +2214,362 @@ namespace ExtractProductItems
             return fRet;
         }
 
+        static int [] ExtractQuantityPriceBreaks(string headerRow, string strInputFilePath)
+        {
+            if (headerRow.Contains("<td>1+</td><td rowspan="))
+            {
+                return null;
+            }
+            else if (headerRow.Contains("<td>1+</td><td>3+</td><td rowspan="))
+            {
+                return new int[] { 1, 3 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td rowspan="))
+            {
+                return new int[] { 1, 2 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>5+</td><td rowspan="))
+            {
+                return new int[] { 1, 5 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td rowspan="))
+            {
+                return new int[] { 1, 6 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td>5+</td><td rowspan="))
+            {
+                return new int[] { 1, 2, 5 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>3+</td><td>5+</td><td rowspan="))
+            {
+                return new int[] { 1, 3, 5 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>10+</td><td rowspan="))
+            {
+                return new int[] { 1, 10 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>12+</td><td rowspan="))
+            {
+                return new int[] { 1, 12 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td>3+</td><td>12+</td><td rowspan="))
+            {
+                return new int[] { 1, 2, 3, 12 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td>3+</td><td>13+</td><td rowspan="))
+            {
+                return new int[] { 1, 2, 3, 13 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td>5+</td><td>10+</td><td rowspan="))
+            {
+                return new int[] { 1, 2, 5, 10 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td>10+</td><td>20+</td><td rowspan="))
+            {
+                return new int[] { 1, 2, 10, 20 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>3+</td><td>4+</td><td>12+</td><td rowspan="))
+            {
+                return new int[] { 1, 3, 4, 12 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>3+</td><td>5+</td><td>10+</td><td rowspan="))
+            {
+                return new int[] { 1, 3, 5, 10 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>5+</td><td>10+</td><td rowspan="))
+            {
+                return new int[] { 1, 5, 10 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>10+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 10 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td>4+</td><td>15+</td><td rowspan="))
+            {
+                return new int[] { 1, 2, 4, 15 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td>6+</td><td>15+</td><td rowspan="))
+            {
+                return new int[] { 1, 2, 6, 15 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>2+</td><td>8+</td><td>12+</td><td rowspan="))
+            {
+                return new int[] { 1, 2, 8, 12 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>3+</td><td>6+</td><td>12+</td><td rowspan="))
+            {
+                return new int[] { 1, 3, 6, 12 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>3+</td><td>10+</td><td>20+</td><td rowspan="))
+            {
+                return new int[] { 1, 3, 10, 20 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>5+</td><td>15+</td><td rowspan="))
+            {
+                return new int[] { 1, 5, 15 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>5+</td><td>25+</td><td rowspan="))
+            {
+                return new int[] { 1, 5, 25 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>12+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 12 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>24+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 24 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>25+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 25 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>4+</td><td>8+</td><td rowspan="))
+            {
+                return new int[] { 1, 4, 8 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>25+</td><td>100+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 25, 100 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>4+</td><td>8+</td><td>20+</td><td rowspan="))
+            {
+                return new int[] { 1, 4, 8, 20 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>4+</td><td>10+</td><td>25+</td><td rowspan="))
+            {
+                return new int[] { 1, 4, 10, 25 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>4+</td><td>16+</td><td>32+</td><td rowspan="))
+            {
+                return new int[] { 1, 4, 16, 32 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>5+</td><td>10+</td><td>20+</td><td rowspan="))
+            {
+                return new int[] { 1, 5, 10, 20 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>5+</td><td>10+</td><td>25+</td><td rowspan="))
+            {
+                return new int[] { 1, 5, 10, 25 };
+            }
+            else if (headerRow.Contains("<td>5+</td><td>10+</td><td>25+</td><td rowspan="))
+            {
+                return new int[] { 5, 10, 25 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>3+</td><td>12+</td><td>24+</td><td rowspan="))
+            {
+                return new int[] { 1, 3, 12, 24 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>12+</td><td>24+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 12, 24 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>12+</td><td>25+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 12, 25 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>12+</td><td>36+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 12, 36 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>6+</td><td>24+</td><td>48+</td><td rowspan="))
+            {
+                return new int[] { 1, 6, 24, 48 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>12+</td><td>24+</td><td rowspan="))
+            {
+                return new int[] { 1, 12, 24 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>12+</td><td>24+</td><td>72+</td><td rowspan="))
+            {
+                return new int[] { 1, 12, 24, 72 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>5+</td><td>20+</td><td rowspan="))
+            {
+                return new int[] { 1, 5, 20 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>10+</td><td>20+</td><td rowspan="))
+            {
+                return new int[] { 1, 10, 20 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>10+</td><td>25+</td><td rowspan="))
+            {
+                return new int[] { 1, 10, 25 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>7+</td><td>25+</td><td>40+</td><td rowspan="))
+            {
+                return new int[] { 1, 7, 25, 40 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>8+</td><td>21+</td><td>42+</td><td rowspan="))
+            {
+                return new int[] { 1, 8, 21, 42 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>10+</td><td>20+</td><td>50+</td><td rowspan="))
+            {
+                return new int[] { 1, 10, 20, 50 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>10+</td><td>25+</td><td>50+</td><td rowspan="))
+            {
+                return new int[] { 1, 10, 25, 50 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>10+</td><td>25+</td><td>100+</td><td rowspan="))
+            {
+                return new int[] { 1, 10, 25, 100 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>24+</td><td rowspan="))
+            {
+                return new int[] { 1, 24 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>25+</td><td rowspan="))
+            {
+                return new int[] { 1, 25 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>100+</td><td rowspan="))
+            {
+                return new int[] { 1, 100 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>144+</td><td rowspan="))
+            {
+                return new int[] { 1, 144};
+            }
+            else if (headerRow.Contains("<td>1+</td><td>24+</td><td>144+</td><td rowspan="))
+            {
+                return new int[] { 1, 24, 144 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>48+</td><td>144+</td><td rowspan="))
+            {
+                return new int[] { 1, 48, 144 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>20+</td><td>50+</td><td rowspan="))
+            {
+                return new int[] { 1, 20, 50 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>20+</td><td>80+</td><td rowspan="))
+            {
+                return new int[] { 1, 20, 80 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>20+</td><td>100+</td><td rowspan="))
+            {
+                return new int[] { 1, 20, 100 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>30+</td><td>50+</td><td rowspan="))
+            {
+                return new int[] { 1, 30, 50 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>48+</td><td>96+</td><td rowspan="))
+            {
+                return new int[] { 1, 48, 96 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>11+</td><td>101+</td><td rowspan="))
+            {
+                return new int[] { 1, 11, 101 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>50+</td><td>150+</td><td rowspan="))
+            {
+                return new int[] { 1, 50, 150 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>50+</td><td>200+</td><td rowspan="))
+            {
+                return new int[] { 1, 50, 200 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>100+</td><td>200+</td><td rowspan="))
+            {
+                return new int[] { 1, 100, 200 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>100+</td><td>500+</td><td rowspan="))
+            {
+                return new int[] { 1, 100, 500 };
+            }
+            else if (headerRow.Contains("<td>1+</td><td>100+</td><td>1000+</td><td rowspan="))
+            {
+                return new int[] { 1, 100, 1000 };
+            }
+            else if (headerRow.Contains("<td>2+</td><td>3+</td><td>6+</td><td rowspan="))
+            {
+                return new int[] { 2, 3, 6 };
+            }
+            else if (headerRow.Contains("<td>2+</td><td>4+</td><td>6+</td><td rowspan="))
+            {
+                return new int[] { 2, 4, 6 };
+            }
+            else if (headerRow.Contains("<td>2+</td><td>4+</td><td>8+</td><td rowspan="))
+            {
+                return new int[] { 2, 4, 8 };
+            }
+            else if (headerRow.Contains("<td>2+</td><td>10+</td><td>20+</td><td rowspan="))
+            {
+                return new int[] { 2, 10, 20 };
+            }
+            else if (headerRow.Contains("<td>2+</td><td>11+</td><td>20+</td><td rowspan="))
+            {
+                return new int[] { 2, 11, 20 };
+            }
+            else if (headerRow.Contains("<td>2+</td><td>8+</td><td>16+</td><td rowspan="))
+            {
+                return new int[] { 2, 8, 16 };
+            }
+            else if (headerRow.Contains("<td>4+</td><td>6+</td><td>8+</td><td rowspan="))
+            {
+                return new int[] { 4, 6, 8 };
+            }
+            else if (headerRow.Contains("<td>5+</td><td>10+</td><td>15+</td><td rowspan="))
+            {
+                return new int[] { 5, 10, 15 };
+            }
+            else if (headerRow.Contains("<td>12+</td><td>36+</td><td>72+</td><td>144+</td><td rowspan="))
+            {
+                return new int[] { 12, 36, 72, 144 };
+            }
+            else if (headerRow.Contains("<td>6+</td><td>10+</td><td rowspan="))
+            {
+                return new int[] { 6, 10 };
+            }
+            else if (headerRow.Contains("<td>4+</td><td rowspan="))
+            {
+                return new int[] { 4 };
+            }
+            else
+            {
+                Console.WriteLine("***WARNING***: No matching Price Break Header in file: " + strInputFilePath + "\nHeader: " + headerRow);
+            }
+            return null;
+        }
+
+        static void ExtractMultiTierPrices(string searchContent, string sku, int [] qtyBreaks, string strInputFilePath, string strOutputFilePath)
+        {
+            string output = "";
+            int nIndex = 0;
+            string itemPrice = "";
+            int tempIndex, endIndex;
+            string strToFind = "<span class=\"price\">";
+            // Find all price entries
+            tempIndex = searchContent.IndexOf(strToFind);
+            while (tempIndex >= 0 && nIndex < qtyBreaks.Length)
+            {
+                tempIndex += strToFind.Length;
+                endIndex = searchContent.IndexOf("</span>", tempIndex);
+                itemPrice = searchContent.Substring(tempIndex, endIndex - tempIndex).Replace("$", "").Replace(",", "");
+                tempIndex = searchContent.IndexOf(strToFind, endIndex);
+                // Special Case: Some pages like www.americanretailsupply.com/64993/785423/A-La-Carte-Bags--Boxes/Green-Gardens-Collection-Bags-and-Boxes.htm
+                // have two column headers where single price starts from middle. Skip those rows??
+                // Logic: Second condition will ensure that there is one more row  (tempIndex >0) after the first row (nIndex=0)
+                if (itemPrice != "N/A" && (nIndex > 0 || tempIndex > 0))
+                {
+                    using (StreamWriter outputFile = new StreamWriter(strOutputFilePath, true))
+                    {
+                        output = String.Format("{0},All Websites [USD],ALL GROUPS,{1},{2}", sku, qtyBreaks[nIndex], itemPrice);
+                        outputFile.WriteLine(output);
+                    }
+                }
+                nIndex++;
+                if (nIndex == qtyBreaks.Length && tempIndex > 0)
+                {
+                    Console.Write("***WARNING***: EXTRA PRICE BREAK Entry in file (fix manually): " + strInputFilePath + "\nItemRow: " + searchContent);
+                }
+            }
+
+        }
+
         static bool ExtractItemsFromContents(string searchContents, string strInputFilePath, string strOutputFilePath, 
             string productCategory, string productName, string productDescription, string productImageUrl, string productText, 
             ref int productItemsCount, ref int itemImageCount, int startIndex, string strBaseFolder)
@@ -2221,6 +2587,8 @@ namespace ExtractProductItems
             }
 
             string itemRow = null;
+            string strMultiTierPriceFile = strOutputFilePath.Replace(".csv", "-price-tiers.csv");
+            int[] priceBreakArray = ExtractQuantityPriceBreaks(headerRow, strInputFilePath);
             while ((itemRow = ExtractNextItemRow(searchContents, lastPointer, out lastPointer, headerType)) != null)
             {
                 string sku = null;
@@ -2268,7 +2636,7 @@ namespace ExtractProductItems
                         shortDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                         productDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                         itemImageUrl, itemImageUrl, itemImageUrl,
-                        attributes.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
+                        "",//attributes.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                         additionalImage,
                         item_url_key
                         );
@@ -2278,6 +2646,12 @@ namespace ExtractProductItems
                     {
                         outputFile.Write(output);
                         outputFile.WriteLine(hardCodedItemFieldsValues);
+                    }
+
+                    // if the product has multi-tier pricing
+                    if (priceBreakArray != null)
+                    {
+                        ExtractMultiTierPrices(itemRow, sku, priceBreakArray, strInputFilePath, strMultiTierPriceFile);
                     }
                     // Console.WriteLine(output);
                 }
@@ -2365,7 +2739,7 @@ namespace ExtractProductItems
         }
 
         static string hardCodedItemFieldsHeader = ",store_view_code,attribute_set_code,product_type,weight,product_online,tax_class_name,visibility,qty,out_of_stock_qty,website_id,product_websites";
-        static string hardCodedItemFieldsValues = ",,Default,simple,1.0,1,Taxable Goods,\"Catalog, Search\",1,0,1,base";
+        static string hardCodedItemFieldsValues = ",,ARS_Default,simple,1.0,1,Taxable Goods,\"Catalog, Search\",1,0,1,base";
 
         public static void DownloadRemoteImageFile(string uri, string fileName, bool fUpdateCache)
         {
@@ -2439,7 +2813,7 @@ namespace ExtractProductItems
                 // Erase categories outfile file in write mode and write headers
                 using (StreamWriter outputFile = new StreamWriter(args[0] + "-categories.csv"))
                 {
-                    outputFile.WriteLine("category,description,meta_title,meta_keywords,meta_description,image_url");
+                    outputFile.WriteLine("category,description,meta_title,meta_keywords,meta_description,image_url,original_file_url");
                 }
             }
             catch (Exception ex)
@@ -2470,6 +2844,10 @@ namespace ExtractProductItems
                         outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes,additional_images,url_key");
                         outputFile.WriteLine(hardCodedItemFieldsHeader);
                     }
+                    using (StreamWriter outputFile = new StreamWriter(args[0] + "-" + currentSubFileCounter.ToString() + "-price-tiers.csv"))
+                    {
+                        outputFile.WriteLine("sku,tier_price_website,tier_price_customer_group,tier_price_qty,tier_price");
+                    }
                     subTotalItemsCount = 0;
                 }
                 productCount++;
@@ -2492,6 +2870,8 @@ namespace ExtractProductItems
                         Console.WriteLine("***ERROR***: Found CORRUPTED BREAD CRUMB file: " + strFilePath);
                         continue;
                     }
+                    // Remove special characters from category
+                    productCategory = LatinToAscii(productCategory);
                     string productDescription = ExtractProductDescription(fileContents, lastPointer, ref lastPointer);
                     if (productDescription == null)
                     {
@@ -2648,13 +3028,13 @@ namespace ExtractProductItems
                         ExtractMetaTags(fileContents, out metaTitle, out metaKeywords, out metaDescription, strFilePath);
                         using (StreamWriter outputFile = new StreamWriter(args[0] + "-categories.csv", true))
                         {
-                            outputFile.WriteLine(String.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\"",
+                            outputFile.WriteLine(String.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\"",
                                 productCategory.Replace("\"", "\"\""),
                                 categoryDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 metaTitle.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 metaKeywords.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 metaDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
-                                ""));
+                                "", fileName));
                         }
                         categoryCounter++;
                     }
