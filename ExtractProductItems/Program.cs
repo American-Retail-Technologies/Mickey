@@ -29,6 +29,38 @@ namespace ExtractProductItems
             return newStringBuilder.ToString();
         }
 
+        // http://stackoverflow.com/questions/1038431/how-to-clean-html-tags-using-c-sharp
+        // Remove tags other than the <a> and </a> tags and <br>
+        public static string RemoveTags(string html)
+        {
+            string returnStr = "";
+            bool insideTag = false;
+            int htmlLength = html.Length;
+            for (int i = 0; i < htmlLength; ++i)
+            {
+                char c = html[i];
+                if (c == '<')
+                {
+                    insideTag = true;
+                    if (html[i + 1] == 'a')
+                    {
+                        insideTag = false;
+                    }
+                    else if (i < htmlLength - 3 &&
+                        Char.ToUpper(html[i + 1]) == 'B' &&
+                        Char.ToUpper(html[i + 2]) == 'R')
+                    {
+                        insideTag = false;
+                    }
+                }
+
+                if (!insideTag) returnStr += c;
+
+                if (c == '>') insideTag = false;
+            }
+            return returnStr;
+        }
+
         static string FindDetailsPageLink(string searchContent, int startIndex, out int endIndex)
         {
             string href = "href";
@@ -206,6 +238,7 @@ namespace ExtractProductItems
                 if (endIndex > startIndex)
                 {
                     metaTitle = searchContent.Substring(startIndex, endIndex - startIndex).Trim();
+                    metaTitle = LatinToAscii(metaTitle);
                 }
             }
             strToFind = "<meta name=\"keywords\" content=\"";
@@ -218,6 +251,7 @@ namespace ExtractProductItems
                 if (endIndex > startIndex)
                 {
                     metaKeywords = searchContent.Substring(startIndex, endIndex - startIndex).Trim();
+                    metaKeywords = LatinToAscii(metaKeywords);
                 }
             }
             strToFind = "<meta name=\"description\" content=\"";
@@ -230,6 +264,7 @@ namespace ExtractProductItems
                 if (endIndex > startIndex)
                 {
                     metaDescription = searchContent.Substring(startIndex, endIndex - startIndex).Trim();
+                    metaDescription = LatinToAscii(metaDescription);
                 }
             }
 
@@ -341,6 +376,9 @@ namespace ExtractProductItems
             description = description.Replace("../../../../ais.eporia.com", "http://yoosh.co/ars_files/ais.eporia.com");
             // This was found in 3 categories:
             description = description.Replace("../../is7.eporia.com", "http://yoosh.co/ars_files/is7.eporia.com");
+            description = LatinToAscii(description);
+            description = description.Replace("&nbsp;", " ");
+            description = "<p>" + RemoveTags(description) + "</p>";
             return description;
         }
 
@@ -2625,6 +2663,7 @@ namespace ExtractProductItems
                     // 11/15/2016 Replace "54V5417-*" with "54V5417-z". * is not allowed in sku. 
                     // There ae only 3 skus - 54V5417-*14102B-26, 54V5417-*18132B-261, 54V5417-*26182B-261
                     sku = sku.Trim();
+                    sku = LatinToAscii(sku);
                     sku = sku.Replace("54V5417-*", "54V5417-z");
                     string item_name = productName.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " ") + " - " + sku;
                     string item_url_key = item_name.Replace(" - ","-").Replace("&", "").Replace(",", "").Replace("/", "").Replace("  ", " ").Trim().Replace(" ", "-").ToLower();
@@ -2793,7 +2832,7 @@ namespace ExtractProductItems
 
             if (args.Length > 0)
             {
-                if (args.Length > 2)
+                if (args.Length >= 2)
                 {
                     strFolder = args[1];
                 }
