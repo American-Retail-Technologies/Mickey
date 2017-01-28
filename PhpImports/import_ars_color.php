@@ -1,7 +1,9 @@
 <?php  
 
 //connect to the database 
-$connect = mysqli_connect("localhost","ars_dbroot","American1","ars_dev_magento1"); 
+//$connect = mysqli_connect("localhost","ars_dbroot","American1","ars_dev_magento1");
+$connect = mysqli_connect("ars-mysql1.c6cjzokfsjyi.us-west-2.rds.amazonaws.com","ars_dbroot","American1","sm_market_quickstart2");
+ 
 // http://stackoverflow.com/questions/4565195/mysql-how-to-insert-into-multiple-tables-with-foreign-keys
 // 
 
@@ -23,6 +25,7 @@ if ($_FILES['csv']['size'] > 0) {
             $new_option_id = mysqli_insert_id($connect);
             // Insert the value read for 2 stores, 0 and 2
             mysqli_query($connect, "INSERT INTO `eav_attribute_option_value` (store_id, option_id, value) VALUES (0, ".$new_option_id.", '".addslashes($data[0])."');");
+            mysqli_query($connect, "INSERT INTO `eav_attribute_option_value` (store_id, option_id, value) VALUES (1, ".$new_option_id.", '".addslashes($data[0])."');");
             mysqli_query($connect, "INSERT INTO `eav_attribute_option_value` (store_id, option_id, value) VALUES (2, ".$new_option_id.", '".addslashes($data[0])."');");
             $row_strings .= $attribute_id ." : ".$new_option_id ." : ".$data[0]."<BR>";
         } 
