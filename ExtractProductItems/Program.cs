@@ -3051,8 +3051,16 @@ namespace ExtractProductItems
                             subCategoryTable = subCategoryTable.Replace("<img src=\"../Templates/AmericanRetailSupplyV2", "<img src=\"http://www.americanretailsupply.com/Templates/AmericanRetailSupplyV2");
                             subCategoryTable = subCategoryTable.Replace("<img src=\"../../", "<img src=\"http://");
                             subCategoryTable = subCategoryTable.Replace("&amp;", "&");
-                            subCategoryTable = subCategoryTable.Replace(" href=\"../", " href=\"");
-                            subCategoryTable = subCategoryTable.Replace(" href=\"", " href=\"/");
+                            if (subCategoryTable.Contains(" href=\"../"))
+                            {
+                                subCategoryTable = subCategoryTable.Replace(" href=\"../", " href=\"");
+                                subCategoryTable = subCategoryTable.Replace(" href=\"", " href=\"/");
+                            }
+                            else
+                            {
+                                String[] strFileNameParts = fileName.Split('/');
+                                subCategoryTable = subCategoryTable.Replace(" href=\"", " href=\"/"+ strFileNameParts[1] + "/");
+                            }
                             subCategoryTable = subCategoryTable.Replace("\n", " ").Replace("\r", " ").Trim();
                             categoryDescription = productDescription + subCategoryTable;
                         }
