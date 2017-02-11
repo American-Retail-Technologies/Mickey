@@ -798,6 +798,10 @@ namespace ExtractProductItems
             {
                 headerType = ProductHeaderType.SKU_Description_Size_1;
             }
+            else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Description</td><td rowspan=\"2\">Size</td><td>4+</td>"))
+            {
+                headerType = ProductHeaderType.SKU_Description_Size_1;
+            }
             else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Size</td><td rowspan=\"2\">Description</td><td>1+</td>"))
             {
                 headerType = ProductHeaderType.SKU_Size_Description_1;
@@ -1014,6 +1018,10 @@ namespace ExtractProductItems
             {
                 headerType = ProductHeaderType.SKU_Color_Description_1;
             }
+            else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Color</td><td rowspan=\"2\">Description</td><td>2+</td><td"))
+            {
+                headerType = ProductHeaderType.SKU_Color_Description_1;
+            }
             else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Color</td><td rowspan=\"2\">Description</td><td>5+</td><td"))
             {
                 headerType = ProductHeaderType.SKU_Color_Description_1;
@@ -1126,6 +1134,11 @@ namespace ExtractProductItems
             {
                 headerType = ProductHeaderType.SKU_Type_DescriptionLxWxFront_1;
             }
+            // Size is more attribute than Type, that's why mapping to SKU_Description_Size_1.
+            else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Type</td><td rowspan=\"2\">Size</td><td>1+</td>"))
+            {
+                headerType = ProductHeaderType.SKU_Description_Size_1;
+            }
             else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Description (LxWxFront)</td><td>1+</td><td"))
             {
                 headerType = ProductHeaderType.SKU_DescriptionLxWxFront_1;
@@ -1143,6 +1156,10 @@ namespace ExtractProductItems
                 headerType = ProductHeaderType.SKU_Description_1;
             }
             else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Color</td><td rowspan=\"2\">Size</td><td>1+</td><td"))
+            {
+                headerType = ProductHeaderType.SKU_Color_Size_1;
+            }
+            else if (headerRow.Contains("rowspan=\"2\">SKU</td><td rowspan=\"2\">Color</td><td rowspan=\"2\">Size</td><td>4+</td><td"))
             {
                 headerType = ProductHeaderType.SKU_Color_Size_1;
             }
@@ -2546,6 +2563,10 @@ namespace ExtractProductItems
             {
                 return new int[] { 2, 8, 16 };
             }
+            else if (headerRow.Contains("<td>2+</td><td>16+</td><td rowspan="))
+            {
+                return new int[] { 2, 16 };
+            }
             else if (headerRow.Contains("<td>4+</td><td>6+</td><td>8+</td><td rowspan="))
             {
                 return new int[] { 4, 6, 8 };
@@ -2565,6 +2586,10 @@ namespace ExtractProductItems
             else if (headerRow.Contains("<td>4+</td><td rowspan="))
             {
                 return new int[] { 4 };
+            }
+            else if (headerRow.Contains("<td>4+</td><td>32+</td><td rowspan="))
+            {
+                return new int[] { 4, 32 };
             }
             else
             {
