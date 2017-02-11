@@ -2818,7 +2818,7 @@ namespace ExtractProductItems
 
         static void Main(string[] args)
         {
-            string strFolder = "D:\\ARS\\ARS_Web_3\\";
+            string strFolder = "D:\\ARS\\ARS_Web_2\\";
             int productCount = 0;
             int totalItemsCount = 0;
             int productImageCount = 0;
