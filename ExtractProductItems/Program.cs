@@ -360,12 +360,13 @@ namespace ExtractProductItems
         {
             string description = null;
             int descriptionIndex = searchContent.IndexOf("<div class=\"Content \" >", startIndex);
-            if (descriptionIndex >= 0)
+            if (descriptionIndex <= 0)
             {
-                descriptionIndex += "<div class=\"Content \" >".Length;
-                endIndex = searchContent.IndexOf("</div>", descriptionIndex);
-                description = searchContent.Substring(descriptionIndex, endIndex - descriptionIndex);
+                return null;
             }
+            descriptionIndex += "<div class=\"Content \" >".Length;
+            endIndex = searchContent.IndexOf("</div>", descriptionIndex);
+            description = searchContent.Substring(descriptionIndex, endIndex - descriptionIndex);
             // Fix the links in the descirption
             description = description.Replace("../../../../rs6.eporia.com", "http://yoosh.co/ars_files/rs6.eporia.com");
             description = description.Replace("../../../../resources.myeporia.com", "http://yoosh.co/ars_files/resources.myeporia.com");
@@ -392,7 +393,13 @@ namespace ExtractProductItems
             if (tempIndex >= 0)
             {
                 strToFind = "<img src=";
+                endIndex = searchContent.IndexOf("</div>", tempIndex);
                 tempIndex = searchContent.IndexOf(strToFind, tempIndex);
+                // 02/11/2017: In som rare cases product image can be blank. return null in those cases
+                if (endIndex < tempIndex)
+                {
+                    return null;
+                }
                 // now find the index of /img
                 startIndex = searchContent.IndexOf("/img", tempIndex);
                 // find ?
@@ -1472,7 +1479,7 @@ namespace ExtractProductItems
         }
 
         static bool GetItemData(string searchContent, ProductHeaderType headerType, out string itemSku, 
-            ref string shortDescription, out string itemImageUrl, out string itemPrice, ref string attributes, string strBaseFolder)
+            ref string shortDescription, out string itemImageUrl, out string itemPrice, ref string attributes,  string strBaseFolder)
         {
             bool fRet = false;
             itemSku = null;
@@ -1512,12 +1519,6 @@ namespace ExtractProductItems
                     itemSku = searchContent.Substring(tempIndex, endIndex - tempIndex).Trim();
                     fRet = true;
                 }
-
-                if (itemImageDownloadUrl != null)
-                {
-                    DownloadRemoteImageFile(itemImageDownloadUrl, strBaseFolder + "product_images\\items\\" + itemSku + "_base.jpg", fUpdateItemImageCache);
-                    itemImageUrl = "/items/" + itemSku + "_base.jpg";
-                }
             }
             else
             {
@@ -1530,6 +1531,22 @@ namespace ExtractProductItems
                     endIndex = searchContent.IndexOf("</td>", tempIndex);
                     itemSku = searchContent.Substring(tempIndex, endIndex - tempIndex);
                     fRet = true;
+                }
+            }
+            if (itemSku != null)
+            {
+                // 11/05/2016: Add url_key
+                // outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes,url_key");
+                // Append SKU to Product Name, to make it unique
+                // 11/15/2016 Replace "54V5417-*" with "54V5417-z". * is not allowed in sku. 
+                // There ae only 3 skus - 54V5417-*14102B-26, 54V5417-*18132B-261, 54V5417-*26182B-261
+                itemSku = itemSku.Trim();
+                itemSku = LatinToAscii(itemSku);
+                itemSku = itemSku.Replace("54V5417-*", "54V5417-z");
+                if (itemImageDownloadUrl != null)
+                {
+                    DownloadRemoteImageFile(itemImageDownloadUrl, strBaseFolder + "product_images\\items\\" + itemSku + "_base.jpg", fUpdateItemImageCache);
+                    itemImageUrl = "/items/" + itemSku + "_base.jpg";
                 }
             }
             // Check if itemSku already exists, set it to null and return false
@@ -2535,6 +2552,10 @@ namespace ExtractProductItems
             {
                 return new int[] { 1, 100, 500 };
             }
+            else if (headerRow.Contains("<td>1+</td><td>10+</td><td>1000+</td><td rowspan="))
+            {
+                return new int[] { 1, 10, 1000 };
+            }
             else if (headerRow.Contains("<td>1+</td><td>100+</td><td>1000+</td><td rowspan="))
             {
                 return new int[] { 1, 100, 1000 };
@@ -2682,14 +2703,6 @@ namespace ExtractProductItems
                     {
                         itemImageCount++;
                     }
-                    // 11/05/2016: Add url_key
-                    // outputFile.Write("sku,categories,name,price,short_description,description,base_image,small_image,thumbnail_image,additional_attributes,url_key");
-                    // Append SKU to Product Name, to make it unique
-                    // 11/15/2016 Replace "54V5417-*" with "54V5417-z". * is not allowed in sku. 
-                    // There ae only 3 skus - 54V5417-*14102B-26, 54V5417-*18132B-261, 54V5417-*26182B-261
-                    sku = sku.Trim();
-                    sku = LatinToAscii(sku);
-                    sku = sku.Replace("54V5417-*", "54V5417-z");
                     string item_name = productName.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " ") + " - " + sku;
                     string item_url_key = item_name.Replace(" - ","-").Replace("&", "").Replace(",", "").Replace("/", "").Replace("  ", " ").Trim().Replace(" ", "-").ToLower();
                     output = String.Format("{0},\"{1}\",\"{2}\",{3},\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\"",
