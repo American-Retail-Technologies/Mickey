@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -12,6 +13,15 @@ namespace RmsInventoryImport
 {
     public partial class InventoryForm : Form
     {
+        // Get a handle to an application window.
+        [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
+        public static extern IntPtr FindWindow(string lpClassName,
+            string lpWindowName);
+
+        // Activate an application window.
+        [DllImport("USER32.DLL")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
         CsvParser csvParser = new CsvParser();
         CsvParser csvHeaderParser = new CsvParser();
         IEnumerable<string[]> csvHeaders;
@@ -44,7 +54,11 @@ namespace RmsInventoryImport
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int size = -1;
+            String inventoryFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\ART_Inventory.csv";
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            int itemLookupCodeIndex = 2;
+            int quantityIndex = 7;
+
             if (result == DialogResult.OK) // Test result.
             {
                 String file = openFileDialog1.FileName;
@@ -57,6 +71,10 @@ namespace RmsInventoryImport
                     // Create the header row
                     string firstline = text.Substring(0, text.IndexOf("\n"));
                     CreateDataGridViewHeader(dgCsvFile, firstline, chkFirstRowHeader.Checked);
+                    using (StreamWriter outputFile = new StreamWriter(inventoryFilePath)) // overwrite mode
+                    {
+                        outputFile.Write("");
+                    }
 
                     csvRecords = csvParser.GetCsvRecords(text, chkFirstRowHeader.Checked);
                     toolStripStatusLabel1.Text = "Read " + csvRecords.Count().ToString() + " lines from file " + file + ".....";
@@ -67,10 +85,14 @@ namespace RmsInventoryImport
                         dgvr = new DataGridViewRow();
                         dgvr.CreateCells(dgCsvFile, strArr);
                         dgCsvFile.Rows.Add(dgvr);
+                        using (StreamWriter outputFile = new StreamWriter(inventoryFilePath, true)) // append mode
+                        {
+                            outputFile.WriteLine(strArr[itemLookupCodeIndex] +","+strArr[quantityIndex]+","+
+                                String.Format("{0:MM/dd/yyyy HH:mm:ss}", DateTime.Now));
+                        }
                     }
                     dgCsvFile.Show();
-                    // Trasform the file...
-
+ 
                     // Send Keystrokes to SOM
                     // https://msdn.microsoft.com/en-us/library/ms171548.aspx
                 }
