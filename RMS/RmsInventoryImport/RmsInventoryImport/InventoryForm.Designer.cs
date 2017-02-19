@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,21 +39,12 @@
             this.dgCsvFile = new System.Windows.Forms.DataGridView();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.chkFirstRowHeader = new System.Windows.Forms.CheckBox();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnRollback = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgCsvFile)).BeginInit();
             this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Location = new System.Drawing.Point(0, 24);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(575, 24);
-            this.menuStrip1.TabIndex = 0;
-            this.menuStrip1.Text = "menuStrip1";
             // 
             // statusStrip1
             // 
@@ -64,6 +55,12 @@
             this.statusStrip1.Size = new System.Drawing.Size(575, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "Welcome to ATR item invetory importer....";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(224, 17);
+            this.toolStripStatusLabel1.Text = "Welcome to ART inventory import tool....";
             // 
             // menuStrip2
             // 
@@ -88,14 +85,14 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -128,18 +125,14 @@
             // chkFirstRowHeader
             // 
             this.chkFirstRowHeader.AutoSize = true;
+            this.chkFirstRowHeader.Checked = true;
+            this.chkFirstRowHeader.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkFirstRowHeader.Location = new System.Drawing.Point(13, 24);
             this.chkFirstRowHeader.Name = "chkFirstRowHeader";
             this.chkFirstRowHeader.Size = new System.Drawing.Size(117, 17);
             this.chkFirstRowHeader.TabIndex = 4;
             this.chkFirstRowHeader.Text = "First row is header?";
             this.chkFirstRowHeader.UseVisualStyleBackColor = true;
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(223, 17);
-            this.toolStripStatusLabel1.Text = "Welcome to ART inventory import tool....";
             // 
             // btnImport
             // 
@@ -171,9 +164,7 @@
             this.Controls.Add(this.chkFirstRowHeader);
             this.Controls.Add(this.dgCsvFile);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.menuStrip2);
-            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.Name = "InventoryForm";
             this.Text = "American Retail Tech RMS Importer";
@@ -188,8 +179,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuStrip2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;

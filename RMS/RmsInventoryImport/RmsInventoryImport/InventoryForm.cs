@@ -52,6 +52,8 @@ namespace RmsInventoryImport
                 {
                     String text = File.ReadAllText(file);
                     size = text.Length;
+
+                    dgCsvFile.Columns.Clear();
                     // Create the header row
                     string firstline = text.Substring(0, text.IndexOf("\n"));
                     CreateDataGridViewHeader(dgCsvFile, firstline, chkFirstRowHeader.Checked);
@@ -67,9 +69,15 @@ namespace RmsInventoryImport
                         dgCsvFile.Rows.Add(dgvr);
                     }
                     dgCsvFile.Show();
+                    // Trasform the file...
+
+                    // Send Keystrokes to SOM
+                    // https://msdn.microsoft.com/en-us/library/ms171548.aspx
                 }
-                catch (IOException)
+                catch (IOException iox)
                 {
+                    toolStripStatusLabel1.Text = "Exception " + iox.ToString() + " occurred while reading file " + file + ".....";
+                    statusStrip1.Update();
                 }
             }
         }
