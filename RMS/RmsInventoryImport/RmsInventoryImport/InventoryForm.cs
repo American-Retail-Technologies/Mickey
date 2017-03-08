@@ -26,6 +26,7 @@ namespace RmsInventoryImport
         CsvParser csvHeaderParser = new CsvParser();
         IEnumerable<string[]> csvHeaders;
         IEnumerable<string[]> csvRecords;
+        String arrayItemLookupCodes = "";
 
         public InventoryForm()
         {
@@ -87,9 +88,15 @@ namespace RmsInventoryImport
                         dgCsvFile.Rows.Add(dgvr);
                         using (StreamWriter outputFile = new StreamWriter(inventoryFilePath, true)) // append mode
                         {
-                            outputFile.WriteLine(strArr[itemLookupCodeIndex] +","+strArr[quantityIndex]+","+
-                                String.Format("{0:MM/dd/yyyy HH:mm:ss}", DateTime.Now));
+                            outputFile.WriteLine(strArr[itemLookupCodeIndex] +","+strArr[quantityIndex]
+                                // + "," + String.Format("{0:MM/dd/yyyy HH:mm:ss}", DateTime.Now)
+                                );
                         }
+                        if (arrayItemLookupCodes.Length > 0)
+                        {
+                            arrayItemLookupCodes += ",";
+                        }
+                        arrayItemLookupCodes += "'" + strArr[itemLookupCodeIndex] + "'";
                     }
                     dgCsvFile.Show();
  
@@ -109,14 +116,24 @@ namespace RmsInventoryImport
             Application.Exit();
         }
 
-        private void btnImport_Click(object sender, EventArgs e)
+        private void chkRollback_CheckedChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void btnRollback_Click(object sender, EventArgs e)
+        private void storeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("TODO: Launch or switch to SOM.", "ART Tools");
+        }
 
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("TODO: Display the settings page.", "ART Tools");
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Welcome to ART Invetory Application Version 0.1\nTested with RMS 2.0", "ART Help");
         }
     }
 }
