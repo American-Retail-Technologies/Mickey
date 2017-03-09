@@ -135,5 +135,14 @@ namespace RmsInventoryImport
         {
             MessageBox.Show("Welcome to ART Invetory Application Version 0.1\nTested with RMS 2.0", "ART Help");
         }
+
+        private void InventoryForm_Load(object sender, EventArgs e)
+        {
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
