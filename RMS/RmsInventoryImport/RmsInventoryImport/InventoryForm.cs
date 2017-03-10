@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace RmsInventoryImport
 {
     public partial class InventoryForm : Form
     {
+        String storeDataConnectionString = ConfigurationManager.ConnectionStrings["StoreDataConnectionString"].ConnectionString;
+
         // Get a handle to an application window.
         [DllImport("USER32.DLL", CharSet = CharSet.Unicode)]
         public static extern IntPtr FindWindow(string lpClassName,
@@ -55,10 +55,12 @@ namespace RmsInventoryImport
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int size = -1;
-            String inventoryFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\ART_Inventory.csv";
+            //String inventoryFilePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\ART_Inventory.csv";
+            String inventoryFilePath = "C:\\ARSHelp\\ART_Inventory.csv";
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
-            int itemLookupCodeIndex = 2;
-            int quantityIndex = 7;
+            int itemLookupCodeIndex = 2; // UpcCode
+            int qtyReceivedIndex = 7; // Ship Qty
+            int priceIndex = 10; // Cost
 
             if (result == DialogResult.OK) // Test result.
             {
@@ -81,22 +83,33 @@ namespace RmsInventoryImport
                     toolStripStatusLabel1.Text = "Read " + csvRecords.Count().ToString() + " lines from file " + file + ".....";
                     statusStrip1.Update();
                     DataGridViewRow dgvr = null;
+                    int i = -1;
                     foreach (string[] strArr in csvRecords)
                     {
+                        i++;
                         dgvr = new DataGridViewRow();
                         dgvr.CreateCells(dgCsvFile, strArr);
                         dgCsvFile.Rows.Add(dgvr);
-                        using (StreamWriter outputFile = new StreamWriter(inventoryFilePath, true)) // append mode
+                        decimal qtyReceived = 0.0M;
+                        if (!Decimal.TryParse(strArr[qtyReceivedIndex], out qtyReceived))
                         {
-                            outputFile.WriteLine(strArr[itemLookupCodeIndex] +","+strArr[quantityIndex]
-                                // + "," + String.Format("{0:MM/dd/yyyy HH:mm:ss}", DateTime.Now)
-                                );
+                            MessageBox.Show(String.Format("Failed to parse Qty Recieved for {0}, {1}, {3}", i, strArr[itemLookupCodeIndex], strArr[qtyReceivedIndex]));
                         }
-                        if (arrayItemLookupCodes.Length > 0)
+                        else if (qtyReceived > 0.0M)
                         {
-                            arrayItemLookupCodes += ",";
+                            using (StreamWriter outputFile = new StreamWriter(inventoryFilePath, true)) // append mode
+                            {
+                                outputFile.WriteLine(strArr[itemLookupCodeIndex] + "," + strArr[qtyReceivedIndex]
+                                    + "," + strArr[priceIndex].Replace("$", "").Replace(" ", "")
+                                    // + "," + String.Format("{0:MM/dd/yyyy HH:mm:ss}", DateTime.Now)
+                                    );
+                            }
+                            if (arrayItemLookupCodes.Length > 0)
+                            {
+                                arrayItemLookupCodes += ",";
+                            }
+                            arrayItemLookupCodes += "'" + strArr[itemLookupCodeIndex] + "'";
                         }
-                        arrayItemLookupCodes += "'" + strArr[itemLookupCodeIndex] + "'";
                     }
                     dgCsvFile.Show();
  
@@ -138,9 +151,15 @@ namespace RmsInventoryImport
 
         private void InventoryForm_Load(object sender, EventArgs e)
         {
+
         }
 
         private void btnView_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnCommit_Click(object sender, EventArgs e)
         {
 
         }

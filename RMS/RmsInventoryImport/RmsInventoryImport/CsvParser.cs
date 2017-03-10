@@ -108,7 +108,10 @@ namespace RmsInventoryImport
                         yield return new Cell { Content = new string(itemChars.ToArray()), OpenQuote = false };
                         itemChars = new List<char>();
                     }
-                    else itemChars.Add(ch);
+                    else
+                    {
+                        itemChars.Add(ch);
+                    }
                 }
                 else if (ch == '"')
                 {
@@ -118,14 +121,32 @@ namespace RmsInventoryImport
                        another double quote.  For example:
                        "aaa","b""bb","ccc"
                      */
-                    if ((index != line.Length - 1) && line[index + 1] == '"') // not the last and the next is also a ", it is escaped
+                    // BUG: Does not take into account a case where the " is in the middle.
+                    if (index == 0 || line[index - 1] == ',')
+                    {
+                        openQuote = true;
+                    }
+                    else if (openQuote)
+                    {
+                        if ((index != line.Length - 1) && line[index + 1] == '"') // not the last and the next is also a ", it is escaped
+                        {
+                            itemChars.Add(ch);
+                            index++;
+                        }
+                        else
+                        {
+                            openQuote = false;
+                        }
+                    }
+                    else
                     {
                         itemChars.Add(ch);
-                        index++;
                     }
-                    else openQuote = !openQuote;
                 }
-                else itemChars.Add(ch);
+                else
+                {
+                    itemChars.Add(ch);
+                }
             }
 
             yield return new Cell { Content = new string(itemChars.ToArray()), OpenQuote = openQuote };

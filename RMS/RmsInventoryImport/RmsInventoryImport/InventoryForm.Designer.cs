@@ -175,6 +175,7 @@
             this.btnCommit.TabIndex = 8;
             this.btnCommit.Text = "Commit";
             this.btnCommit.UseVisualStyleBackColor = true;
+            this.btnCommit.Click += new System.EventHandler(this.btnCommit_Click);
             // 
             // chkRollback
             // 
