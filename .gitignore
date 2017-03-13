@@ -3,3 +3,5 @@ GrabImageURLs/obj/
 ExtractProductItems/bin/
 ExtractProductItems/obj/
 ExtractProductItems/files.txt.csv
+RMS/RmsInventoryImport/RmsInventoryImport/obj/
+RMS/RmsInventoryImport/RmsInventoryImport/bin/
