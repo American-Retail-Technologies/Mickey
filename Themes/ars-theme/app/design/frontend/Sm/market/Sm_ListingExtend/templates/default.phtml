@@ -1,0 +1,155 @@
+<?php
+/*------------------------------------------------------------------------
+ # SM Listing Extend - Version 2.0.1
+ # Copyright (c) 2014 YouTech Company. All Rights Reserved.
+ # @license - Copyrighted Commercial Software
+ # Author: YouTech Company
+ # Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$child_items = $this->_getSelectSource();
+$helper = $this->_helper();
+if (!empty($child_items)) {
+	$class_cslider = '';
+	$module_id = $this->_moduleID();
+	$tag_id = 'sm_coundownproduct_slider_' . rand() . time();	
+	//effect
+	$nav = $this->_getConfig('nav') == 1?'true':'false';
+	$loop = $this->_getConfig('loop') == 1?'true':'false';
+	$slideBy = (int)$this->_getConfig('slideBy') > 0 ? $this->_getConfig('slideBy') : 1;
+	$autoplay = $this->_getConfig('autoplay') == 1?'true':'false';
+	$autoplayHoverPause = $this->_getConfig('autoplayHoverPause') == 1?'true':'false';
+	$autoplayTimeout = $this->_getConfig('autoplayTimeout') >= 0 ? $this->_getConfig('autoplayTimeout') : 5000;	
+	$autoplaySpeed = $this->_getConfig('autoplaySpeed') >= 0 ? $this->_getConfig('autoplaySpeed') : 5000;
+	$navSpeed = $this->_getConfig('navSpeed') >= 0 ? $this->_getConfig('navSpeed') : 5000;
+	$startPosition = $this->_getConfig('startPosition');
+	$mouseDrag = $this->_getConfig('mouseDrag') == 1?'true':'false';
+	$touchDrag = $this->_getConfig('touchDrag') == 1?'true':'false';
+	
+	$duration = $this->_getConfig('duration') >= 0 ? $this->_getConfig('duration') : 300;
+	$delay = $this->_getConfig('delay') >= 0 ? $this->_getConfig('delay') : 600;
+	$margin = (int)$this->_getConfig('margin') >= 0 ? $this->_getConfig('margin') : 5;
+	
+	$nb_column1 = $this->_getConfig('nb_column1', 4);
+	$nb_column2 = $this->_getConfig('nb_column2', 3);
+	$nb_column3 = $this->_getConfig('nb_column3', 2);
+	$nb_column4 = $this->_getConfig('nb_column4', 1);
+	$nb_column5 = $this->_getConfig('nb_column5', 1);
+	$class_suffix = $this->_getConfig('class_suffix', '');
+	
+	$price_from = $this->_getConfig('price_from', '');
+	?>
+	<!--[if gt IE 9]><!-->
+	
+	<div id="<?php echo $tag_id; ?>" class="sm-listing-extend first-load <?php echo $class_suffix; ?>"><!--<![endif]-->
+		<div class="smlistingextend-heading clearfix">
+			<?php if ($this->_getConfig('display_title')) : ?>
+				<div class="cslider-listing-title">
+					<?php echo $this->_getConfig('title', 'SM Listing Extend'); ?>
+				</div>
+			<?php endif; ?>
+		</div>		
+		
+		<?php if ($this->_getConfig('pretext')) { ?>
+			<div class="cdps-pretext">
+				<?php echo $this->_getConfig('pretext'); ?>
+			</div>
+		<?php } ?>
+				
+		<div class="cslider-wrap ">
+			<div class="cslider-items-container products-grid"><!--Begin Items-->
+				<?php if (!empty($child_items)) {
+					include('default_items.phtml');
+				} else {
+					?>
+					<div class="cslider-loading">
+						<div class="cssload-square">
+							<div class="cssload-square-part cssload-square-green"></div>
+							<div class="cssload-square-part cssload-square-pink"></div>
+							<div class="cssload-square-blend"></div>
+						</div>
+					</div>
+				<?php } ?>
+			</div>
+			<!--End Items-->
+		</div>
+	</div>
+	
+   <?php if ($this->_getConfig('posttext')) { ?>
+		<div class="cdps-posttext">
+			<?php echo $this->_getConfig('posttext'); ?>
+		</div>
+	<?php } ?>
+	
+	<script type="text/javascript">	
+		jQuery(document).ready(function ($) {
+			;(function (element) {
+				var $element = $(element),
+					$listingextend = $('.cslider-items-container',$element);
+
+					$listingextend.on("initialized.owl.carousel", function () {
+						var $item_active = $(".cslider-item.active", $element);
+						var $this_dots = $(".owl-dot", $element);
+						var $this_control		= $(".owl-controls", $element);
+						_changeDots($this_dots);
+					});
+					
+					function _changeDots($el){
+						$el.each(function (i) {
+							$(this).html(i+1);
+						});						
+					}
+					
+					$listingextend.owlCarousel({
+					nav: <?php echo $nav; ?>,
+					loop: <?php echo $loop; ?>,
+					margin: <?php echo $margin; ?>,
+					slideBy: <?php echo $slideBy; ?>,
+					autoplay: <?php echo $autoplay; ?>,
+					autoplayHoverPause: <?php echo $autoplayHoverPause; ?>,
+					autoplayTimeout: <?php echo $autoplayTimeout; ?>,
+					autoplaySpeed: <?php echo $autoplaySpeed; ?>,
+					navSpeed: <?php echo $navSpeed; ?>,
+					startPosition: <?php echo $startPosition; ?>,
+					mouseDrag:<?php echo $mouseDrag; ?>,
+					touchDrag:<?php echo $touchDrag; ?>,
+/* 					dotClass: "cslider-dot",
+					dotsClass: "cslider-dots",
+					themeClass: 'cslider-theme',
+					baseClass: 'cslider-carousel',
+					itemClass: 'cslider-item',	 */				
+					dots: true,
+					autoWidth: false,
+					/* navClass: ['owl-prev', 'owl-next'], */
+					navText: ['&#139;', '&#155;'],
+					responsive: {
+						0: {
+							items:<?php echo $nb_column5;?>
+						},
+						480: {
+							items:<?php echo $nb_column4;?>
+						},
+						768: {
+							items:<?php echo $nb_column3;?>
+						},
+						991: {
+							items:<?php echo $nb_column2;?>
+						},						
+						1200: {
+							items:<?php echo $nb_column1;?>
+						}
+					}
+					});
+		
+
+				})("#<?php echo $tag_id; ?>");
+			});			
+	
+	</script>
+<?php
+} else {
+	echo 'Has no item to show!';
+} ?>
+
+
+

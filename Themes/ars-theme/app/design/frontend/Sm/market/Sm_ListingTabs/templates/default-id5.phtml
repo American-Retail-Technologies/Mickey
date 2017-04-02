@@ -1,0 +1,137 @@
+<?php
+/*------------------------------------------------------------------------
+ # SM Listing Tabs - Version 2.2.0
+ # Copyright (c) 2014 YouTech Company. All Rights Reserved.
+ # @license - Copyrighted Commercial Software
+ # Author: YouTech Company
+ # Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+$list = $this->_getSelectSource();
+$helper = $this->_helper();
+if (!empty($list)) {
+	$class_ltabs = '';
+	$module_id = $this->_moduleID();
+	$tag_id = 'sm_listing_tabs_' . rand() . time();
+	$show_loadmore_slider = $this->_getConfig('show_loadmore_slider');
+	if ($show_loadmore_slider == 'loadmore')
+		$class_ltabs = 'ltabs00-' . $this->_getConfig('nb_column1', 4) . ' ltabs01-' . $this->_getConfig('nb_column1', 3) . ' ltabs02-' .
+		$this->_getConfig('nb_column2', 3) . ' ltabs03-' . $this->_getConfig('nb_column3', 2) . ' ltabs04-' . $this->_getConfig('nb_column4', 1);	
+	$class_show = ($show_loadmore_slider == 'loadmore') ? ' show-loadmore' : ' show-slider';
+	//effect
+	$nav = $this->_getConfig('nav') == 1?'true':'false';
+	$loop = $this->_getConfig('loop') == 1?'true':'false';
+	$margin = (int)$this->_getConfig('margin') >= 0 ? $this->_getConfig('margin') : 5;
+	$slideBy = (int)$this->_getConfig('slideBy') > 0 ? $this->_getConfig('slideBy') : 1;
+	$autoplay = $this->_getConfig('autoplay') == 1?'true':'false';
+	$autoplayHoverPause = $this->_getConfig('autoplayHoverPause') == 1?'true':'false';
+	$autoplaySpeed = $this->_getConfig('autoplaySpeed') >= 0 ? $this->_getConfig('autoplaySpeed') : 5000;
+	$navSpeed = $this->_getConfig('navSpeed') >= 0 ? $this->_getConfig('navSpeed') : 5000;
+	$startPosition = $this->_getConfig('startPosition');
+	$mouseDrag = $this->_getConfig('mouseDrag') == 1?'true':'false';
+	$touchDrag = $this->_getConfig('touchDrag') == 1?'true':'false';
+
+	$nb_column1 = $this->_getConfig('nb_column1', 4);
+	$nb_column2 = $this->_getConfig('nb_column2', 3);
+	$nb_column3 = $this->_getConfig('nb_column3', 2);
+	$nb_column4 = $this->_getConfig('nb_column4', 1);
+	$nb_column5 = $this->_getConfig('nb_column5', 1);
+	$class_suffix = $this->_getConfig('class_suffix', '');
+	?>
+	<!--[if lt IE 9]>
+	<div id="<?php echo $tag_id; ?>" class="sm-listing-tabs msie lt-ie9 first-load"><![endif]-->
+	<!--[if IE 9]>
+	<div id="<?php echo $tag_id; ?>" class="sm-listing-tabs msie first-load"><![endif]-->
+	<!--[if gt IE 9]><!-->
+	<div id="<?php echo $tag_id; ?>" class="sm-listing-tabs first-load <?php echo $class_suffix; ?>"><!--<![endif]-->
+		
+		
+		<?php
+
+		$pretext = $this->_getConfig('pretext');
+		if (!empty($pretext)) {
+			?>
+			<div class="pre-text"><?php echo $this->_getConfig('pretext'); ?></div>
+		<?php } ?>
+		
+		<?php if ($this->_getConfig('display_title')) { ?>
+			<div class="title-home">
+				<h2>
+					<span><?php echo $this->_getConfig('title', 'Tab Listing'); ?></span>
+				</h2>
+			</div>
+		<?php } ?>
+		
+		<div class="ltabs-wrap ">
+			<div class="ltabs-tabs-container" data-delay="<?php echo $this->_getConfig('delay', 300); ?>"
+			     data-duration="<?php echo $this->_getConfig('duration', 600); ?>"
+			     data-effect="<?php echo $this->_getConfig('effect'); ?>"
+				data-ajaxurl="<?php echo $block->getBaseUrl().'listingtabs/index/index'; ?>"			  
+			     data-modid="<?php echo $tag_id; ?>">
+				<!--Begin Tabs-->
+				<?php include('default_tabs.phtml'); ?>
+			</div>
+			<!-- End Tabs-->
+			<div class="ltabs-items-container <?php echo $class_show; ?>"><!--Begin Items-->
+				<?php foreach ($list as $items) {
+					$child_items = isset($items['child']) ? $items['child'] : '';
+					$cls_device = $class_ltabs;
+					$cls_animate = $this->_getConfig('effect');
+					$cls = (isset($items['sel']) && $items['sel'] == "sel") ? ' ltabs-items-selected ltabs-items-loaded' : '';
+					$cls .= ($items['entity_id'] == "*") ? ' items-category-all' : ' items-category-' . $items['entity_id'];
+					?>
+					<div class="ltabs-items <?php echo $cls; ?>">
+						<div class="products-grid ltabs-items-inner <?php echo $cls_device . ' ';
+						echo $cls_animate; ?>">
+							<?php if (!empty($child_items)) {
+								include('default_items.phtml');
+							} else {
+								?>
+								<div class="ltabs-loading">
+									<div class="cssload-square">
+										<div class="cssload-square-part cssload-square-green"></div>
+										<div class="cssload-square-part cssload-square-pink"></div>
+										<div class="cssload-square-blend"></div>
+									</div>
+								</div>
+							<?php } ?>
+						</div>
+
+						<?php if($show_loadmore_slider == 'loadmore') { ?>
+							<?php $classloaded = ($this->_getConfig('product_limitation', 2) >= $items['count'] || $this->_getConfig('product_limitation', 2) == 0) ? 'loaded' : '';?>
+							<div class="ltabs-loadmore"
+									data-active-content=".items-category-<?php echo ($items['entity_id'] == "*") ? 'all' : $items['entity_id']; ?>"
+									data-categoryid="<?php echo $items['entity_id']; ?>"
+									data-rl_start="<?php echo $this->_getConfig('product_limitation', 2) ?>"
+									data-rl_total="<?php echo $items['count'] ?>"
+									data-ajaxurl="<?php echo $block->getBaseUrl().'listingtabs/index/index'; ?>"							   
+									data-rl_allready="<?php echo __('All ready'); ?>"							    
+									data-modid="<?php echo $module_id; ?>"
+									data-rl_load="<?php echo $this->_getConfig('product_limitation', 2) ?>">
+									<div class="ltabs-loadmore-btn <?php echo $classloaded ?>"
+								     data-label=" <?php echo ($classloaded) ? __('All ready') : __('Load more'); ?>">
+									<span class="ltabs-image-loading"></span>
+									<img class="add-loadmore" src="<?php echo $block->getViewFileUrl('Sm_ListingTabs::images/add.png'); ?>" alt="" />
+								</div>
+							</div>
+						<?php } ?>
+					</div>
+				<?php } ?>
+			</div>
+			<!--End Items-->
+		</div>
+		<?php
+		$posttext = $this->_getConfig('posttext');
+		if (!empty($posttext)) {
+			?>
+			<div class="post-text"><?php echo $this->_getConfig('posttext'); ?></div>
+		<?php } ?>		
+	</div>
+
+	<?php include('default_js.phtml'); ?>
+<?php
+} else {
+	echo 'Has no item to show!';
+} ?>
+
+
+

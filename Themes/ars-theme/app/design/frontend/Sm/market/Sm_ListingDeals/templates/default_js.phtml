@@ -1,0 +1,311 @@
+<?php
+/**------------------------------------------------------------------------
+* SM Listing Deals - Version 1.1.0
+* Copyright (c) 2015 YouTech Company. All Rights Reserved.
+* @license - Copyrighted Commercial Software
+* Author: YouTech Company
+* Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+$_cfg = json_encode($this->_getConfig());
+$_cfg = strtr(rtrim(base64_encode($_cfg), '='), '+/', '-_');
+?>
+<script type="text/javascript">
+	//<![CDATA[
+	jQuery(document).ready(function ($) {
+		;(function (element) {
+			var $element = $(element),
+				$tab = $('.listingdeals-tab', $element),
+				$tabs = $('.listingdeals-tabs', $element),
+				ajax_url = $tabs.parents('.listingdeals-tabs-container').attr('data-ajaxurl'),
+				effect = $tabs.parents('.listingdeals-tabs-container').attr('data-effect'),
+				delay = $tabs.parents('.listingdeals-tabs-container').attr('data-delay'),
+				duration = $tabs.parents('.listingdeals-tabs-container').attr('data-duration'),
+				rl_moduleid = $tabs.parents('.listingdeals-tabs-container').attr('data-modid'),
+				$items_content = $('.listingdeals-items', $element),
+				$items_first_active = $('.listingdeals-items-selected', $element),
+				$load_more = $('.listingdeals-loadmore', $element),
+				$btn_loadmore = $('.listingdeals-loadmore-btn', $load_more),
+				$tab_label_select = $('.listingdeals-tab-selected', $element);
+
+				setTimeout(function () {
+					callbackCountDown();
+				}, 1000);
+
+				enableSelectBoxes();
+				function enableSelectBoxes() {
+					$tab_wrap = $('.listingdeals-tabs-wrap', $element),
+						$tab_label_select.html($('.listingdeals-tab', $element).filter('.tab-sel').children('.listingdeals-tab-label').html());
+					if ($(window).innerWidth() <= 479) {
+						$tab_wrap.addClass('listingdeals-selectbox');
+					} else {
+						$tab_wrap.removeClass('listingdeals-selectbox');
+					}
+				}
+
+				$('span.listingdeals-tab-selected, span.listingdeals-tab-arrow', $element).click(function () {
+					if ($('.listingdeals-tabs', $element).hasClass('listingdeals-open')) {
+						$('.listingdeals-tabs', $element).removeClass('listingdeals-open');
+					} else {
+						$('.listingdeals-tabs', $element).addClass('listingdeals-open');
+					}
+				});
+
+				$(window).resize(function () {
+					if ($(window).innerWidth() <= 479) {
+						$('.listingdeals-tabs-wrap', $element).addClass('listingdeals-selectbox');
+					} else {
+						$('.listingdeals-tabs-wrap', $element).removeClass('listingdeals-selectbox');
+					}
+				});
+
+				function showAnimateItems(el) {
+					var $_items = $('.new-listingdeals-item', el), nub = 0;
+					$('.listingdeals-loadmore-btn', el).fadeOut('fast');
+					$_items.each(function (i) {
+						nub++;
+						switch (effect) {
+							case 'none' :
+								$(this).css({'opacity': '1', 'filter': 'alpha(opacity = 100)'});
+								break;
+							default:
+								animatesItems($(this), nub * delay, i, el);
+						}
+						if (i == $_items.length - 1) {
+							$('.listingdeals-loadmore-btn', el).fadeIn(delay);
+						}
+						$(this).removeClass('new-listingdeals-item');
+					});
+				}
+
+				function animatesItems($this, fdelay, i, el) {
+					var $_items = $('.listingdeals-item', el);
+					$this.attr("style",
+						"-webkit-animation:" + effect + " " + duration + "ms;"
+						+ "-moz-animation:" + effect + " " + duration + "ms;"
+						+ "-o-animation:" + effect + " " + duration + "ms;"
+						+ "-moz-animation-delay:" + fdelay + "ms;"
+						+ "-webkit-animation-delay:" + fdelay + "ms;"
+						+ "-o-animation-delay:" + fdelay + "ms;"
+						+ "animation-delay:" + fdelay + "ms;").delay(fdelay).animate({
+							opacity: 1,
+							filter: 'alpha(opacity = 100)'
+						}, {
+							//delay: 100
+						});
+					if (i == ($_items.length - 1)) {
+						$(".listingdeals-items-inner").addClass("play");
+					}
+				}
+
+				showAnimateItems($items_first_active);
+				$tab.on('click.tab', function () {
+					var $this = $(this);
+					if ($this.hasClass('tab-sel')) return false;
+					if ($this.parents('.listingdeals-tabs').hasClass('listingdeals-open')) {
+						$this.parents('.listingdeals-tabs').removeClass('listingdeals-open');
+					}
+					$tab.removeClass('tab-sel');
+					$this.addClass('tab-sel');
+					var items_active = $this.attr('data-active-content');
+					var _items_active = $(items_active, $element);
+					$items_content.removeClass('listingdeals-items-selected');
+					_items_active.addClass('listingdeals-items-selected');
+					$tab_label_select.html($tab.filter('.tab-sel').children('.listingdeals-tab-label').html());
+					var $loading = $('.listingdeals-loading', _items_active);
+					var loaded = _items_active.hasClass('listingdeals-items-loaded');
+
+					if (!loaded && !_items_active.hasClass('listingdeals-process')) {
+						_items_active.addClass('listingdeals-process');
+						var category_id = $this.attr('data-category-id');
+						$loading.show();
+						$.ajax({
+							type: 'POST',
+							url: ajax_url,
+							data: {
+								listing_deals_moduleid: rl_moduleid,
+								is_ajax_listing_deals: 1,
+								ajax_listingdeals_start: 0,
+								categoryid: category_id,
+								config: '<?php echo $_cfg; ?>'
+							},
+							success: function (data) {
+								if (data.items_markup != '') {
+									$('.listingdeals-items-inner', _items_active).html(data.items_markup);
+									_items_active.addClass('listingdeals-items-loaded').removeClass('listingdeals-process');
+									$loading.remove();
+									showAnimateItems(_items_active);
+									updateStatus(_items_active);
+									callbackCountDown();
+
+									<?php if ($show_loadmore_slider == 'slider') { ?>
+									CreateProSlider($('.listingdeals-items-inner', _items_active));
+									<?php } ?>
+									if(typeof(_SmQuickView) != 'undefined')
+										_SmQuickView();
+									if(typeof(loadaJax) != 'undefined')
+										loadaJax();
+								}
+							},
+							dataType: 'json'
+						});
+
+					} else {
+
+						<?php if ($show_loadmore_slider == 'loadmore'){?>
+						$('.listingdeals-item', $items_content).removeAttr('style').addClass('new-listingdeals-item').css('opacity', 0);
+						showAnimateItems(_items_active);
+						<?php } ?>
+
+						<?php if ($show_loadmore_slider == 'slider'){?>
+						var owl = $('.listingdeals-items-inner', _items_active);
+						owl = owl.data('owlCarousel');
+						if (typeof owl === 'undefined') {
+						} else {
+							owl.onResize();
+						}
+						<?php } ?>
+					}
+				});
+
+				function updateStatus($el) {
+					$('.listingdeals-loadmore-btn', $el).removeClass('loading');
+					var countitem = $('.listingdeals-item', $el).length;
+					$('.listingdeals-image-loading', $el).css({display: 'none'});
+					$('.listingdeals-loadmore-btn', $el).parent().attr('data-rl_start', countitem);
+					var rl_total = $('.listingdeals-loadmore-btn', $el).parent().attr('data-rl_total');
+					var rl_load = $('.listingdeals-loadmore-btn', $el).parent().attr('data-rl_load');
+					var rl_allready = $('.listingdeals-loadmore-btn', $el).parent().attr('data-rl_allready');
+
+					if (countitem >= rl_total) {
+						$('.listingdeals-loadmore-btn', $el).addClass('loaded');
+						$('.listingdeals-image-loading', $el).css({display: 'none'});
+						$('.listingdeals-loadmore-btn', $el).attr('data-label', rl_allready);
+						$('.listingdeals-loadmore-btn', $el).removeClass('loading');
+					}
+				}
+
+				$btn_loadmore.on('click.loadmore', function () {
+					var $this = $(this);
+					if ($this.hasClass('loaded') || $this.hasClass('loading')) {
+						return false;
+					} else {
+						$this.addClass('loading');
+						$('.listingdeals-image-loading', $this).css({display: 'inline-block'});
+						var rl_start = $this.parent().attr('data-rl_start'),
+							rl_moduleid = $this.parent().attr('data-modid'),
+							rl_ajaxurl = $this.parent().attr('data-ajaxurl'),
+							effect = $this.parent().attr('data-effect'),
+							category_id = $this.parent().attr('data-categoryid'),
+							items_active = $this.parent().attr('data-active-content');
+						var _items_active = $(items_active, $element);
+						$.ajax({
+							type: 'POST',
+							url: rl_ajaxurl,
+							data: {
+								listing_deals_moduleid: rl_moduleid,
+								is_ajax_listing_deals: 1,
+								ajax_listingdeals_start: rl_start,
+								categoryid: category_id,
+								config: '<?php echo $_cfg; ?>'
+							},
+							success: function (data) {
+								if (data.items_markup != '') {
+									$(data.items_markup).insertAfter($('.listingdeals-item', _items_active).nextAll().last());
+									$('.listingdeals-image-loading', $this).css({display: 'none'});
+									showAnimateItems(_items_active);
+									updateStatus(_items_active);
+									callbackCountDown();
+									if(typeof(_SmQuickView) != 'undefined')
+										_SmQuickView();
+									if(typeof(loadaJax) != 'undefined')
+										loadaJax();
+								}
+							}, dataType: 'json'
+						});
+					}
+					return false;
+				});
+
+				<?php if ($show_loadmore_slider == 'slider') {  ?>
+				if ($('.listingdeals-items-inner', $element).parent().hasClass('listingdeals-items-selected')) {
+					var items_active = $('.listingdeals-tab.tab-sel', $element).attr('data-active-content');
+					var _items_active = $(items_active, $element);
+					CreateProSlider($('.listingdeals-items-inner', _items_active));
+				}
+
+				function CreateProSlider($items_inner) {
+					$items_inner.owlCarousel({
+						center: false,
+						nav: <?php echo $nav;?>,
+						dots: <?php echo $dots;?>,
+						loop: <?php echo $loop;?>,
+						dotsSpeed: <?php echo $dotsSpeed;?>,
+						margin: <?php echo $margin;?>,
+						slideBy: <?php echo $step;?>,
+						autoplay: <?php echo $play; ?>,
+						autoplayTimeout: <?php echo $interval;?>,
+						autoplaySpeed: <?php echo $autoplaySpeed; ?>,
+						autoplayHoverPause: <?php echo $autoplayHoverPause; ?>,
+						startPosition: <?php echo $start; ?>,
+						navSpeed: <?php echo $navSpeed;?>,
+						mouseDrag: <?php echo $mouseDrag;?>,
+						touchDrag:<?php echo $touchDrag; ?>,
+						navClass: ['owl-prev', 'owl-next'],
+						navText: ['&#139;', '&#155;'],
+						responsive: {
+							0: {
+								items:<?php echo $nb_column5;?>
+							},
+							480: {
+								items:<?php echo $nb_column4;?>
+							},
+							768: {
+								items:<?php echo $nb_column3;?>
+							},
+							991: {
+								items:<?php echo $nb_column2;?>
+							},
+							1200: {
+								items:<?php echo $nb_column1;?>
+							}
+						}
+					});
+				}
+				<?php } ?>
+
+				function CountDown(date,id){
+					dateNow = new Date();
+					amount = date.getTime() - dateNow.getTime();
+					delete dateNow;
+					if(amount < 0){
+						id.html("Now!");
+					} else{
+						days=0;hours=0;mins=0;secs=0;out="";
+						amount = Math.floor(amount/1000);
+						days=Math.floor(amount/86400);
+						amount=amount%86400;
+						hours=Math.floor(amount/3600);
+						amount=amount%3600;
+						mins=Math.floor(amount/60);
+						amount=amount%60;
+						secs=Math.floor(amount);
+						out += "<div class='listingdeals-time time-day'><div class='num-time'>"+ days +"</div><div class='title-time'>"+((days<=1)?"Day":"Days")+"</div></div>";
+						out += "<div class='listingdeals-time time-hours'><div class='num-time'>"+ hours +"</div><div class='title-time'>"+((hours==1)?"Hour":"Hours")+"</div></div>";
+						out += "<div class='listingdeals-time time-mins'><div class='num-time'>"+ mins +"</div><div class='title-time'>"+((mins==1)?"Min":"Mins")+"</div></div>";
+						out += "<div class='listingdeals-time time-secs'><div class='num-time'>"+ secs +"</div><div class='title-time'>"+((secs==1)?"Sec":"Secs")+"</div></div>";
+						out = out.substr(0,out.length-2);
+						id.html(out);
+						setTimeout(function(){CountDown(date,id)}, 1000);
+					}
+				}
+				function callbackCountDown(){
+					$( ".listingdeals-countdown",$element).each(function() {
+						var timer = $(this).data('timer');
+						var data = new Date(timer);
+						CountDown(data,$(this));
+					});
+				}
+		})('#<?php echo $uniqued; ?>');
+	});
+	//]]>
+</script>

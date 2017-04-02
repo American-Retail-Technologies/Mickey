@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+	  <container name="root" before="-" >
+		<block class="Magento\Catalog\Block\Product\Compare\ListCompare" name="catalog.compare.list" template="Sm_Cartpro::compare/list.phtml" cacheable="false"/>
+		<block class="Magento\Framework\Pricing\Render" name="product.price.render.default">
+				<arguments>
+					<argument name="price_render_handle" xsi:type="string">catalog_product_prices</argument>
+					<argument name="use_link_for_as_low_as" xsi:type="boolean">true</argument>
+					<!-- set "override" configuration settings here -->
+				</arguments>
+			</block>
+	  </container>
+</layout>

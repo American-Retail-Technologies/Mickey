@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<imageslider>
+			<general>
+				<isenabled>1</isenabled>
+				<display_title>1</display_title>
+				<title>SM Image Slider</title>
+				<target>_blank</target>
+				<theme_display>theme2</theme_display>
+				<nb_column1>3</nb_column1>
+				<nb_column2>2</nb_column2>
+			</general>
+
+			<source>
+				<product_additem></product_additem>
+			</source>
+
+			<product>
+				<product_title_display>1</product_title_display>
+				<product_title_maxlength>25</product_title_maxlength>
+				<product_description_display>1</product_description_display>
+				<product_description_maxlength>150</product_description_maxlength>
+			</product>
+
+			<image>
+				<img_function>1</img_function>
+				<img_width>200</img_width>
+				<img_height>200</img_height>
+				<img_background>FFFFFF</img_background>
+				<img_replacement>sm/imageslider/images/nophoto.jpg</img_replacement>
+			</image>
+
+			<effect_options>
+				<play>1</play>
+				<start>1</start>
+				<scroll>1</scroll>
+				<duration>800</duration>
+				<delay>800</delay>
+				<stop>1</stop>
+				<nav>0</nav>
+				<loop>1</loop>
+				<dots>0</dots>
+				<margin>5</margin>
+				<merge>1</merge>
+				<navSpeed>1000</navSpeed>
+				<mouseDrag>1</mouseDrag>
+				<dotsSpeed>1000</dotsSpeed>
+				<autoHeight>0</autoHeight>
+				<wide_box>boxed</wide_box>
+			</effect_options>
+
+			<advanced>
+				<include_jquery>1</include_jquery>
+				<pretext>Pretext</pretext>
+				<posttext>Posttext</posttext>
+				<use_cache>1</use_cache>
+				<cache_time>3600</cache_time>
+			</advanced>
+		</imageslider>
+	</default>
+</config>

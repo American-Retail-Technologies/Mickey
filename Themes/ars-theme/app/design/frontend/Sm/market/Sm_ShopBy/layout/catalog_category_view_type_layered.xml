@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<title>Sm Shop By</title>
+		<!-- <css src="Sm_ShopBy::css/smshopby.css"/>
+		<script src="jquery.js" data-requiremodule="jquery"/> -->
+	</head>
+    <body>
+        <attribute name="class" value="page-with-filter"/>	
+        <referenceContainer name="sidebar.main">
+            <block class="Sm\ShopBy\Block\Navigation\Category" name="catalog.leftnav" before="-" template="layer/view.phtml">
+                <block class="Sm\ShopBy\Block\Navigation\State" name="catalog.navigation.state" as="state" />
+                <block class="Sm\ShopBy\Block\Navigation\FilterRenderer" name="catalog.navigation.renderer" as="renderer" template="layer/filter.phtml"/>
+            </block>         
+        </referenceContainer>
+		<referenceContainer class="Magento\Catalog\Block\Product\ListProduct" name="category.products.list"  remove="true"/>
+		<referenceContainer name="content">
+            <block class="Sm\ShopBy\Block\Catalog\Product\Pager" name="product_list" before="-" template="product/list.phtml">
+				<container name="category.product.list.additional" as="additional" />
+				<block class="Magento\Framework\View\Element\RendererList" name="category.product.type.details.renderers" as="details.renderers">
+                    <block class="Magento\Framework\View\Element\Template" as="default"/>
+                </block>
+                    <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                        <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>
+                    </block>
+                    <action method="setToolbarBlockName">
+                        <argument name="name" xsi:type="string">product_list_toolbar</argument>
+                    </action>
+            </block>	
+		</referenceContainer>		
+    </body>
+</page>

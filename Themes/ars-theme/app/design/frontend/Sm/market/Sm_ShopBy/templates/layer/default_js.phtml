@@ -1,0 +1,214 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<script type="text/javascript">
+	require([
+		"jquery",
+		"jquery/ui",
+		"accordion",
+		"mage/collapsible"
+	], function ($) {
+		$('#layered-filter-block').addClass('filter-no-options');
+		var min_price = <?php echo  $mimax_price['min_price']; ?>;
+		var max_price = <?php echo  $mimax_price['max_price']; ?>;		
+		
+		function updateQueryStringParameter(uri, key, value) {
+		  var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+		  var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+		  if (uri.match(re)) {
+			return uri.replace(re, '$1' + key + "=" + value + '$2');
+		  }
+		  else {
+			return uri + separator + key + "=" + value;
+		  }
+		}
+		
+		function getUrl(key,value){	
+			var window_url =  $(location).attr('href');   
+			if(window_url.indexOf(key) != -1)
+				var _url = updateQueryStringParameter(window_url,key,value); 
+			else{
+				if (window_url.indexOf('?') != -1) {
+					_url = window_url + '&'+key+'='+value;
+				} else {
+					_url = window_url + '?'+key+'='+value;
+				}
+			}
+			return _url;
+		}
+
+		function appendHtml(json,_url){
+			if (typeof json.items_markup !== 'undefined'){
+				history.pushState({}, "", _url);
+				$('#loading').hide();						
+				var product_list = $(json.items_markup.product_list); 
+				var filter_by = $(json.items_markup.filter_by);
+				
+				$('#layered-filter-block').replaceWith(filter_by);
+				if($('#catalog-listing').length){
+					$('#catalog-listing').replaceWith(product_list);
+				}else{
+					$('.message').remove();
+					$(".column.main").append(product_list);
+				}
+					
+				/* var windowWidth = $(window).width(); 
+				if(windowWidth <= 768)
+					_collapsible($('#layered-filter-block'));
+				_accordion($('#narrow-by-list')); */
+									
+				if(typeof(_SmQuickView) != 'undefined')
+					_SmQuickView();										
+				if(typeof(loadaJax) != 'undefined')
+					loadaJax();				
+			}else {
+				$('#ajax-errors').show();
+			}	
+		}	
+		
+		function _accordion(el){
+		   if(el.length){
+			el.accordion({
+			 openedState:  "active",
+			 collapsible: true,
+			 active: false,
+			 multipleCollapsible: false
+			});
+		   }
+		}				
+		
+		$("#sm_slider_price").slider({
+		range:true,
+		min: min_price,
+		max: max_price,
+		values: [<?php echo $value1; ?>,<?php echo $value2; ?>],
+		slide : function( event, ui ) {
+				$("#price-filter-min-text").val(ui.values[0]);		
+				$("#price-filter-max-text").val(ui.values[1]);		
+			},		
+		change: function( event, ui ) {
+				$('#loading').show();
+				$('#ajax-errors').hide();
+				var energy = ui.values.join('-');
+				var _url = getUrl('price',energy);
+				$.ajax({
+					url: _url,
+					dataType:'json',
+					success:function(json){
+						appendHtml(json,_url);
+						$('.swatch-option-tooltip').hide();
+					}
+				});
+				return;				
+			}		   
+		});			
+		
+		$(document).ready(function($){
+			<?php if (!$this->getRequest()->isAjax()): ?>
+				var _html = '<div id="loading" style="display: none; margin-bottom: 10px; text-align: center;"><img class="v-middle" alt="" src="<?php echo $block->getViewFileUrl('Sm_ShopBy::images/loading-qv.gif');?>"></div>';
+				$("body").append(_html);
+			<?php endif;?>		
+			
+			//Sorter Filter
+			var obj_change = {
+			  "#sorter": "product_list_order",
+			  ".limiter-options": "product_list_limit"
+			};
+			
+			$.each( obj_change, function( key, value ) {
+				$(key).change(function(e) {
+					$('#loading').show();
+					$('#ajax-errors').hide();				
+					var _url = getUrl(value,$(this).val());
+
+					$.ajax({
+						url: _url,
+						dataType:'json',
+						success:function(json){
+							appendHtml(json,_url);
+							$('.swatch-option-tooltip').hide();
+						}
+					});
+					return;
+				});				
+			});	
+			
+			//////
+			var obj_click = {
+			  "#layered-filter-block": "url",
+			  ".modes": "product_list_mode",
+			  ".pages": "url",
+			  ".sorter" : "product_list_dir" 
+			};
+
+			
+			$.each( obj_click, function( key, value ) {
+				$('a',$(key)).on('click', function(e){
+					if($(this).hasClass("ui-slider-handle"))
+						return;
+					e.preventDefault();
+					$('#loading').show();
+					$('#ajax-errors').hide();	
+					if(value == 'product_list_mode' || value == 'product_list_dir')	
+						var _url = getUrl(value,$(this).data('value'));
+					else
+						var _url = $(this).attr('href');	
+					$.ajax({
+						url: _url,
+						dataType:'json',
+						success:function(json){
+							appendHtml(json,_url);
+							$('.swatch-option-tooltip').hide();
+						}
+						
+					});
+					return;
+				});				
+			});	
+
+			$('#button-price-slider').on('click', function(e){
+				var input_min_price = $("#price-filter-min-text").val();
+				var input_max_price = $("#price-filter-max-text").val();
+				if(!$.isNumeric(input_min_price) || ($.isNumeric(input_min_price) && input_min_price <=0))
+					input_min_price = 	min_price;
+				if(!$.isNumeric(input_max_price) || ($.isNumeric(input_max_price) && input_max_price <=0))
+					input_max_price = 	max_price;				
+
+				if(input_min_price <= min_price)
+					input_min_price = min_price;
+				if(input_max_price >= max_price)
+					input_max_price = max_price;
+				$('#loading').show();
+				$('#ajax-errors').hide();	
+				
+				var _url = getUrl('price',input_min_price+'-'+input_max_price);
+	
+				$.ajax({
+					url: _url,
+					dataType:'json',
+					success:function(json){
+						appendHtml(json,_url);
+						$('.swatch-option-tooltip').hide();
+					}					
+				});
+				return;
+			});		
+			
+			
+		});
+		
+	});
+</script>

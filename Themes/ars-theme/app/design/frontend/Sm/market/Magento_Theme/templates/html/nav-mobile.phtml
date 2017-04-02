@@ -1,0 +1,87 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Top menu for store
+ *
+ * @see \Magento\Theme\Block\Html\Topmenu
+ */
+?>
+
+<?php 
+	$columnsLimit = $block->getColumnsLimit() ?: 0;
+	$_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
+	$_config = $this->helper('Sm\Market\Helper\Data');
+?>
+
+<!--COLLAPSE-->
+<?php if($_config->getGeneral('responsive_menu') == 'collapse'){?>
+	<div class="nav-mobile-container collapse-type">
+		<div class="btn-mobile">
+			<a id="collapse-button" class="button-mobile collapse-nav" title="<?php echo __('Categories')?>"><i class="fa fa-bars"></i><span class="hidden"><?php echo __('Categories')?></span></a>
+		</div>
+		<nav class="navigation-mobile">
+			<ul>
+				<?php /* @escapeNotVerified */ echo $_menu; ?>
+			</ul>
+		</nav>
+		
+		<script>
+			jQuery(document).ready(function($) {
+				$('#collapse-button').click(function(){
+					$('.navigation-mobile').slideToggle(200);
+					$(this).toggleClass('active');
+				});
+				
+				$('.navigation-mobile > ul li').has('ul').append( '<span class="touch-button"><span>open</span></span>' );
+
+				$('.touch-button').click(function(){
+					$(this).prev().slideToggle(200);
+					$(this).toggleClass('active');
+					$(this).parent().toggleClass('parent-active');
+				});
+
+			});
+		</script>
+	</div>
+<?php } ?>
+
+<!--SIDEBAR-->
+<?php if($_config->getGeneral('responsive_menu') == 'sidebar'){?>
+	<div class="nav-mobile-container sidebar-type">
+		<div class="btn-mobile">
+			<a id="sidebar-button" class="button-mobile sidebar-nav" title="<?php echo __('Categories')?>"><i class="fa fa-bars"></i><span class="hidden"><?php echo __('Categories')?></span></a>
+		</div>
+		<nav class="navigation-mobile">
+			<ul>
+				<?php /* @escapeNotVerified */ echo $_menu; ?>
+			</ul>
+		</nav>
+		
+		<script>
+			jQuery(document).ready(function($) {
+				$('#sidebar-button').click(function(){
+					$('body').toggleClass('navbar-active');
+					$(this).toggleClass('active');
+				});
+				
+				$('.navigation-mobile > ul li').has('ul').append( '<span class="touch-button"><span>open</span></span>' );
+
+				$('.touch-button').click(function(){
+					$(this).prev().slideToggle(200);
+					$(this).toggleClass('active');
+					$(this).parent().toggleClass('parent-active');
+				});
+
+			});
+		</script>
+		
+	</div>
+<?php } ?>

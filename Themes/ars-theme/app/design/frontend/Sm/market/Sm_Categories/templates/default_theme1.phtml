@@ -1,0 +1,108 @@
+<?php
+/**------------------------------------------------------------------------
+* SM  - Version 
+* Copyright (c) 2015 YouTech Company. All Rights Reserved.
+* @license - Copyrighted Commercial Software
+* Author: YouTech Company
+* Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+?>
+<div class="cat-wrap slider-categories">
+	<?php
+	$i=0;
+	foreach ($list as $key => $items)
+	{
+		$i++;
+		$cat_child = $items['child_cat'];
+			?>
+			<div class="item content-box">
+				<div class="parent-cat">
+					<?php if (($items['image'])) {
+						?>
+						<div class="image-cat">
+							<img
+									src="<?php echo $items['image']; ?>"
+									title="<?php echo $items['title']; ?>"
+									alt="<?php echo $items['title']; ?>"
+									/>
+							<a href="<?php echo $items['link'];?>" title="<?php echo $items['title'];?>" <?php echo $helper->parseTarget($this->_getConfig('target')); ?> class="btn-categories"><?php echo __('View More')?></a>
+						</div>
+					<?php } ?>
+					
+					
+					
+					
+				</div>
+				<?php if ($this->_getConfig('cat_sub_title_display', 1)) { ?>
+					<!-- Begin -->
+					<div class="child-cat">
+						<?php if ($this->_getConfig('cat_title_display') == 1) { ?>
+							<div class="cat-title">
+								<a href="<?php echo $items['link']; ?>"
+								   title="<?php echo $items['title']; ?>"
+									<?php echo $helper->parseTarget($this->_getConfig('target')); ?> >
+									<?php echo $helper->truncate($items['title'], $this->_getConfig('category_title_max_characs', 25)); ?>
+								</a>
+							</div>
+						<?php } ?>
+					
+						<?php
+						if (!empty($items['child_cat'])) { ?>
+							<ul class="sub-cats">
+							<?php foreach ($items['child_cat'] as $key1 => $item) {
+								?>
+								<li class="child-title">
+									<a href="<?php echo $item['link']; ?>"
+									   title="<?php echo $item['title']; ?>" <?php echo $helper->parseTarget($this->_getConfig('target')); ?> >
+										<?php echo $helper->truncate($item['title'], $this->_getConfig('category_sub_title_max_characs', 25)); ?>
+									</a>
+									<?php if ($this->_getConfig('total_item_cate', 1)) { ?>
+										<span class="num_items">
+			                                            <?php echo '(' . ($item['number_products']) . ')'; ?>
+			                                        </span>
+									<?php } ?>
+								</li>
+							<?php } ?>
+							</ul>
+						<?php } else { ?>
+							<p>
+								<?php echo 'No sub-categories to show!'; ?>
+							</p>
+						<?php } ?>
+					</div><!-- END child-cat -->
+				<?php } ?>
+			</div>
+		<?php } ?>
+</div>
+
+<script>
+
+				jQuery(document).ready(function($) {
+					var slider_categories = $(".slider-categories");
+					slider_categories.owlCarousel({
+								nav: true,
+								dots:false,
+								margin: 30,
+								
+								responsive: {
+									0: {
+										items:<?php echo $this->_getConfig('nb_column5', 1);?>
+									},
+									480: {
+										items:<?php echo $this->_getConfig('nb_column4', 2);?>
+									},
+									768: {
+										items:<?php echo $this->_getConfig('nb_column3', 3);?>
+									},
+									991: {
+										items:<?php echo $this->_getConfig('nb_column2', 3);?>
+									},						
+									1200: {
+										items:<?php echo $this->_getConfig('nb_column1', 4);?>
+									}
+								}
+					});	  
+				});	
+			
+			</script>

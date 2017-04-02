@@ -1,0 +1,17 @@
+<?php
+/**------------------------------------------------------------------------
+* SM Categories - Version 3.0.0
+* Copyright (c) 2015 YouTech Company. All Rights Reserved.
+* @license - Copyrighted Commercial Software
+* Author: YouTech Company
+* Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+if ($this->_getConfig('cat_title_display') == 1) { ?>
+	<div class="cat-title">
+		<a href="<?php echo $items->link; ?>"
+		   title="<?php echo $items->title; ?>"
+			<?php echo $helper->parseTarget($this->_getConfig('target')); ?> >
+			<?php echo $helper->truncate($items->title, $this->_getConfig('category_title_max_characs', 25)); ?>
+		</a>
+	</div>
+<?php }

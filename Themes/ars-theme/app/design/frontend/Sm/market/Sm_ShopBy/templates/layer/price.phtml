@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php 
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$currencysymbol = $objectManager->get('Magento\Directory\Model\Currency')->getCurrencySymbol();
+?>
+<div class="wrap-price-shopby">
+	<div class="ac-shopby clearfix">
+		<div class="price-input">
+			<input class="input-text txt-price-shopby" id="price-filter-min-text" type="text" value="<?php echo $value1; ?>">
+			<input class="input-text txt-price-shopby" id="price-filter-max-text" type="text" value="<?php echo $value2; ?>"><?php //echo $currencysymbol; ?>
+		</div>
+		<button id="button-price-slider" title="<?php echo __('Search')?>" class="button btn-shopby"><span><span><?php echo __('Search') ?></span></span></button>
+	</div>
+	<div id="sm_slider_price"></div>
+</div>

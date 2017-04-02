@@ -1,0 +1,126 @@
+
+.cslider-carousel .animated {
+    animation-duration: 1000ms;
+    animation-fill-mode: both;
+}
+.cslider-carousel .cslider-animated-in {
+    z-index: 0;
+}
+.cslider-carousel .cslider-animated-out {
+    z-index: 1;
+}
+.cslider-carousel .fadeOut {
+    animation-name: fadeOut;
+}
+@keyframes fadeOut {
+0% {
+    opacity: 1;
+}
+100% {
+    opacity: 0;
+}
+}
+.cslider-height {
+    transition: height 500ms ease-in-out 0s;
+}
+.cslider-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+.cslider-carousel .cslider-stage {
+    position: relative;
+}
+.cslider-carousel .cslider-stage::after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+.cslider-carousel .cslider-stage-outer {
+    overflow: hidden;
+    position: relative;
+}
+.cslider-carousel .cslider-controls .cslider-nav .cslider-prev, .cslider-carousel .cslider-controls .cslider-nav .cslider-next, .cslider-carousel .cslider-controls .cslider-dot {
+    -moz-user-select: none;
+    cursor: pointer;
+}
+.cslider-carousel.cslider-loaded {
+    display: block;
+}
+.cslider-carousel.cslider-loading {
+    display: block;
+    opacity: 0;
+}
+.cslider-carousel.cslider-hidden {
+    opacity: 0;
+}
+.cslider-carousel .cslider-refresh .cslider-item {
+}
+.cslider-carousel .cslider-item {
+    -moz-user-select: none;
+    float: left;
+    min-height: 1px;
+    position: relative;
+}
+.cslider-carousel .cslider-item img {
+}
+.cslider-carousel.cslider-text-select-on .cslider-item {
+    -moz-user-select: auto;
+}
+.cslider-carousel .cslider-grab {
+    cursor: grab;
+}
+.cslider-carousel.cslider-rtl {
+    direction: rtl;
+}
+.cslider-carousel.cslider-rtl .cslider-item {
+    float: right;
+}
+.no-js .cslider-carousel {
+    display: block;
+}
+.cslider-carousel .cslider-item .cslider-lazy {
+    opacity: 0;
+    transition: opacity 400ms ease 0s;
+}
+.cslider-carousel .cslider-item img {
+    transform-style: preserve-3d;
+}
+.cslider-carousel .cslider-video-wrapper {
+    background: #000 none repeat scroll 0 0;
+    height: 100%;
+    position: relative;
+}
+.cslider-carousel .cslider-video-play-icon {
+    background: rgba(0, 0, 0, 0) url("cslider.video.play.png") no-repeat scroll 0 0;
+    cursor: pointer;
+    height: 80px;
+    left: 50%;
+    margin-left: -40px;
+    margin-top: -40px;
+    position: absolute;
+    top: 50%;
+    transition: scale 100ms ease 0s;
+    width: 80px;
+    z-index: 1;
+}
+.cslider-carousel .cslider-video-play-icon:hover {
+}
+.cslider-carousel .cslider-video-playing .cslider-video-tn, .cslider-carousel .cslider-video-playing .cslider-video-play-icon {
+}
+.cslider-carousel .cslider-video-tn {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 400ms ease 0s;
+}
+.cslider-carousel .cslider-video-frame {
+    position: relative;
+    z-index: 1;
+}

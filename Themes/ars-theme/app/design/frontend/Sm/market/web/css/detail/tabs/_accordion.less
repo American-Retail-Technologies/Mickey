@@ -1,0 +1,57 @@
+﻿.accordion-style{
+  .resp-accordion{
+    border: 1px solid #ddd;
+    display: block;
+    font-size: 133.33%;
+    color: #444;
+    padding: 15px 20px !important;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 10px;
+    position: relative;
+
+
+
+    .resp-arrow{
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      right: 10px;
+      top: 50%;
+      margin-top: -15px;
+      text-align: center;
+
+      &:before{
+        .font-awesome(f067,16px);
+      }
+    }
+
+    &.resp-tab-active{
+      color: #fff;
+      .resp-arrow{
+        &:before{
+          .font-awesome(f068,16px);
+        }
+      }
+    }
+  }
+
+  .resp-tab-content{
+    padding:20px 0;
+    border:none;
+  }
+
+}
+
+/* RTL */
+
+.direction_rtl{
+  .accordion-style .resp-accordion .resp-arrow{
+    left: 10px;
+    right: auto;
+  }
+}
+
+

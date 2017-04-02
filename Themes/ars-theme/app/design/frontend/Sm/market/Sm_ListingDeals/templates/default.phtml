@@ -1,0 +1,132 @@
+<?php
+/**------------------------------------------------------------------------
+ * SM Listing Deals - Version 1.1.0
+ * Copyright (c) 2015 YouTech Company. All Rights Reserved.
+ * @license - Copyrighted Commercial Software
+ * Author: YouTech Company
+ * Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+/** @var $helper \Sm\ListingDeals\Helper\Data */
+
+$list = $this->_getSelectSource();
+$helper = $this->_helper();
+
+if (!empty($list))
+{
+
+	$uniqued = 'sm_listingdeals_' . time() . rand();
+	$show_loadmore_slider = $this->_getConfig('show_loadmore_slider');
+	$class_show = ($show_loadmore_slider == 'loadmore') ? ' show-loadmore' : ' show-slider';
+	//effect
+	$play = (int)$this->_getConfig('play', 1) ? 'true' : 'false';
+	$start = (int)$this->_getConfig('start');
+	$start = ($start <= 0 || $start > count($list)) ? 0 : $start - 1;
+	$autoplayHoverPause = (int)$this->_getConfig('autoplayHoverPause', 1) ? 'true' : 'false';
+	$autoplaySpeed = $this->_getConfig('autoplaySpeed') >= 0 ? $this->_getConfig('autoplaySpeed') : 5000;
+	$step = (int)$this->_getConfig('slideBy', 1);
+	$step = $step <= 0 ? 1 : $step;
+	$speed = (int)$this->_getConfig('duration');
+	$interval = (int)$this->_getConfig('delay');
+
+	$nav = ($this->_getConfig('nav', 1) == 1) ? 'true' : 'false';
+	$_navSpeed = $this->_getConfig('navSpeed', 1000);
+	$navSpeed = (is_numeric($_navSpeed) && $_navSpeed >= 0) ? $_navSpeed : 1000;
+	$loop = ($this->_getConfig('loop', 1) == 1) ? 'true' : 'false';
+	$dots = ($this->_getConfig('dots', 1) == 1) ? 'true' : 'false';
+	$_dotSpeed = $this->_getConfig('dotsSpeed');
+	$dotsSpeed = (is_numeric($_dotSpeed) && $_dotSpeed >= 0) ? $_dotSpeed : 1000;
+
+	$_margin = $this->_getConfig('margin', 1);
+	$margin = (is_numeric($_margin) && $_margin >= 0) ? $_margin : 5;
+	$mouseDrag = ($this->_getConfig('mouseDrag', 1) == 1) ? 'true' : 'false';
+	$touchDrag = ($this->_getConfig('touchDrag', 1) == 1) ? 'true' : 'false';
+
+	$num_rows = $this->_getConfig('nb_rows', 3);
+	$nb_column1 = $this->_getConfig('nb_column1', 4);
+	$nb_column2 = $this->_getConfig('nb_column2', 3);
+	$nb_column3 = $this->_getConfig('nb_column3', 3);
+	$nb_column4 = $this->_getConfig('nb_column4', 2);
+	$nb_column5 = $this->_getConfig('nb_column5', 1);
+
+	$class_respl = '';
+	if ($show_loadmore_slider == 'loadmore')
+		$class_respl = 'listingdeals-resp01-'.$nb_column1.' listingdeals-resp02-'.$nb_column2.' listingdeals-resp03-'.$nb_column3.' listingdeals-resp04-'.$nb_column4.' listingdeals-resp05-'.$nb_column5;
+
+	if($this->_getConfig('display_title'))
+	{
+		if($this->_getConfig('title'))
+		{ ?>
+			<div class="page-title"><?php echo $this->_getConfig('title','SM Listing Deals'); ?></div>
+		<?php }
+	}
+
+	if ($this->_getConfig('pretext') != null)
+	{ ?>
+		<div class="listingdeals-pretext"><?php echo $this->_getConfig('pretext'); ?></div>
+	<?php } ?>
+
+	<div id="<?php echo $uniqued; ?>" class="sm-listingdeals listingdeals-preload">
+<!--		<div class="sm-listingdeals-loading"></div>-->
+		<div class="listingdeals-wrap ">
+			<div class="listingdeals-tabs-container" data-delay="<?php echo $this->_getConfig('delay', 300); ?>"
+			     data-duration="<?php echo $this->_getConfig('duration', 600); ?>"
+			     data-effect="<?php echo $this->_getConfig('effect'); ?>"
+			     data-ajaxurl="<?php echo $block->getBaseUrl().'listingdeals/index/index'; ?>"
+			     data-modid="<?php echo $uniqued; ?>">
+				<?php require('default_tabs.phtml'); ?>
+			</div>
+			<div class="listingdeals-items-container <?php echo $class_show; ?>"><!--Begin Items-->
+				<?php
+					foreach ($list as $items) {
+						$child_items = isset($items['child']) ? $items['child'] : '';
+						$cls_device = $class_respl;
+						$cls_animate = $this->_getConfig('effect');
+						$cls = (isset($items['sel']) && $items['sel'] == "sel") ? ' listingdeals-items-selected listingdeals-items-loaded' : '';
+						$cls .= ($items['entity_id'] == "*") ? ' items-category-all' : ' items-category-' . $items['entity_id'];
+						?>
+							<div class="products-grid listingdeals-items <?php echo $cls; ?>">
+								<div class="listingdeals-items-inner <?php echo $cls_device . ' '.$cls_animate; ?>">
+									<?php if (!empty($child_items)) {
+										require('default_items.phtml');
+									} else { ?>
+										<div class="listingdeals-loading">
+											<div class="cssload-square">
+												<div class="cssload-square-part cssload-square-green"></div>
+												<div class="cssload-square-part cssload-square-pink"></div>
+												<div class="cssload-square-blend"></div>
+											</div>
+										</div>
+									<?php } ?>
+								</div>
+								<?php if($show_loadmore_slider == 'loadmore') { ?>
+									<?php $classloaded = ($this->_getConfig('product_limitation', 2) >= $items['count'] || $this->_getConfig('product_limitation', 2) == 0) ? 'loaded' : '';?>
+									<div class="listingdeals-loadmore"
+									     data-active-content=".items-category-<?php echo ($items['entity_id'] == "*") ? 'all' : $items['entity_id']; ?>"
+									     data-categoryid="<?php echo $items['entity_id']; ?>"
+									     data-rl_start="<?php echo $this->_getConfig('product_limitation', 2) ?>"
+									     data-rl_total="<?php echo $items['count'] ?>"
+									     data-ajaxurl="<?php echo $block->getBaseUrl().'listingdeals/index/index'; ?>"
+									     data-rl_allready="<?php echo __('All ready'); ?>"
+									     data-modid="<?php echo $uniqued; ?>"
+									     data-rl_load="<?php echo $this->_getConfig('product_limitation', 2) ?>">
+										<div class="listingdeals-loadmore-btn <?php echo $classloaded ?>"
+										     data-label=" <?php echo ($classloaded) ? __('All ready') : __('Load more'); ?>">
+											<span class="listingdeals-image-loading"></span>
+											<img class="add-loadmore" src="<?php echo $block->getViewFileUrl('Sm_ListingDeals::images/add.png'); ?>" alt="" />
+										</div>
+									</div>
+								<?php } ?>
+							</div>
+				<?php   }   ?>
+			</div>
+		</div>
+	</div>
+	<?php if ($this->_getConfig('posttext') != null) { ?>
+		<div class="bs-posttext">
+			<?php echo $this->_getConfig('posttext'); ?>
+		</div>
+	<?php } ?>
+	<?php require('default_js.phtml') ?>
+<?php } else { echo '<h3 style="color:#f1703d;">'.__('Has no content to show!').'</h3>'; };
+?>

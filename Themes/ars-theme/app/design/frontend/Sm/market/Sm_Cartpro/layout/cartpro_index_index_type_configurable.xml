@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+	<container name="root.configurable"  htmlTag="div" htmlId="product-wrap-test" before="-" >
+<!-- 		<referenceContainer name="header.container" remove="true"/>
+	    <referenceContainer name="page.top" remove="true"/>
+		<referenceContainer name="footer-container" remove="true"/>
+		<referenceContainer name="product.info.details" remove="true" />
+		<referenceContainer name="content.aside" remove="true" />
+		<referenceContainer name="copyright" remove="true"/> -->
+		<update handle="catalog_product_view"/>
+		<update handle="catalog_product_opengraph" />
+		<update handle="page_calendar"/>		
+		
+		<attribute name="class" value="page-product-configurable"/>
+        <referenceBlock name="head.components">
+            <block class="Magento\Framework\View\Element\Js\Components" name="configurableproduct_product_view_head_components" template="Magento_ConfigurableProduct::js/components.phtml"/>
+        </referenceBlock>
+		<referenceContainer name="product.info.type">
+			<block class="Magento\ConfigurableProduct\Block\Product\View\Type\Configurable" name="product.info.configurable" as="product_type_data" template="Magento_Catalog::product/view/type/default.phtml"/>
+			<container name="product.info.configurable.extra" after="product.info.configurable" as="product_type_data_extra" label="Product Extra Info">
+				<block class="Magento\ConfigurableProduct\Block\Stockqty\Type\Configurable" template="Magento_CatalogInventory::stockqty/composite.phtml"/>
+			</container>
+		</referenceContainer>
+		<referenceContainer name="product.info.options.configurable" remove="true"/>
+		<referenceBlock name="product.info.options.wrapper">
+			<block class="Magento\Swatches\Block\Product\Renderer\Listing\Configurable" as="configurable" template="Sm_Cartpro::product/view/renderer.phtml" />  
+		</referenceBlock>
+		
+            <container name="product.info.main" htmlTag="div" htmlClass="product-info-main" before="-">
+                <block class="Magento\Catalog\Pricing\Render" name="product.price.tier" after="product.info.price">
+                    <arguments>
+                        <argument name="price_render" xsi:type="string">product.price.render.default</argument>
+                        <argument name="price_type_code" xsi:type="string">tier_price</argument>
+                        <argument name="zone" xsi:type="string">item_view</argument>
+                    </arguments>
+                </block>
+                <container name="alert.urls" as="alert_urls" label="Alert Urls" after="product.price.tier"/>
+                <block class="Magento\Catalog\Block\Product\View" name="product.info" template="Sm_Cartpro::product/view/form.phtml" after="alert.urls">
+                    <container name="product.info.form.content" as="product_info_form_content">
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart" as="addtocart" template="Sm_Cartpro::product/view/addtocart.phtml"/>
+                    </container>
+                    <block class="Magento\Framework\View\Element\Template" name="product.info.form.options" as="options_container">
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper" as="product_options_wrapper" template="product/view/options/wrapper.phtml">
+                            <block class="Magento\Catalog\Block\Product\View\Options" name="product.info.options" as="product_options" template="product/view/options.phtml">
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" as="default" template="product/view/options/type/default.phtml"/>
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\Text" as="text" template="product/view/options/type/text.phtml"/>
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\File" as="file" template="product/view/options/type/file.phtml"/>
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\Select" as="select" template="product/view/options/type/select.phtml"/>
+                                <block class="Magento\Catalog\Block\Product\View\Options\Type\Date" as="date" template="product/view/options/type/date.phtml"/>
+                            </block>
+                            <block class="Magento\Framework\View\Element\Html\Calendar" name="html_calendar" as="html_calendar" template="Magento_Theme::js/calendar.phtml"/>
+                        </block>
+                        <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper.bottom" as="product_options_wrapper_bottom" template="product/view/options/wrapper/bottom.phtml">
+                            <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart.additional" as="product.info.addtocart" template="Sm_Cartpro::product/view/addtocart.phtml"/>
+                        </block>
+                    </block>
+                </block>
+            </container>
+			<block class="Magento\Framework\Pricing\Render" name="product.price.render.default">
+				<arguments>
+					<argument name="price_render_handle" xsi:type="string">catalog_product_prices</argument>
+					<argument name="use_link_for_as_low_as" xsi:type="boolean">true</argument>
+					<!-- set "override" configuration settings here -->
+				</arguments>
+			</block>
+	</container>
+</layout>

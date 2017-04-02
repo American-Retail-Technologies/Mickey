@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<cartpro>
+			<general>
+				<isactive>1</isactive>
+				<display_title>1</display_title>
+				<title>SM Cart Pro</title>
+				<enable>1</enable>
+				<enable_ajax_cart>1</enable_ajax_cart>
+				<enable_ajax_compare>1</enable_ajax_compare>
+				<enable_ajax_wishlist>1</enable_ajax_wishlist>
+				<confirm_countdown_number>20</confirm_countdown_number>
+				<mini_cartpro_effect_selector>click</mini_cartpro_effect_selector>				
+			</general>
+		</cartpro>
+	</default>
+</config>

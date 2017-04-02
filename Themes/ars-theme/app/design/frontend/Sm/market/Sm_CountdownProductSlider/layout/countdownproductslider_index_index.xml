@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<title>Sm Coundownt Product Slider</title>
+		<!-- <css src="Sm_CountdownProductSlider::css/animate.css"  />
+		<css src="Sm_CountdownProductSlider::css/owl.carousel.css"  /> -->
+		<!-- <css src="Sm_CountdownProductSlider::css/countdownproductslider.css"  />
+		<script src="Sm_CountdownProductSlider::js/owl.carousel.js" defer="defer"/> -->
+	</head>
+	<body>
+		<referenceContainer name="content">
+			<block class="Sm\CountdownProductSlider\Block\CountdownProductSlider" name="countdownproductslider.default" as="countdownproductslider_default" template="Sm_CountdownProductSlider::default.phtml">
+			</block>
+		</referenceContainer>
+	</body>
+</page>

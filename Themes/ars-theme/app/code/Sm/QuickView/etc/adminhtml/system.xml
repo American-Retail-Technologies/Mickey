@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="magentech" translate="label" sortOrder="1">
+			<label>Magentech.com</label>
+		</tab>
+		<section id="quickview" translate="label" type="text" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>SM Quick View</label>
+			<tab>magentech</tab>
+			<resource>Sm_QuickView::config_quickview</resource>
+			<group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General Settings</label>
+				<field id="isenabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Extensions</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+				</field>
+				<field id="item_class" translate="label" type="textarea" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Item Class</label>
+					<validate>required-entry</validate>
+				</field>
+				<field id="item_class_show_button" translate="label" type="textarea" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Item Class Show Button</label>
+					<validate>required-entry</validate>
+				</field>
+				<field id="label_button" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Label Button</label>
+					<validate>required-entry</validate>
+				</field>
+				<field id="heading4" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Popup Config</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="auto_size" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Auto Size</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>If Yes, then sets both autoHeight and autoWidth to true.</comment>
+				</field>
+				<field id="popup_width" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Popup Width</label>
+					<comment>Unit(px), range 800-1200. Example: 1000</comment>
+					<validate>validate-greater-than-zero integer required-entry validate-number validate-digits-range digits-range-800-1200</validate>
+					<depends>
+						<field id="auto_size">0</field>
+					</depends>
+				</field>
+				<field id="popup_height" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Popup Height</label>
+					<comment>Unit(px), range 500-1080 . Example: 580</comment>
+					<validate>validate-greater-than-zero integer required-entry validate-number validate-digits-range digits-range-500-1080</validate>
+					<depends>
+						<field id="auto_size">0</field>
+					</depends>
+				</field>
+				<field id="display_overlay" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display Overlay</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="open_effect" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Open Effect</label>
+					<source_model>Sm\QuickView\Model\Config\Source\ListEffects</source_model>
+				</field>
+				<field id="close_effect" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Close Effect</label>
+					<source_model>Sm\QuickView\Model\Config\Source\ListEffects</source_model>
+				</field>
+			</group>
+			<group id="product_information" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Product Information</label>
+				<field id="author" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label><![CDATA[<p>Author: <a target="_blank" title="Magentech" href="http://www.magentech.com">Magentech</a></p>
+											<p>Vesion: 3.1.0</p>
+											<p>Userguide: <a target="_blank" title="Usergide" href="http://www.magentech.com/documentation/sm-quickview/">Userguide</a></p>
+											<p>Support: <a target="_blank" href="http://www.magentech.com/forum">Forum</a></p>
+								]]></label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

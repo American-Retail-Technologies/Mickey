@@ -1,0 +1,281 @@
+<?php
+/*------------------------------------------------------------------------
+# SM Deals
+# Copyright (c) 2015 YouTech Company. All Rights Reserved.
+# @license - Copyrighted Commercial Software
+# Author: YouTech Company
+# Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$list = $this->_getSelectSource();
+$helper = $this->_helper();
+
+$num_rows = $this->_getConfig('nb_rows', '3');
+
+$play = (int)$this->_getConfig('play', 1) ? 'true' : 'false';
+$start = (int)$this->_getConfig('start');
+$start = ($start <= 0 || $start > count($list)) ? 0 : $start - 1;
+$stop = (int)$this->_getConfig('stop', 1) ? 'true' : 'false';
+$step = (int)$this->_getConfig('scroll', 1);
+$step = $step <= 0 ? 1 : $step;
+$speed = (int)$this->_getConfig('duration');
+$interval = (int)$this->_getConfig('delay');
+
+$nav = ($this->_getConfig('nav', 1) == 1) ? 'true' : 'false';
+$_navSpeed = $this->_getConfig('navSpeed', 1000);
+$navSpeed = (is_numeric($_navSpeed) && $_navSpeed >= 0) ? $_navSpeed : 1000;
+$loop = ($this->_getConfig('loop', 1) == 1) ? 'true' : 'false';
+$dots = ($this->_getConfig('dots', 1) == 1) ? 'true' : 'false';
+$_dotSpeed = $this->_getConfig('dotsSpeed');
+$dotsSpeed = (is_numeric($_dotSpeed) && $_dotSpeed >= 0) ? $_dotSpeed : 1000;
+
+$_margin = $this->_getConfig('margin', 1);
+$margin = (is_numeric($_margin) && $_margin >= 0) ? $_margin : 5;
+$mouseDrag = ($this->_getConfig('mouseDrag', 1) == 1) ? 'true' : 'false';
+$autoHeight = ($this->_getConfig('autoHeight', 1) == 1) ? 'true' : 'false';
+$_wide_box = $this->_getConfig('wide_box','wide');
+$wide_box = ($_wide_box == 'boxed')?' boxed':'';
+
+$nb_column1 = $this->_getConfig('nb_column1', 4);
+$nb_column2 = $this->_getConfig('nb_column2', 3);
+$nb_column3 = $this->_getConfig('nb_column3', 3);
+$nb_column4 = $this->_getConfig('nb_column4', 2);
+$nb_column5 = $this->_getConfig('nb_column5', 1);
+
+if (!empty($list))
+{
+	$uniqued = 'sm_deals_' . time() . rand();
+	$class_respl = 'deals-resp01-'.$nb_column1.' deals-resp02-'.$nb_column2.' deals-resp03-'.$nb_column3.' deals-resp04-'.$nb_column4.' deals-resp05-'.$nb_column5;
+	if($this->_getConfig('display_title'))
+	{
+		if($this->_getConfig('title'))
+		{ ?>
+			<div class="deals_title_text"><?php echo $this->_getConfig('title','SM Deals'); ?></div>
+		<?php }
+	}
+
+	if ($this->_getConfig('pretext') != null)
+	{ ?>
+		<div class="deals-pretext"><?php echo $this->_getConfig('pretext'); ?></div>
+	<?php } ?>
+
+	<div id="<?php echo $uniqued; ?>" class="products-grid sm-deals deals-preload <?php echo $wide_box; ?>">
+		<?php
+		if ($this->_getConfig('use_slider')){
+			?>
+			<div class="sm-deals-loading">
+				<div class="cssload-square">
+					<div class="cssload-square-part cssload-square-green"></div>
+					<div class="cssload-square-part cssload-square-pink"></div>
+					<div class="cssload-square-blend"></div>
+				</div>
+			</div>
+			<div class="deals-content-items owl-carousel">
+		<?php } else { ?>
+			<div class="deals-content-items">
+		<?php }
+		$p = 0;
+		if (!($this->_getConfig('use_slider'))){
+			?>
+				<div class="deals-items <?php echo $class_respl; ?> ">
+			<?php
+		}
+		foreach ($list as $_product)
+		{
+			$p++;
+			if ($this->_getConfig('use_slider')){
+				if (($p % $num_rows == 1) || ($num_rows == 1)) {
+					?>
+						<div class="deals-items" style="display: none;clear: both;">
+					<?php
+					}
+			}
+			$specialPriceToDate = $_product->special_to_date;
+			?>
+			<div class="item deals-item">
+				<div class="item-inner">
+					<div class="box-info box-info-top">
+						<?php if((int)$this->_getConfig('product_title_display',1)) { ?>
+							<h2 class="product-name">
+								<a href="<?php echo $_product->link;?>" title="<?php echo $_product->title; ?>"
+									<?php echo $helper->parseTarget($this->_getConfig('target'));?>
+									>
+									<?php echo $helper->truncate($_product->title,$this->_getConfig('product_title_maxlength'));?>
+								</a>
+							</h2>
+						<?php } ?>
+						
+						<?php if ((int)$this->_getConfig('product_reviews_count', 1)) { ?>
+								<?php
+								$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+								echo $block->getReviewsSummaryHtml($_product,$templateType,true);
+								?>
+						<?php } ?>
+						
+						<?php if ((int)$this->_getConfig('product_price_display', 1)) { ?>
+							<?php echo $this->getProductPrice($_product); ?>
+						<?php } ?>
+					</div>
+
+					<?php if ( $_product->_image && $this->_getConfig('product_image_display') ) { ?>
+						<div class="box-image">
+							<a href="<?php echo $_product->link ?>" title="<?php echo $_product->title; ?>" <?php echo $helper->parseTarget($this->_getConfig('target'));?>>
+								<img src="<?php echo $_product->_image; ?>" title="<?php echo $_product->title; ?>" alt="<?php echo $_product->title; ?>" />
+							</a>
+						</div>
+					<?php } ?>
+					
+					<div class="deals-countdown" data-timer="<?php echo date("Y/m/d", strtotime($specialPriceToDate)); ?>"></div>
+
+					<div class="box-info">
+						<?php if ((int)$this->_getConfig('product_description_display', 1)) { ?>
+							<div class="deals-description">
+								<?php echo $_product->_description; ?>
+							</div>
+						<?php } ?>
+
+						<?php if ($this->_getConfig('product_readmore_display') == 1) { ?>
+							<div class="deals-detail">
+								<a href="<?php echo $_product->link ?>"
+								   title="<?php echo $_product->title; ?>"
+									<?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+									>
+									<?php echo $this->_getConfig('product_readmore_text', 'Details'); ?>
+								</a>
+							</div>
+						<?php } ?>
+
+					</div>
+				</div>
+			</div>
+
+			<?php
+			$clear = 'clr1';
+			if ($p % 2 == 0) $clear .= ' clr2';
+			if ($p % 3 == 0) $clear .= ' clr3';
+			if ($p % 4 == 0) $clear .= ' clr4';
+			if ($p % 5 == 0) $clear .= ' clr5';
+			if ($p % 6 == 0) $clear .= ' clr6';
+			?>
+			<div class="<?php echo $clear; ?>"></div>
+
+			<?php
+			if ($this->_getConfig('use_slider')){
+				if(($p % $num_rows == 0)) {
+					?>
+						</div>
+					<?php
+				}
+			}
+		}
+		if (!$this->_getConfig('use_slider')){
+			?>
+				</div>
+			<?php
+		}
+			?>
+		</div>
+	</div>
+	<?php if ($this->_getConfig('posttext') != null) { ?>
+	<div class="bs-posttext">
+		<?php echo $this->_getConfig('posttext'); ?>
+	</div>
+<?php } ?>
+	<script type="text/javascript">
+		//<![CDATA[
+			jQuery(document).ready(function ($) {
+				;(function (element) {
+					if (<?php echo $this->_getConfig('use_slider')?>) {
+						var $element = $(element),
+							$sm_deals = $('.deals-content-items', $element);
+
+						$(window).on('load', function () {
+							setTimeout(function () {
+								$('.sm-deals-loading', $element).remove();
+								$element.removeClass('deals-preload');
+								__runDealsSlider();
+								$('.deals-items').css({display: 'block'});
+							}, 1000);
+						});
+
+						function __runDealsSlider() {
+							$sm_deals.owlCarousel({
+								center: false,
+								nav: <?php echo $nav;?>,
+								dots: <?php echo $dots;?>,
+								loop: <?php echo $loop;?>,
+								dotsSpeed: <?php echo $dotsSpeed;?>,
+								margin: <?php echo $margin;?>,
+								slideBy: <?php echo $step;?>,
+								autoplay: <?php echo $play; ?>,
+								autoplayTimeout: <?php echo $interval;?>,
+								autoplayHoverPause: <?php echo $stop;?>,
+								autoplaySpeed: <?php echo $speed;?>,
+								startPosition: <?php echo $start;?>,
+								navSpeed: <?php echo $navSpeed;?>,
+								mouseDrag: <?php echo $mouseDrag;?>,
+								responsive: {
+									0: {
+										items:<?php echo $nb_column5;?>
+									},
+									480: {
+										items:<?php echo $nb_column4;?>
+									},
+									768: {
+										items:<?php echo $nb_column3;?>
+									},
+									991: {
+										items:<?php echo $nb_column2;?>
+									},
+									1200: {
+										items:<?php echo $nb_column1;?>
+									}
+								},
+								autoHeight: <?php echo $autoHeight;?>,
+								responsiveRefreshRate: 100,
+								/* onInitialized: function (e) {
+									$('.owl-nav', $element).insertBefore($('.owl-stage', $element));
+								} */
+							});
+						}
+					}
+
+					data = new Date(2013,10,26,12,00,00);
+					var listdeal = [];
+					function CountDown(date,id){
+						dateNow = new Date();
+						amount = date.getTime() - dateNow.getTime();
+						delete dateNow;
+						if(amount < 0){
+							id.html("Now!");
+						} else{
+							days=0;hours=0;mins=0;secs=0;out="";
+							amount = Math.floor(amount/1000);
+							days=Math.floor(amount/86400);
+							amount=amount%86400;
+							hours=Math.floor(amount/3600);
+							amount=amount%3600;
+							mins=Math.floor(amount/60);
+							amount=amount%60;
+							secs=Math.floor(amount);
+							if(days != 0){out += "<div class='deals-time time-day'><div class='num-time'>"+ days +"</div><div class='title-time'>"+((days==1)?"Day":"Days")+"</div></div>";}
+							out += "<div class='deals-time time-hours'><div class='num-time'>"+ hours +"</div><div class='title-time'>"+((hours==1)?"Hour":"Hours")+"</div></div>";
+							out += "<div class='deals-time time-mins'><div class='num-time'>"+ mins +"</div><div class='title-time'>"+((mins==1)?"Min":"Mins")+"</div></div>";
+							out += "<div class='deals-time time-secs'><div class='num-time'>"+ secs +"</div><div class='title-time'>"+((secs==1)?"Sec":"Secs")+"</div></div>";
+							out = out.substr(0,out.length-2);
+							id.html(out);
+							setTimeout(function(){CountDown(date,id)}, 1000);
+						}
+					}
+
+					$( ".deals-countdown",$element).each(function() {
+						var timer = $(this).data('timer');
+						var data = new Date(timer);
+						CountDown(data,$(this));
+					});
+				})('#<?php echo $uniqued; ?>');
+			});
+		//]]>
+	</script>
+<?php } else { echo '<h3 style="color:#f1703d;">'.__('Has no content to show!').'</h3>'; };
+?>

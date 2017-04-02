@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\Theme\Block\Html\Header $block
+ */
+ 
+$_config = $this->helper('Sm\Market\Helper\Data');
+$footerStyle = $_config->getThemeLayout('footer_style');
+
+include (dirname(__FILE__).'/footer-style/'.$footerStyle.'.phtml');
+
+?>

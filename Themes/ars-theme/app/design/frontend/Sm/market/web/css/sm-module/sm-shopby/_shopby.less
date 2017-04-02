@@ -1,0 +1,139 @@
+#loading {
+  background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100000;
+}
+
+#loading img {
+  background-color: black;
+  border-radius: 4px;
+  left: 50%;
+  margin-left: -22px;
+  padding: 10px;
+  position: fixed;
+  top: 50%;
+  z-index: 99999;
+}
+
+.block .block-content.filter-content .filter-options-content {
+  display: block !important;
+}
+
+.v-middle {
+  vertical-align: middle;
+}
+
+#layered-filter-block .wrap-price-shopby {
+  display: block;
+}
+
+#layered-filter-block .wrap-price-shopby .ac-shopby {
+  width: 100%;
+}
+
+#layered-filter-block .wrap-price-shopby .txt-price-shopby{
+  margin-right: 4%;
+  width: 46%;
+  float: left;
+  border: 1px solid #ddd;
+  height: 30px;
+}
+
+#layered-filter-block .wrap-price-shopby .price-input {
+  float: left;
+  width: 60%;
+}
+
+.direction_rtl{
+  #layered-filter-block .wrap-price-shopby .price-input{
+    float: right;
+  }
+
+  #layered-filter-block .wrap-price-shopby .txt-price-shopby{
+    float: right;
+    margin-left: 4%;
+    margin-right: 0;
+  }
+}
+
+#layered-filter-block .button {
+  border: 0 none;
+  color: #fff;
+  cursor: pointer;
+  height: 35px;
+  line-height: 35px;
+  margin: 0;
+  overflow: visible;
+  padding: 0 10px;
+  white-space: nowrap;
+  width: auto;
+}
+
+#layered-filter-block .wrap-price-shopby .btn-shopby {
+  height: 30px;
+  line-height: 30px;
+  float: right;
+  width: 40%;
+}
+
+#sm_slider_price:before, #sm_slider_price:after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  position: absolute;
+  width: 5px;
+  z-index: 1;
+}
+
+#sm_slider_price {
+  background-color: #666;
+  height: 6px;
+  margin: 10px 8px 0 4px;
+  position: relative;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+
+  .ui-slider-range{
+    position: absolute;
+    height: 100%;
+    background-color: #f03939;
+  }
+}
+
+
+
+#sm_slider_price .ui-slider-handle {
+  background: #fff none repeat scroll 0 0;
+  border: 3px solid;
+  border-radius: 50%;
+  color: #f03939;
+  cursor: e-resize;
+  display: block;
+  height: 14px;
+  position: absolute;
+  text-align: center;
+  top: -5px;
+  width: 14px;
+  z-index: 15;
+  margin-right: inherit;
+  padding-left: inherit;
+  padding-right: inherit;
+}
+
+.wrap-price-shopby {
+  .ac-shopby {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 991px) {
+
+  #layered-filter-block .wrap-price-shopby .button.btn-shopby {
+    float: left;
+    padding: 0 10px;
+  }
+}	

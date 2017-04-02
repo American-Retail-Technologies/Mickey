@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<!-- <css src="Sm_Cartpro::css/cartpro.css" media="all" /> -->
+		<css src="Magento_Swatches::css/swatches.css"/>
+	</head>	
+	<body>	
+		<referenceBlock name="head.additional">
+			<block class="Sm\Cartpro\Block\Content" name="content_cartpro" as="content_cartpro" template="Sm_Cartpro::content.phtml" />
+		</referenceBlock>	
+		
+		<referenceContainer name="sidebar.additional">
+            <block class="Magento\Framework\View\Element\Template" name="catalog.compare.sidebar"
+                   template="Magento_Catalog::product/compare/sidebar.phtml">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="compareProducts" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Catalog/js/view/compare-products</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Framework\View\Element\Js\Components" name="head.components" as="components" template="Magento_Catalog::js/components.phtml"/>
+        </referenceContainer>
+		
+		<referenceContainer name="before.body.end">
+			<block class="Sm\Cartpro\Block\JsFooter" template="Sm_Cartpro::jsfooter.phtml" name="before_body_js"/>
+		</referenceContainer>		
+		
+		
+		
+	</body>
+</page>

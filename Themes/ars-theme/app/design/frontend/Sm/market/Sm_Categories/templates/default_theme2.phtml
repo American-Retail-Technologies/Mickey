@@ -1,0 +1,88 @@
+<?php
+/**------------------------------------------------------------------------
+* SM  - Version 
+* Copyright (c) 2015 YouTech Company. All Rights Reserved.
+* @license - Copyrighted Commercial Software
+* Author: YouTech Company
+* Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+?>
+<div class="cat-wrap theme2">
+	<?php
+	$i=0;
+	foreach ($list as $key => $items)
+	{
+		$i++;
+		$cat_child = $items['child_cat'];
+			?>
+			<div class="content-box">
+				<div class="parent-cat">
+					<?php if (($items['image'])) {
+						?>
+						<div class="image-cat">
+							<img
+									src="<?php echo $items['image']; ?>"
+									title="<?php echo $items['title']; ?>"
+									alt="<?php echo $items['title']; ?>"
+									/>
+							<a href="<?php echo $items['link'];?>" title="<?php echo $items['title'];?>" <?php echo $helper->parseTarget($this->_getConfig('target')); ?> class="btn-categories"><?php echo __('View More')?></a>
+						</div>
+					<?php } ?>
+					
+					
+					
+					
+				</div>
+				<?php if ($this->_getConfig('cat_sub_title_display', 1)) { ?>
+					<!-- Begin -->
+					<div class="child-cat">
+						<?php if ($this->_getConfig('cat_title_display') == 1) { ?>
+							<div class="cat-title">
+								<a href="<?php echo $items['link']; ?>"
+								   title="<?php echo $items['title']; ?>"
+									<?php echo $helper->parseTarget($this->_getConfig('target')); ?> >
+									<?php echo $helper->truncate($items['title'], $this->_getConfig('category_title_max_characs', 25)); ?>
+								</a>
+							</div>
+						<?php } ?>
+					
+						<?php
+						if (!empty($items['child_cat'])) { ?>
+							<ul class="sub-cats">
+							<?php foreach ($items['child_cat'] as $key1 => $item) {
+								?>
+								<li class="child-title">
+									<a href="<?php echo $item['link']; ?>"
+									   title="<?php echo $item['title']; ?>" <?php echo $helper->parseTarget($this->_getConfig('target')); ?> >
+										<?php echo $helper->truncate($item['title'], $this->_getConfig('category_sub_title_max_characs', 25)); ?>
+									</a>
+									<?php if ($this->_getConfig('total_item_cate', 1)) { ?>
+										<span class="num_items">
+			                                            <?php echo '(' . ($item['number_products']) . ')'; ?>
+			                                        </span>
+									<?php } ?>
+								</li>
+							<?php } ?>
+							</ul>
+						<?php } else { ?>
+							<p>
+								<?php echo 'No sub-categories to show!'; ?>
+							</p>
+						<?php } ?>
+					</div><!-- END child-cat -->
+				<?php } ?>
+			</div>
+			<?php
+			$clear = 'clr1';
+			if ($i % 2 == 0) $clear .= ' clr2';
+			if ($i % 3 == 0) $clear .= ' clr3';
+			if ($i % 4 == 0) $clear .= ' clr4';
+			if ($i % 5 == 0) $clear .= ' clr5';
+			if ($i % 6 == 0) $clear .= ' clr6';
+			?>
+			<div class="<?php echo $clear; ?>"></div>
+		<?php
+	}
+	?>
+</div>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<basicproducts>
+			<general>
+				<isactive>1</isactive>
+				<display_title>1</display_title>
+				<title>SM Basic Products</title>
+				<target>_blank</target>
+				<nb_column1>3</nb_column1>
+				<nb_column2>3</nb_column2>
+				<nb_column3>3</nb_column3>
+				<nb_column4>2</nb_column4>
+				<nb_column5>1</nb_column5>
+			</general>
+			<source>
+				<product_source>catalog</product_source>
+				<product_category></product_category>
+				<child_category_products>1</child_category_products>
+				<max_depth>1</max_depth>
+				<product_featured>0</product_featured>
+				<product_order_by>name</product_order_by>
+				<product_order_dir>ASC</product_order_dir>
+				<product_limitation>5</product_limitation>
+				<product_additem></product_additem>
+				<product_ids></product_ids>
+				<cat_title_display>1</cat_title_display>
+				<category_title_max_characs>100</category_title_max_characs>
+			</source>
+			<product>
+				<product_title_display>1</product_title_display>
+				<product_title_maxlength>25</product_title_maxlength>
+				<product_description_display>1</product_description_display>
+				<product_description_maxlength>150</product_description_maxlength>
+				<product_price_display>1</product_price_display>
+				<product_reviews_count>1</product_reviews_count>
+				<product_addcart_display>1</product_addcart_display>
+				<product_addwishlist_display>1</product_addwishlist_display>
+				<product_addcompare_display>1</product_addcompare_display>
+				<product_readmore_display>1</product_readmore_display>
+				<product_readmore_text>Details</product_readmore_text>
+			</product>
+			<image>
+				<img_from_product_image>1</img_from_product_image>
+				<img_from_product_description>1</img_from_product_description>
+				<img_order>product_image, product_description</img_order>
+				<img_function>1</img_function>
+				<img_width>200</img_width>
+				<img_height>200</img_height>
+				<img_background>FFFFFF</img_background>
+				<img_replacement>sm/basicproducts/images/nophoto.jpg</img_replacement>
+			</image>
+			<advanced>
+				<pretext>Pretext</pretext>
+				<posttext>Posttext</posttext>
+				<use_cache>1</use_cache>
+				<cache_time>3600</cache_time>
+			</advanced>
+		</basicproducts>
+	</default>
+</config>

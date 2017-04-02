@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<shopby>
+			<general>
+				<isactive>1</isactive>
+				<display_title>1</display_title>
+				<title>SM Shop By</title>
+				<use_ajax>1</use_ajax>
+				<price_slider>1</price_slider>
+			</general>
+			<image>
+				<img_from_product_image>1</img_from_product_image>
+				<img_from_product_description>1</img_from_product_description>
+				<img_order>product_image, product_description</img_order>
+				<img_function>1</img_function>
+				<img_width>200</img_width>
+				<img_height>200</img_height>
+				<img_background>FFFFFF</img_background>
+				<img_replacement>sm/shopby/images/nophoto.jpg</img_replacement>
+			</image>			
+		</shopby>
+	</default>
+</config>

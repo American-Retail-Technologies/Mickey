@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<quickview>
+			<general>
+				<isenabled>1</isenabled>
+				<item_class>.product-items li.product-item .product-item-info .product-item-details</item_class>
+				<item_class_show_button>.product-items li.product-item</item_class_show_button>
+				<label_button>Quick View</label_button>
+				<auto_size>1</auto_size>
+				<popup_width>75</popup_width>
+				<popup_height>90</popup_height>
+				<display_overlay>1</display_overlay>
+				<open_effect>elastic</open_effect>
+				<close_effect>elastic</close_effect>
+			</general>
+		</quickview>
+	</default>
+</config>

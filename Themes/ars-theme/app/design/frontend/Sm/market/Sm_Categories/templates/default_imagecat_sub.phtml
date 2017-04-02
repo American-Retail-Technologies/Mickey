@@ -1,0 +1,23 @@
+<?php
+/**------------------------------------------------------------------------
+ * SM Categories - Version 3.0.0
+ * Copyright (c) 2015 YouTech Company. All Rights Reserved.
+ * @license - Copyrighted Commercial Software
+ * Author: YouTech Company
+ * Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+if (($item->image)) {
+	?>
+	<div class="image-cat">
+		<a href="<?php echo $item->link;?>"
+		   title="<?php echo $item->title;?>"
+			<?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+			>
+			<img
+				src="<?php echo $item->image; ?>"
+				title="<?php echo $item->title; ?>"
+				alt="<?php echo $item->title; ?>"
+				/>
+		</a>
+	</div>
+<?php }

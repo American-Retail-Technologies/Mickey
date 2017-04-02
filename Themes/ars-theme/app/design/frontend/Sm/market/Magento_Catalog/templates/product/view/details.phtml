@@ -1,0 +1,96 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+$_config = $this->helper('Sm\Market\Helper\Data');
+$tabStyle = $_config->getProductDetail('tab_style');
+
+$show_custom_tab = $_config->getProductDetail('show_custom_tab');
+$custom_tab_name = $_config->getProductDetail('custom_tab_name');
+$customtab_content = $_config->getProductDetail('customtab_content');
+?>
+<?php if ($detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml')):?>
+    <div class="product info detailed">
+        <?php $layout = $block->getLayout(); ?>
+        <div class="tab-theme <?php echo $tabStyle . '-style'?>" id="tab-product">
+			<ul class="resp-tabs-list">
+				<?php foreach ($detailedInfoGroup as $name):?>
+					<?php
+						$html = $layout->renderElement($name);
+						if (!trim($html)) {
+							continue;
+						}
+						$alias = $layout->getElementAlias($name);
+						$label = $block->getChildData($alias, 'title');
+					?>
+					
+					<li id="<?php /* @escapeNotVerified */ echo $alias; ?>"><?php  echo $label; ?></li>
+					
+				<?php endforeach;?>
+				
+				<?php if($show_custom_tab){?>
+					<li class="customtab"><?php  echo $custom_tab_name; ?></li>
+				<?php } ?>
+			</ul>
+			
+			<div class="resp-tabs-container">
+				<?php foreach ($detailedInfoGroup as $name):?>
+					<?php
+						$html = $layout->renderElement($name);
+						if (!trim($html)) {
+							continue;
+						}
+					?>
+					
+					<div><?php  echo $html; ?></div>
+					
+				<?php endforeach;?>
+				
+				<?php if($show_custom_tab){?>
+					<div class="customtab-content">
+						<?php  
+							echo $customtab_content; 
+						?>
+					</div>
+				<?php } ?>
+			</div>
+        </div>
+		<script>
+			jQuery(document).ready(function ($) {
+				$('#tab-product').easyResponsiveTabs({
+					type: '<?php echo $tabStyle;?>', //Types: default, vertical, accordion           
+					width: 'auto', //auto or any width like 600px
+					fit: true,   // 100% fit in a container
+					activate: function(event) { // Callback function if tab is switched
+						/* var $tab = $(this);
+						var $info = $('#tabInfo');
+						var $name = $('span', $info);
+
+						$name.text($tab.text());
+
+						$info.show(); */
+					}
+				});
+				
+				$(".product-info-main .reviews-actions .action.view").click(function() {
+					$("#reviews").trigger( "click" );
+					$('html, body').animate({
+						scrollTop: $("#customer-reviews").offset().top
+					}, 1000);
+				});
+				
+				$(".product-info-main .reviews-actions .action.add").click(function() {
+					$("#reviews").trigger( "click" );
+					$('html, body').animate({
+						scrollTop: $("#review-form").offset().top
+					}, 1000);
+				});
+
+			});
+		</script>
+    </div>
+<?php endif; ?>

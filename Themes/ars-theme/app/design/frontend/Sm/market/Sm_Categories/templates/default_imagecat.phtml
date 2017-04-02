@@ -1,0 +1,20 @@
+<?php
+/**------------------------------------------------------------------------
+* SM Categories - Version 3.0.0
+* Copyright (c) 2015 YouTech Company. All Rights Reserved.
+* @license - Copyrighted Commercial Software
+* Author: YouTech Company
+* Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+if (($items->image)) {
+	?>
+	<div class="image-cat">
+		<img
+			src="<?php echo $items->image; ?>"
+			title="<?php echo $items->title; ?>"
+			alt="<?php echo $items->title; ?>"
+		/>
+
+		<a href="<?php echo $items->link;?>" title="<?php echo $items->title;?>" class="btn-categories"><?php echo __('View More')?></a>
+	</div>
+<?php }

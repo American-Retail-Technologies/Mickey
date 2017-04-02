@@ -1,0 +1,76 @@
+<?php
+/*------------------------------------------------------------------------
+ # SM Listing Deals - Version 1.1.0
+ # Copyright (c) 2014 YouTech Company. All Rights Reserved.
+ # @license - Copyrighted Commercial Software
+ # Author: YouTech Company
+ # Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+/** @var $helper \Sm\ListingDeals\Helper\Data */
+$category_image_config = [
+	'width' => (int)$this->_getConfig('imgcat_width', 50),
+	'height' => (int)$this->_getConfig('imgcat_height', 50),
+	'background' => (string)$this->_getConfig('imgcat_background'),
+	'function' => (int)$this->_getConfig('imgcat_function', 0)
+];
+?>
+<div class="listingdeals-tabs-wrap">
+	<span class='listingdeals-tab-selected'></span>
+	<span class='listingdeals-tab-arrow'>&#9660;</span>
+	<ul class="listingdeals-tabs cf">
+		<?php
+		foreach ($list as $tab) {
+			if ($this->_getConfig('product_source') == "catalog") {
+				?>
+				<li class="listingdeals-tab <?php echo isset($tab['sel']) ? '  tab-sel tab-loaded' : ''; ?> <?php echo ($tab['entity_id'] == ('*')) ? ' tab-all' : ''; ?>"
+				    data-category-id="<?php echo $tab['entity_id']; ?>"
+				    data-active-content=".items-category-<?php echo ($tab['entity_id'] == "*") ? 'all' : $tab['entity_id']; ?>">
+					<?php if ($this->_getConfig('icon_display', 1)) {
+						if(empty($tab['_image'])){
+							$tab['_image'] =  $block->getViewFileUrl('Sm_ListingDeals::images/nophoto.jpg');
+						}
+
+						if ($tab['entity_id'] != "*") {
+							if ($tab['_image']) {
+								?>
+									<div class="listingdeals-tab-img">
+										<img width = "<?php echo $category_image_config['width']; ?>"
+											height = "<?php echo $category_image_config['height']; ?>"
+											src="<?php echo $tab['_image']; ?>"
+											title="<?php echo $tab['title']; ?>" alt="<?php echo $tab['title']; ?>"
+											/>
+									</div>
+								<?php
+							}
+						} else {
+							$img =  $block->getViewFileUrl('Sm_ListingDeals::images/icon-catall.png');
+							$cat_img = $helper->_resizeImage($img, $category_image_config,"category");
+							?>
+								<div class="listingdeals-tab-img">
+									<img class="cat-all" src="<?php echo $cat_img; ?>" title="<?php echo $tab['title']; ?>" alt="<?php echo $tab['title']; ?>"/>
+								</div>
+							<?php
+						}
+						?>
+					<?php } ?>
+					<span
+						class="listingdeals-tab-label"><?php echo $helper->truncate($tab['title'], $this->_getConfig('cat_title_maxlength')); ?>
+					</span>
+				</li>
+			<?php
+			} else {
+				?>
+				<li class="listingdeals-tab <?php echo isset($tab['sel']) ? ' tab-sel tab-loaded' : ''; ?> <?php echo ($tab['entity_id'] == ('*')) ? ' tab-all' : ''; ?>"
+				    data-category-id="<?php echo $tab['entity_id']; ?>"
+				    data-active-content=".items-category-<?php echo $tab['entity_id']; ?>">
+					<span
+						class="listingdeals-tab-label">
+							<?php $title = $this->getLabel($tab['title']); ?>
+							<?php echo $helper->truncate($title, $this->_getConfig('cat_title_maxlength')); ?>
+					</span>
+				</li>
+			<?php
+			}
+		} ?>
+	</ul>
+</div>

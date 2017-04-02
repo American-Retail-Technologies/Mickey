@@ -1,0 +1,140 @@
+<?php
+/*------------------------------------------------------------------------
+	# SM Listing Extend - Version 2.0.1
+	# Copyright (c) 2014 YouTech Company. All Rights Reserved.
+	# @license - Copyrighted Commercial Software
+	# Author: YouTech Company
+	# Websites: http://www.magentech.com
+   -------------------------------------------------------------------------*/
+$helper = $this->_helper();
+$col = (int)$this->_getConfig('item_row', 2);
+$count = count($child_items);
+
+$_config = $this->helper('Sm\Market\Helper\Data');
+
+if (!empty($child_items)) {
+    $j = 0;
+    foreach ($child_items as $_product) {
+        $j++; ?>
+		<?php if ($col==1 || ($j % $col) == 1){ ?>
+			<div class="item">
+		<?php } ?>
+			
+		<div class="item-inner">
+			<?php if ($_product->_image) { ?>
+				<div class="box-image">
+					<a href="<?php echo $_product->link ?>"
+					   title="<?php echo $_product->title; ?>"
+						<?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+						>
+						<img src="<?php echo $_product->_image; ?>"
+							 title="<?php echo $_product->title; ?>"
+							 alt="<?php echo $_product->title; ?>" >
+					</a>
+				</div>
+			<?php }?>
+
+			<!-- Begin cdps-content -->
+			<?php  ?>
+			<div class="box-info">
+
+				<?php if ((int)$this->_getConfig('product_title_display', 1)) { ?>
+					<h2 class="product-name">
+						<a href="<?php echo $_product->link; ?>" title="<?php echo $_product->title; ?>"
+							<?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+							>
+							<?php echo $helper->truncate($_product->title, $this->_getConfig('product_title_maxlength')); ?>
+						</a>
+					</h2>
+				<?php } ?>
+
+				<?php if ($this->_getConfig('product_source') != 'media') { ?>
+					<?php if ((int)$this->_getConfig('product_reviews_count', 1)) { ?>
+							<?php 
+								$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+								echo $block->getReviewsSummaryHtml($_product,$templateType,true); 
+							?>
+					<?php } ?>
+
+					<?php if ((int)$this->_getConfig('product_price_display', 1)) { ?>
+						 <?php echo $this->getProductPrice($_product); ?>
+					<?php } ?>
+					
+					
+					<div class="bottom-action">
+						<?php if($_config->getAdvanced('show_addtocart_button')){?>
+						
+							<?php if ($_product->isSaleable()){ ?>
+								
+									<?php $postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+									$postData = $postDataHelper->getPostData($block->getAddToCartUrl($_product), ['product' => $_product->getEntityId()])
+									?>
+									<button class="action tocart btn-action btn-cart"
+											data-post='<?php echo $postData; ?>'
+											type="button" title="<?php  echo __('Add to Cart') ?>">
+										<span><?php echo __('Add to Cart') ?></span>
+									</button>
+								
+							<?php } else { ?>
+								<?php if ($_product->getIsSalable()){ ?>
+									<div class="stock available"><span><?php  echo __('In stock') ?></span></div>
+								<?php } else { ?>
+									<div class="stock unavailable"><span><?php  echo __('Out of stock') ?></span></div>
+								<?php } ?>
+							<?php } ?>
+						
+						<?php } ?>
+
+						
+						<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $_config->getAdvanced('show_wishlist_button') ){ ?>
+							<a href="#" data-post='<?php  echo $block->getAddToWishlistParams($_product); ?>'  class="action towishlist btn-action link-wishlist" data-action="add-to-wishlist" title="<?php  echo __('Add to Wish List') ?>">
+								<span><?php  echo __('Add to Wish List') ?></span>
+							</a>
+						<?php } ?>
+						<?php if ($block->getAddToCompareUrl() &&  $_config->getAdvanced('show_compare_button') ){ ?>
+							<?php
+							$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
+							?>
+							<a href="#" class="action tocompare btn-action link-compare"
+							   data-post='<?php  echo $compareHelper->getPostDataParams($_product);?>'
+							   data-role="add-to-links"
+							   title="<?php  echo __('Add to Compare'); ?>">
+								<span><?php  echo __('Add to Compare') ?></span>
+							</a>
+						<?php }; ?>
+					
+					</div>
+					
+				<?php } ?>
+				
+				<?php if ((int)$this->_getConfig('product_description_display', 1) && $helper->_trimEncode($_product->_description) != '') { ?>
+					<div class="cdps-description">
+						<?php echo $_product->_description; ?>
+					</div>
+				<?php } ?>
+
+				<?php if ($this->_getConfig('product_readmore_display') == 1) { ?>
+					<div class="cdps-detail">
+						<a href="<?php echo $_product->link ?>"
+						   title="<?php echo $_product->title; ?>"
+							<?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+							>
+							<?php echo $this->_getConfig('product_readmore_text', 'Details'); ?>
+						</a>
+					</div>
+				<?php } ?>
+            </div>
+        </div>
+		<?php if (($j % $col == 0) || ($j == $count) ){ ?>
+			</div>
+		<?php } ?>
+        <?php $clear = 'clr1';
+        if ($j % 2 == 0) $clear .= ' clr2';
+        if ($j % 3 == 0) $clear .= ' clr3';
+        if ($j % 4 == 0) $clear .= ' clr4';
+        if ($j % 5 == 0) $clear .= ' clr5';
+        if ($j % 6 == 0) $clear .= ' clr6';
+        ?>
+    <?php
+    }
+}?>

@@ -1,0 +1,229 @@
+<?php
+/*------------------------------------------------------------------------
+# SM Basic Products - Version 2.1.0
+# Copyright (c) 2015 YouTech Company. All Rights Reserved.
+# @license - Copyrighted Commercial Software
+# Author: YouTech Company
+# Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$list = $block->_getSelectSource();
+$helper = $this->_helper();
+$_config = $this->helper('Sm\Market\Helper\Data');
+
+if (!empty($list)) {
+    $uniqued = 'sm_basic_products_' . time() . rand();
+	$class_respl = 'bs-resp01-' . $this->_getConfig('nb_column1', 3) . ' bs-resp02-' . $this->_getConfig('nb_column2', 3) . ' bs-resp03-' . $this->_getConfig('nb_column3', 3) . ' bs-resp04-' . $this->_getConfig('nb_column4', 2) . ' bs-resp05-' . $this->_getConfig('nb_column5', 1);
+    ?>
+
+    <?php if ($this->_getConfig('pretext') != null) { ?>
+		<div class="bs-pretext">
+			<?php echo $this->_getConfig('pretext'); ?>
+		</div>
+	<?php } ?>
+
+	<?php if ($this->_getConfig('display_title', 1)) { ?>
+		<?php if ($this->_getConfig('title')) { ?>
+			<div class="shop-title">
+				<div class="title"><?php echo __('Shop')?></div>
+				<div class="sub-title">
+					<h2><?php echo $this->_getConfig('title', 'Sm Basic Products'); ?></h2>
+				</div>
+			</div>
+		<?php } ?>
+	<?php } ?>
+
+    <div id="<?php echo $uniqued; ?>" class="products-grid sm-basic-products">
+        <!-- Begin bs-items     -->
+        <div class="bs-items <?php echo $class_respl; ?> ">
+            <?php  $j = 0;
+            foreach ($list as $_product) { $j++;
+                ?>
+                <!-- Begin bs-item-cf -->
+                <div class="item bs-item cf">
+                    <!-- Begin bs-item-inner -->
+                    <div class="item-inner">
+                        <?php if ($_product->_image) { ?>
+                            <div class="box-image">
+                                <a href="<?php echo $_product->link ?>"
+                                   title="<?php echo $_product->title; ?>"
+                                    <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+                                    >
+                                    <img src="<?php echo $_product->_image; ?>"
+                                         title="<?php echo $_product->title; ?>"
+                                         alt="<?php echo $_product->title; ?>"
+                                        >
+                                </a>
+								
+								<!--LABEL PRODUCT-->
+
+                                <?php
+									$specialprice = $_product->getSpecialPrice();
+									$specialPriceFromDate = $_product->getSpecialFromDate();
+									$specialPriceToDate = $_product->getSpecialToDate();
+									
+									$today = time();
+
+									if ($specialprice) {
+										if ($today >= strtotime($specialPriceFromDate) && $today <= strtotime($specialPriceToDate) || $today >= strtotime($specialPriceFromDate) && is_null($specialPriceToDate)) { ?>
+											<div class="label-product label-sale">
+												<span class="sale-product-icon">
+													<?php echo __('Sale'); ?>
+												</span>
+											</div>
+										<?php }
+									}
+								?>
+								
+								<?php
+								$now = date("Y-m-d");
+                                $newsFrom = substr($_product->getNewsFromDate(), 0, 10);
+                                $newsTo = substr($_product->getNewsToDate(), 0, 10);
+								
+								if ($newsTo != '' || $newsFrom != '') {
+                                    if (($newsTo != '' && $newsFrom != '' && $now >= $newsFrom && $now <= $newsTo) || ($newsTo == '' && $now >= $newsFrom) || ($newsFrom == '' && $now <= $newsTo)) {?>
+                                            <div class="label-product label-new">
+												<span class="new-product-icon"><?php echo __('New'); ?></span>
+											</div>
+                                    <?php }
+                                } ?>
+								
+								
+								<!--END LABEL PRODUCT-->
+								
+								<div class="bottom-action">
+									<?php if($_config->getAdvanced('show_addtocart_button')){?>
+										<div class="actions-primary">
+											 <?php if ($_product->isSaleable()): ?>
+												<?php $postParams = $this->getAddToCartPostParams($_product); 
+												$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+												$session = $objectManager->get('\Magento\Framework\View\Element\FormKey');
+												?>
+												<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+													<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+													<input type="hidden" name="<?php /* @escapeNotVerified */ echo \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED]; ?>">
+													<?php echo $block->getBlockHtml('formkey')?>
+													<input  name="form_key" type="hidden" value="<?php echo $session->getFormKey(); ?>" />
+													<button type="submit"
+															title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+															class="action tocart primary btn-action btn-cart">
+														<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+													</button>
+												</form>
+											<?php else: ?>
+												<?php if ($_product->getIsSalable()): ?>
+													<div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+												<?php else: ?>
+													<div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+												<?php endif; ?>
+											<?php endif; ?>
+										</div>
+									<?php } ?>
+									
+									
+
+									<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && $_config->getAdvanced('show_wishlist_button') ){ ?>
+										<a href="#" data-post='<?php  echo $block->getAddToWishlistParams($_product); ?>'  class="action towishlist btn-action link-wishlist" data-action="add-to-wishlist" title="<?php  echo __('Add to Wish List') ?>">
+											<span><?php  echo __('Add to Wish List') ?></span>
+										</a>
+									<?php } ?>
+									
+									<?php if ($block->getAddToCompareUrl() &&  $_config->getAdvanced('show_compare_button') ){ ?>
+										<?php
+										$compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare');
+										?>
+										<a href="#" class="action tocompare btn-action link-compare"
+										   data-post='<?php  echo $compareHelper->getPostDataParams($_product);?>'
+										   data-role="add-to-links"
+										   title="<?php  echo __('Add to Compare'); ?>">
+											<span><?php  echo __('Add to Compare') ?></span>
+										</a>
+									<?php }; ?>
+									
+									
+								</div>
+                            </div>
+                        <?php }?>
+
+                        <!-- Begin bs-content -->
+                        <?php  ?>
+						<div class="product details product-item-details box-info">
+
+                            <?php if ((int)$this->_getConfig('product_title_display', 1)) { ?>
+                                <h2 class="product name product-item-name product-name">
+                                    <a href="<?php echo $_product->link; ?>" title="<?php echo $_product->title; ?>"
+                                        <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+                                        >
+                                        <?php echo $helper->truncate($_product->title, $this->_getConfig('product_title_maxlength')); ?>
+                                    </a>
+                                </h2>
+                            <?php } ?>
+							
+							<?php if ($this->_getConfig('product_source') != 'media') { ?>
+							
+								<?php if ((int)$this->_getConfig('product_reviews_count', 1)) {
+										$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+										echo $block->getReviewsSummaryHtml($_product,$templateType,true); 
+								} ?>
+
+                                <?php if ((int)$this->_getConfig('product_price_display', 1)) {
+									echo $this->getProductPrice($_product);
+                                } ?>
+								
+							<?php } ?>
+							
+                            <?php if ((int)$this->_getConfig('product_description_display', 1) && $helper->_trimEncode($_product->_description) != '') { ?>
+                                <div class="bs-description">
+                                    <?php echo $_product->_description; ?>
+                                </div>
+                            <?php } ?>
+							
+                            <?php if ($this->_getConfig('cat_title_display') == 1 && $this->_getConfig('product_source') != 'media') { ?>
+                               <div class="bs-category"><?php echo __('Category:&nbsp') ;?>
+									<a  href="<?php echo $_product->cat_link; ?>"  title="<?php echo $_product->cat_title; ?>"  <?php echo $helper->parseTarget($this->_getConfig('target')); ?>>
+										 <?php echo  $helper->truncate($_product->cat_title, $this->_getConfig('category_title_max_characs', 25)); ?>
+									</a>
+									
+                                </div>
+                            <?php } ?>
+
+                            <?php if ($this->_getConfig('product_readmore_display') == 1) { ?>
+                                <div class="bs-detail">
+                                    <a href="<?php echo $_product->link ?>"
+                                       title="<?php echo $_product->title; ?>"
+                                        <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+                                        >
+                                        <?php echo $this->_getConfig('product_readmore_text', 'Details'); ?>
+                                    </a>
+                                </div>
+                            <?php } ?>
+							
+                        </div>
+						
+                        <!-- End bs-content -->
+                    </div>
+                    <!-- End bs-item-inner -->
+                </div><!-- End bs-item-cf -->
+                <?php
+                $clear = 'clr1';
+                if ($j % 2 == 0) $clear .= ' clr2';
+                if ($j % 3 == 0) $clear .= ' clr3';
+                if ($j % 4 == 0) $clear .= ' clr4';
+                if ($j % 5 == 0) $clear .= ' clr5';
+                if ($j % 6 == 0) $clear .= ' clr6';
+                ?>
+                <div class="<?php echo $clear; ?>"></div>
+            <?php } ?>
+        </div>
+        <!-- End bs-items -->
+    </div><!-- End Sm-basic-products -->
+   <?php if ($this->_getConfig('posttext') != null) { ?>
+		<div class="bs-posttext">
+			<?php echo $this->_getConfig('posttext'); ?>
+		</div>
+	<?php } ?>
+<?php
+} else {
+	echo '<h1 style="color:#f1703d;">Has no content to show!</h1>';
+}
+?>

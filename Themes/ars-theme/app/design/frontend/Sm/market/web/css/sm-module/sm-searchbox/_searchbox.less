@@ -1,0 +1,50 @@
+.sm-searchbox-popular{
+  padding: 15px 0;
+  display: table;
+  width: 100%;
+
+  .sm-searchbox-popular-title{
+    white-space: nowrap;
+    vertical-align: top;
+    color: #444;
+    font-size: 108.33%;
+    padding-right: 5px;
+  }
+
+  .sm-searchbox-keyword{
+    ul{
+      li{
+        float: left;
+        margin-right: 5px;
+        font-size: 108.33%;
+
+        &:after{
+          content: ",";
+        }
+
+        &:last-child{
+          &:after{
+            display: none;
+          }
+        }
+
+        a{
+          color: #666;
+
+          &:hover{
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.search-autocomplete{
+  z-index: 99!important;
+  margin-top: auto;
+}
+
+.sm-searchbox-advanced{
+  clear: both;
+}

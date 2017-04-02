@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<categories>
+			<general>
+				<isenabled>1</isenabled>
+				<display_title>1</display_title>
+				<title>SM Categories</title>
+				<target>_blank</target>
+				<nb_column1>4</nb_column1>
+				<nb_column2>3</nb_column2>
+				<nb_column3>3</nb_column3>
+				<nb_column4>2</nb_column4>
+				<nb_column5>1</nb_column5>
+				<theme>theme1</theme>
+				<accmouseenter>click</accmouseenter>
+			</general>
+
+			<source>
+				<product_category></product_category>
+				<max_depth>1</max_depth>
+				<category_order_by>entity_id</category_order_by>
+				<category_order_dir>ASC</category_order_dir>
+				<product_limitation>5</product_limitation>
+			</source>
+
+			<cat_options>
+				<cat_title_display>1</cat_title_display>
+				<category_title_max_characs>50</category_title_max_characs>
+				<cat_sub_title_display>1</cat_sub_title_display>
+				<category_sub_title_max_characs>50</category_sub_title_max_characs>
+				<total_item_cate>1</total_item_cate>
+			</cat_options>
+
+			<image_options>
+				<imgcat_from_category_image>1</imgcat_from_category_image>
+				<imgcat_from_category_description>1</imgcat_from_category_description>
+				<imgcat_order>category_image, category_description</imgcat_order>
+				<imgcat_function>1</imgcat_function>
+				<imgcat_width>150</imgcat_width>
+				<imgcat_height>150</imgcat_height>
+				<imgcat_background>FFFFFF</imgcat_background>
+				<imgcat_replacement>sm/categories/images/nophoto.jpg</imgcat_replacement>
+			</image_options>
+
+			<advanced>
+				<pretext>Pretext</pretext>
+				<posttext>Posttext</posttext>
+				<use_cache>1</use_cache>
+				<cache_time>3600</cache_time>
+			</advanced>
+		</categories>
+	</default>
+</config>

@@ -1,0 +1,54 @@
+<?php
+/*------------------------------------------------------------------------
+ # SM Cart Pro - Version 2.2.0
+ # Copyright (c) 2015 YouTech Company. All Rights Reserved.
+ # @license - Copyrighted Commercial Software
+ # Author: YouTech Company
+ # Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$_helper_compare =  $this->helper('Magento\Catalog\Helper\Product\Compare');
+$_items = $_helper_compare->getItemCount() > 0 ? $_helper_compare->getItemCount() : null;
+$cls_compare = ($_items) ? '' :' cartpro-hidden';
+$_helper_wishlist = $this->helper('Magento\Wishlist\Helper\Data');
+$_nb_wishlist = $_helper_wishlist->getItemCount() > 0 ? $_helper_wishlist->getItemCount() : null;
+$cls_wishlist = $_nb_wishlist ? '' : ' cartpro-hidden ';
+$helper  = $this->helper('Sm\Cartpro\Helper\Data');
+$confirm_countdown_number = (int)$helper->_getConfig('confirm_countdown_number'); 
+$cls_time = $confirm_countdown_number > 0 ? ' ' : ' cartpro-hidden';
+$_cartQty = (int)$this->getSummaryCount();
+$cls_cart = $_cartQty > 0 ? '' : ' cartpro-hidden';
+?>
+
+<div id="cartpro_process" class="cartpro-process">
+	<div class="cartpro-loadmark">
+		<div class="cartpro-imageload">
+			<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+			<div class="cartpro-text">
+				<?php echo __('Please wait...');?>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="cartpro_modal" class="cartpro-modal ">
+	<div class="cpmodal-wrapper">
+		<span class="cpmodal-close cp-close"><i class="fa fa-times"></i></span>
+		<div class="cpmodal-message"></div>
+		
+		<div class="content-cpcart">
+			<div class="cpmodal-iframe"></div>
+			<div class="cpmodal-action">
+				<a class="cpmodal-button cp-close cartpro-time" title="<?php  echo __('Continue');?>"  href="#">
+					<span class="cpmodal-time"></span><?php  echo __('Continue');?></a>
+				<a class="cpmodal-button  cpmodal-viewcart cpmodal-display <?php echo $cls_cart; ?>" 
+					title="<?php  echo __('View cart & checkout');?>" 
+					href="<?php echo $this->getUrl('checkout/cart/'); ?>">
+					<?php  echo __('View cart & checkout'); ?>
+				</a>
+				<a  class="cpmodal-button  cartpro-wishlist cpmodal-display <?php echo $cls_wishlist; ?>" href="<?php echo $_helper_wishlist->getListUrl() ?>"><?php echo __('Go to Wishlist') ?></a>
+				<a  class="cpmodal-button  cartpro-compare cpmodal-display <?php echo $cls_compare; ?>" href="<?php echo $_helper_compare->getListUrl() ?>"><?php echo __('Go to Compare') ?></a>
+			</div>
+			<div class="cpmodal-form"> </div>
+		</div>
+	</div>
+</div>

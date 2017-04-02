@@ -1,0 +1,188 @@
+<?php
+/*------------------------------------------------------------------------
+# SM Image Slider - Version 2.1.0
+# Copyright (c) 2015 YouTech Company. All Rights Reserved.
+# @license - Copyrighted Commercial Software
+# Author: YouTech Company
+# Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$list = $this->_getProducts();
+if (!empty($list)) {
+	$tag_id = 'sm_imageslider_' . rand() . time();
+	$helper = $this->_helper();
+
+	$stop = (int)$this->_getConfig('stop', 1) ? 'true' : 'false';
+	$play = (int)$this->_getConfig('play', 1) ? 'true' : 'false';
+	$step = (int)$this->_getConfig('scroll', 1);
+	$step = $step <= 0 ? 1 : $step;
+	$speed = (int)$this->_getConfig('duration');
+	$interval = (int)$this->_getConfig('delay');
+	$start = (int)$this->_getConfig('start');
+	$start = ($start <= 0 || $start > count($list)) ? 0 : $start - 1;
+
+	$nav = ($this->_getConfig('nav', 1) == 1) ? 'true' : 'false';
+	$_navSpeed = $this->_getConfig('navSpeed', 1000);
+	$navSpeed = (is_numeric($_navSpeed) && $_navSpeed >= 0) ? $_navSpeed : 1000;
+	$loop = ($this->_getConfig('loop', 1) == 1) ? 'true' : 'false';
+	$dots = ($this->_getConfig('dots', 1) == 1) ? 'true' : 'false';
+	$_dotSpeed = $this->_getConfig('dotsSpeed');
+	$dotsSpeed = (is_numeric($_dotSpeed) && $_dotSpeed >= 0) ? $_dotSpeed : 1000;
+	
+	$_margin = $this->_getConfig('margin', 1);
+	$margin = (is_numeric($_margin) && $_margin >= 0) ? $_margin : 5;
+	$theme = $this->_getConfig('theme_display', 1);
+	$mouseDrag = ($this->_getConfig('mouseDrag', 1) == 1) ? 'true' : 'false';
+
+
+	$_device1 = $this->_getConfig('nb_column1', 4);
+	if ($theme == 'theme1') {
+		$device1 = $_device1;
+	}
+
+	$device2 = $this->_getConfig('nb_column2', 3);
+	$_wide_box = $this->_getConfig('wide_box','wide');
+	$wide_box = ($_wide_box == 'boxed')?' boxed':'';
+?>
+	<div id="<?php echo $tag_id; ?>" class="sm-imageslider imgsl-preload <?php echo $theme.$wide_box; ?>">
+
+		<?php if ($this->_getConfig('display_title', 1)) { ?>
+			<?php if ($this->_getConfig('title')) { ?>
+				<div class="title-imageslider">
+					<?php echo $this->_getConfig('title'); ?>
+				</div>
+			<?php } ?>
+		<?php } ?>
+
+		<?php if ($this->_getConfig('pretext') != '') { ?>
+			<div class="image-pre-text"><?php echo $this->_getConfig('pretext'); ?></div>
+		<?php } ?>
+
+		<div class="sm-imageslider-loading">
+			<div class="cssload-square">
+				<div class="cssload-square-part cssload-square-green"></div>
+				<div class="cssload-square-part cssload-square-pink"></div>
+				<div class="cssload-square-blend"></div>
+			</div>
+		</div>
+		<div class="sm-imageslider-inner <?php echo $theme; ?>">
+			<div class="sm-imageslider-content owl-carousel">
+				<?php foreach ($list as $key => $_product) {
+					if ($theme == 'theme1' ) {
+						$data = 1;
+					}
+					?>
+					<div class="item">
+						<div class="item-image">
+							<a href="<?php echo $_product['link']; ?>"
+							   title="<?php echo $_product['title']; ?>"
+								<?php echo $helper->parseTarget($this->_getConfig('target')); ?> >
+								<img src="<?php echo $_product['_image']; ?>" alt="<?php echo $_product['title']; ?>"/>
+							</a>
+						</div>
+
+						<?php if ($theme == 'theme2' && ($this->_getConfig('product_description_display', 1) || $this->_getConfig('product_title_display', 1))) { ?>
+							<div class="item-info">
+								<?php if ($this->_getConfig('product_description_display', 1)) { ?>
+									<div class="item-desc">
+										<div class="item-desc-inner">
+											<?php echo $_product['_description']; ?>
+										</div>
+									</div>
+								<?php } ?>
+
+								<?php if ($this->_getConfig('product_title_display', 1)) { ?>
+									<div class="item-title">
+										<div class="item-title-inner">
+											<a href="<?php echo $_product['link']; ?>"
+											   title="<?php echo $_product['title']; ?>"
+												<?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+												>
+												<?php echo $_product['title']; ?>
+											</a>
+										</div>
+									</div>
+								<?php } ?>
+							</div>
+						<?php } ?>
+					</div>
+				<?php
+				}?>
+			</div>
+		</div>
+
+		<?php if ($this->_getConfig('posttext') != '') { ?>
+			<div class="image-post-text"><?php echo $this->_getConfig('posttext'); ?></div>
+		<?php } ?>
+
+	</div>
+
+	<script type="text/javascript">
+			//<![CDATA[
+			jQuery(document).ready(function ($) {
+				;
+				(function (element) {
+					var $element = $(element),
+						$sm_imageslider = $('.sm-imageslider-content', $element);
+
+					$(window).on('load', function () {
+						setTimeout(function () {
+							$('.sm-imageslider-loading', $element).remove();
+							$element.removeClass('imgsl-preload');
+							__runImageSlider();
+
+						}, 1000);
+
+					});
+
+					function __runImageSlider() {
+						$sm_imageslider.owlCarousel({
+							
+							<?php if($theme == 'theme2') { ?>
+								center: true,
+								autoWidth:true,
+								items:3,
+								margin:0,
+							<?php } else { ?>
+								center: false,
+								startPosition: <?php echo $start;?>,
+								margin: <?php echo $margin;?>,
+								responsive: {
+									0: {
+										items:<?php echo $device2;?>
+									},
+									768: {
+										items:<?php echo $device1;?>
+									}
+								},
+							<?php } ?>
+							
+							
+							nav: <?php echo $nav;?>,
+							loop: <?php echo $loop;?>,
+							dots: <?php echo $dots;?>,
+							dotsSpeed: <?php echo $dotsSpeed;?>,
+
+							navText: ['&#139;', '&#155;'],
+							slideBy: <?php echo $step;?>,
+							autoplay: <?php echo $play; ?>,
+							autoplayTimeout: <?php echo $interval;?>,
+							autoplayHoverPause: <?php echo $stop;?>,
+							autoplaySpeed: <?php echo $speed;?>,
+							
+							navSpeed: <?php echo $navSpeed;?>,
+							mouseDrag: <?php echo $mouseDrag;?>,
+							
+							responsiveRefreshRate: 100,
+						});
+					}
+
+					
+				})('#<?php echo $tag_id; ?>');
+			});
+			//]]>
+	</script>
+<?php
+} else {
+	echo 'Has no item to show!';
+}?>

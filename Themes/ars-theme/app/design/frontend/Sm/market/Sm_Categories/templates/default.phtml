@@ -1,0 +1,113 @@
+<?php
+/**------------------------------------------------------------------------
+* SM Categories - Version 3.1.0
+* Copyright (c) 2015 YouTech Company. All Rights Reserved.
+* @license - Copyrighted Commercial Software
+* Author: YouTech Company
+* Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$list = $this->_getList();
+$helper = $this->_helper();
+$uniqued = 'sm_categories_' . rand() . time();
+$theme = $this->_getConfig('theme', 'theme1');
+
+$cat_dev1 = ' cat01-' . $this->_getConfig('nb_column1', 4);
+$cat_dev2 = ' cat02-' . $this->_getConfig('nb_column2', 3);
+$cat_dev3 = ' cat03-' . $this->_getConfig('nb_column3', 3);
+$cat_dev4 = ' cat04-' . $this->_getConfig('nb_column4', 2);
+$cat_dev5 = ' cat05-' . $this->_getConfig('nb_column5', 1);
+$cat_dev = $cat_dev1.$cat_dev2.$cat_dev3.$cat_dev4.$cat_dev5;
+?>
+
+<?php
+	if($this->_getConfig('display_title'))
+	{
+		if ($this->_getConfig('title')) {
+			?>
+				<div class="title-home-page">
+					<?php echo $this->_getConfig('title', 'SM Categories'); ?>
+				</div>
+			<?php
+		}
+	}
+?>
+<?php if ($this->_getConfig('pretext')) { ?>
+	<div class="intro_text">
+		<?php echo $this->_getConfig('pretext'); ?>
+	</div>
+<?php } ?>
+
+<?php if (!empty($list)) { ?>
+	<div id="<?php echo $uniqued; ?>" class="sm-categories <?php echo $theme . $cat_dev; ?>">
+		<?php require('default_'.$theme.'.phtml'); ?>
+	</div>
+<?php
+} else {
+	echo '<h3 style="color:#f1703d;">'.__('Has no content to show!').'</h3>';
+}
+?>
+
+<?php if ($this->_getConfig('posttext')) { ?>
+	<div class="footer_text">
+		<?php echo $this->_getConfig('posttext'); ?>
+	</div>
+<?php } ?>
+
+<?php if ($theme == 'theme4') {
+	?>
+		<script type="text/javascript">
+			require([
+				"Sm_Categories/js/jquery.imagesloaded",
+				"Sm_Categories/js/jquery.accordion"
+			], function() {
+				//<![CDATA[
+				jQuery(document).ready(function ($) {
+					;(function (element) {
+						var $element = $(element);
+						$(window).load(function () {
+							$element.imagesLoaded(function () {
+							});
+						});
+						$element.imagesLoaded(function () {
+
+							$element.accordion({
+								items: '.sm-categories-inner',
+								heading: '.sm-categories-heading',
+								content: '.sm-categories-content',
+								active_class: 'selected',
+								event: '<?php echo $this->_getConfig('accmouseenter','click'); ?>',
+								delay: 300,
+								duration: 500,
+								active: '1'
+							});
+
+							var height_content = function () {
+								$('.sm-categories-inner', $element).each(function () {
+									var $inner = $('.sm-categories-content', $(this).filter('.selected'));
+									$inner.css('height', 'auto');
+									if ($inner.length) {
+										var inner_height = $inner.height();
+										$inner.css('height', inner_height);
+									}
+								});
+							}
+
+							if ($.browser.msie && parseInt($.browser.version, 10) <= 8) {
+
+							} else {
+								$(window).resize(function () {
+									height_content();
+								});
+								$(window).load(function () {
+									height_content();
+								});
+							}
+						});
+					})('#<?php echo $uniqued;?>')
+
+				});
+				//]]>
+			});
+		</script>
+<?php } ?>

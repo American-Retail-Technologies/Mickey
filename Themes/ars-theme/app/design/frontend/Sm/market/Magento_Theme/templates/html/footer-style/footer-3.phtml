@@ -1,0 +1,68 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+$_config = $this->helper('Sm\Market\Helper\Data');
+?>
+
+<div class="footer-container footer-style-3">
+	<div class="footer-wrapper">
+		<div class="container">
+			<div class="socials-footer">
+				<?php echo $block->getLayout()->createBlock('Magento\Framework\View\Element\Template')->setTemplate('Magento_Theme::html/social.phtml')->toHtml(); ?>
+			</div>
+			
+			<div class="footer-top">
+				<div class="row">
+					<div class="col-md-3 col-sm-6 col-xs-12 about-store">
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('about-footer')->toHtml(); ?>
+					</div>
+					
+					<div class="col-md-3 col-sm-6 col-xs-12 customer-services">
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('customer-services-footer')->toHtml(); ?>
+					</div>
+					
+					<div class="col-md-3 col-sm-6 col-xs-12 payment-shipping">
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('payment-shipping-footer')->toHtml(); ?>
+					</div>
+					
+					<div class="col-md-3 col-sm-6 col-xs-12 contact-footer">
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('contact-footer')->toHtml(); ?>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 copyright-footer">
+						<?php if($_config->getAdvanced('custom_copyright')){ ?>
+							<address><?php echo $_config->getAdvanced('copyright_content') ?></address>
+						<?php } else {?>
+							<address><?php /* @escapeNotVerified */ echo $block->getCopyright() ?></address>
+						<?php } ?>
+					</div>
+					
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 footer-payment">
+						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('payment-footer-2')->toHtml(); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+	
+	<?php if($_config->getAdvanced('show_gototop')){ ?>
+		<a id="yt-totop" href="javascript:void(0)" title="Go to Top"></a>
+	<?php } ?>
+</div>
+
+
+
+

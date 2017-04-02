@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+
+<?php
+	$_config = $this->helper('Sm\Market\Helper\Data');
+	$detailStyle = $_config->getProductDetail('detail_style');
+	$thumsStyle = $_config->getProductDetail('thumbs_style');
+	
+	if($detailStyle == 'detail-1'){
+		include (dirname(__FILE__).'/detail-style/detail-1.phtml');
+	} else {
+		include (dirname(__FILE__).'/detail-style/detail-sidebar.phtml');
+	}
+?>
+

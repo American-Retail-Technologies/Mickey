@@ -1,0 +1,181 @@
+<?php
+/*------------------------------------------------------------------------
+ # SM Countdown Product Slider - Version 2.0.1
+ # Copyright (c) 2014 YouTech Company. All Rights Reserved.
+ # @license - Copyrighted Commercial Software
+ # Author: YouTech Company
+ # Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$child_items = $this->_getSelectSource();
+$helper = $this->_helper();
+$_config = $this->helper('Sm\Market\Helper\Data');
+if (!empty($child_items)) {
+	$class_cslider = '';
+	$module_id = $this->_moduleID();
+	$tag_id = 'sm_coundownproduct_slider_' . rand() . time();	
+	//effect
+	$nav = $this->_getConfig('nav') == 1?'true':'false';
+	$loop = $this->_getConfig('loop') == 1?'true':'false';
+	$slideBy = (int)$this->_getConfig('slideBy') > 0 ? $this->_getConfig('slideBy') : 1;
+	$autoplay = $this->_getConfig('autoplay') == 1?'true':'false';
+	$autoplayHoverPause = $this->_getConfig('autoplayHoverPause') == 1?'true':'false';
+	$autoplayTimeout = $this->_getConfig('autoplayTimeout') >= 0 ? $this->_getConfig('autoplayTimeout') : 5000;	
+	$autoplaySpeed = $this->_getConfig('autoplaySpeed') >= 0 ? $this->_getConfig('autoplaySpeed') : 5000;
+	$navSpeed = $this->_getConfig('navSpeed') >= 0 ? $this->_getConfig('navSpeed') : 5000;
+	$startPosition = $this->_getConfig('startPosition') > 0 ? $this->_getConfig('startPosition') : 1;
+	$mouseDrag = $this->_getConfig('mouseDrag') == 1?'true':'false';
+	$touchDrag = $this->_getConfig('touchDrag') == 1?'true':'false';
+	
+	$effect = $this->_getConfig('effect', '');
+	$duration = $this->_getConfig('duration') >= 0 ? $this->_getConfig('duration') : 300;
+	$delay = $this->_getConfig('delay') >= 0 ? $this->_getConfig('delay') : 600;
+	$margin = (int)$this->_getConfig('margin') >= 0 ? $this->_getConfig('margin') : 5;
+	
+	$nb_column1 = $this->_getConfig('nb_column1', 4);
+	$nb_column2 = $this->_getConfig('nb_column2', 3);
+	$nb_column3 = $this->_getConfig('nb_column3', 2);
+	$nb_column4 = $this->_getConfig('nb_column4', 1);
+	$nb_column5 = $this->_getConfig('nb_column5', 1);
+	$class_suffix = $this->_getConfig('class_suffix', '');
+	
+	$date_from = $this->_getConfig('date_from', '');
+	?>
+
+	<div id="<?php echo $tag_id; ?>" class="sm-countdownproduct-slider first-load <?php echo $class_suffix; ?>">
+			
+		
+		
+				
+		<div class="cslider-wrap products-grid">
+			<div class="content-slider">
+				<div class="title-home">
+					<?php if ($this->_getConfig('display_title')) : ?>
+						<h2>
+							<?php echo $this->_getConfig('title', 'Sm Countdown Product Slider'); ?>
+						</h2>
+					<?php endif; ?>
+
+					<?php if ($this->_getConfig('pretext')) { ?>
+						<p class="bs-pretext"><?php echo $this->_getConfig('pretext'); ?></p>
+					<?php } ?>
+					
+					<div class="countdown-slider">
+						<?php if ($date_from): ?>
+							<div class="countdown-time">
+								<div class="cslider-item-timer" data-timer="<?php echo date("Y/m/d", strtotime($date_from)); ?>"></div>
+							</div>
+						<?php endif; ?>
+					</div>	
+				</div>
+				
+				<div class="slider-wrapper">
+					<div class="product-slider cslider-items-container">
+						<?php if (!empty($child_items)) {
+							include('default_items.phtml');
+						} else {
+							?>
+							<div class="cslider-loading"></div>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+		
+			
+			<!--End Items-->
+		</div>
+	</div>
+	
+   <?php if ($this->_getConfig('posttext')) { ?>
+		<div class="cdps-posttext">
+			<?php echo $this->_getConfig('posttext'); ?>
+		</div>
+	<?php } ?>
+	
+	<script type="text/javascript">	
+		jQuery(document).ready(function ($) {
+			;(function (element) {
+				var $element = $(element),
+					$countdownproductslider = $('.cslider-items-container',$element);
+
+					$countdownproductslider.owlCarousel({
+					nav: <?php echo $nav; ?>,
+					loop: <?php echo $loop; ?>,
+					margin: <?php echo $margin; ?>,
+					slideBy: <?php echo $slideBy; ?>,
+					autoplay: <?php echo $autoplay; ?>,
+					autoplayHoverPause: <?php echo $autoplayHoverPause; ?>,
+					autoplayTimeout: <?php echo $autoplayTimeout; ?>,
+					autoplaySpeed: <?php echo $autoplaySpeed; ?>,
+					navSpeed: <?php echo $navSpeed; ?>,
+					startPosition: <?php echo $startPosition; ?>,
+					mouseDrag:<?php echo $mouseDrag; ?>,
+					touchDrag:<?php echo $touchDrag; ?>,
+					dots: true,
+					stagePadding: 5,
+					responsive: {
+						0: {
+							items:<?php echo $nb_column5;?>
+						},
+						480: {
+							items:<?php echo $nb_column4;?>
+						},
+						768: {
+							items:<?php echo $nb_column3;?>
+						},
+						991: {
+							items:<?php echo $nb_column2;?>
+						},						
+						1200: {
+							items:<?php echo $nb_column1;?>
+						}
+					}
+					});
+
+
+					
+					data = new Date(2013,10,26,12,00,00);
+
+					function CountDown(date,$el){
+						dateNow = new Date();
+						amount = date.getTime() - dateNow.getTime();
+						delete dateNow;
+						if(amount < 0){
+							$el.html("Now!");
+						} else{
+							days=0;hours=0;mins=0;secs=0;out="";
+							amount = Math.floor(amount/1000);
+							days=Math.floor(amount/86400);
+							amount=amount%86400;
+							hours=Math.floor(amount/3600);
+							amount=amount%3600;
+							mins=Math.floor(amount/60);
+							amount=amount%60;
+							secs=Math.floor(amount);
+							if(days != 0){out += "<div class='deals-time time-day'><div class='num-time'>"+ days +"</div><div class='title-time'>"+((days==1)?"d":"d")+"</div></div>";}
+							if(hours != 0){out += "<div class='deals-time time-hours'><div class='num-time'>"+ hours +"</div><div class='title-time'>"+((hours==1)?"h":"h")+"</div></div>";}
+							out += "<div class='deals-time time-mins'><div class='num-time'>"+ mins +"</div><div class='title-time'>"+((mins==1)?"m":"m")+"</div></div>";
+							out += "<div class='deals-time time-secs'><div class='num-time'>"+ secs +"</div><div class='title-time'>"+((secs==1)?"s":"s")+"</div></div>";
+							out = out.substr(0,out.length-2);
+							$el.html(out);
+							setTimeout(function(){CountDown(date,$el)}, 1000);
+						}
+					}		
+
+					$( ".cslider-item-timer",$element).each(function() {
+						var timer = $(this).data('timer');
+						var data = new Date(timer);
+						CountDown(data,$(this));
+					});			
+
+				})("#<?php echo $tag_id; ?>");
+			});			
+	
+	</script>
+<?php
+} else {
+	echo 'Has no item to show!';
+} ?>
+
+
+

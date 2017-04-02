@@ -1,0 +1,126 @@
+<?php
+/*------------------------------------------------------------------------
+# SM Basic Products - Version 2.1.0
+# Copyright (c) 2015 YouTech Company. All Rights Reserved.
+# @license - Copyrighted Commercial Software
+# Author: YouTech Company
+# Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$list = $block->_getSelectSource();
+$helper = $this->_helper();
+	
+if (!empty($list)) { ?>
+
+    <?php if ($this->_getConfig('pretext') != null) { ?>
+		<div class="bs-pretext">
+			<?php echo $this->_getConfig('pretext'); ?>
+		</div>
+	<?php } ?>
+
+	
+
+    <div class="block products-sidebar">
+		<?php if ($this->_getConfig('display_title', 1)) { ?>
+			<?php if ($this->_getConfig('title')) { ?>
+				<div class="title-home">
+					<h2>
+						<span><?php echo $this->_getConfig('title', 'Sm Basic Products'); ?></span>
+					</h2>
+				</div>
+			<?php } ?>
+		<?php } ?>
+        <!-- Begin bs-items     -->
+        <div class="block-content block-content-products">
+            <?php foreach ($list as $_product) { ?>
+                <!-- Begin bs-item-cf -->
+                <div class="item bs-item cf">
+                    <!-- Begin bs-item-inner -->
+                    <div class="item-inner">
+                        <?php if ($_product->_image) { ?>
+                            <div class="box-image">
+                                <a href="<?php echo $_product->link ?>"
+                                   title="<?php echo $_product->title; ?>"
+                                    <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+                                    >
+                                    <img src="<?php echo $_product->_image; ?>"
+                                         title="<?php echo $_product->title; ?>"
+                                         alt="<?php echo $_product->title; ?>"
+                                        >
+                                </a>
+                            </div>
+                        <?php }?>
+
+                        <!-- Begin bs-content -->
+                        <?php  ?>
+						<div class="box-info">
+
+                            <?php if ((int)$this->_getConfig('product_title_display', 1)) { ?>
+                                <h2 class="product name product-item-name product-name">
+                                    <a href="<?php echo $_product->link; ?>" title="<?php echo $_product->title; ?>"
+                                        <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+                                        >
+                                        <?php echo $helper->truncate($_product->title, $this->_getConfig('product_title_maxlength')); ?>
+                                    </a>
+                                </h2>
+                            <?php } ?>
+							
+							<?php if ($this->_getConfig('product_source') != 'media') { ?>
+							
+								<?php if ((int)$this->_getConfig('product_reviews_count', 1)) {
+										$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+										echo $block->getReviewsSummaryHtml($_product,$templateType,true); 
+								} ?>
+
+                                <?php if ((int)$this->_getConfig('product_price_display', 1)) {
+									echo $this->getProductPrice($_product);
+                                } ?>
+								
+							<?php } ?>
+							
+                            <?php if ((int)$this->_getConfig('product_description_display', 1) && $helper->_trimEncode($_product->_description) != '') { ?>
+                                <div class="bs-description">
+                                    <?php echo $_product->_description; ?>
+                                </div>
+                            <?php } ?>
+							
+                            <?php if ($this->_getConfig('cat_title_display') == 1 && $this->_getConfig('product_source') != 'media') { ?>
+                               <div class="bs-category"><?php echo __('Category:&nbsp') ;?>
+									<a  href="<?php echo $_product->cat_link; ?>"  title="<?php echo $_product->cat_title; ?>"  <?php echo $helper->parseTarget($this->_getConfig('target')); ?>>
+										 <?php echo  $helper->truncate($_product->cat_title, $this->_getConfig('category_title_max_characs', 25)); ?>
+									</a>
+									
+                                </div>
+                            <?php } ?>
+
+                            <?php if ($this->_getConfig('product_readmore_display') == 1) { ?>
+                                <div class="bs-detail">
+                                    <a href="<?php echo $_product->link ?>"
+                                       title="<?php echo $_product->title; ?>"
+                                        <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
+                                        >
+                                        <?php echo $this->_getConfig('product_readmore_text', 'Details'); ?>
+                                    </a>
+                                </div>
+                            <?php } ?>
+
+                        </div>
+						
+                        <!-- End bs-content -->
+                    </div>
+                    <!-- End bs-item-inner -->
+                </div><!-- End bs-item-cf -->
+            <?php } ?>
+        </div>
+        <!-- End bs-items -->
+    </div><!-- End Sm-basic-products -->
+   <?php if ($this->_getConfig('posttext') != null) { ?>
+		<div class="bs-posttext">
+			<?php echo $this->_getConfig('posttext'); ?>
+		</div>
+	<?php } ?>
+<?php
+} else {
+	echo '<h1 style="color:#f1703d;">Has no content to show!</h1>';
+}
+?>

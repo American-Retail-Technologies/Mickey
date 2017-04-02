@@ -1,0 +1,426 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="magentech" translate="label" sortOrder="1">
+			<label>Magentech.com</label>
+		</tab>
+		<section id="listingdeals" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>SM Listing Deals</label>
+			<tab>magentech</tab>
+			<resource>Sm_ListingDeals::config_listingdeals</resource>
+			<group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General Settings</label>
+				<field id="isenabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Extensions</label>
+					<source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
+				</field>
+				<field id="display_title" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display Title</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Title</label>
+				</field>
+				<field id="target" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Target</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\Target</source_model>
+				</field>
+				<field id="show_loadmore_slider" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Type</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\LoadMore</source_model>
+				</field>
+				<field id="heading" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Config number rows for slider</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="nb_rows" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Rows</label>
+					<validate>validate-greater-than-zero integer required-entry validate-number</validate>
+				</field>
+				<field id="heading1" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>For devices have screen width from 1200px up to greater.</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="nb_column1" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Column</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\ColumnDevices</source_model>
+				</field>
+				<field id="heading2" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>For devices have screen width from 992px up to 1199px.</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="nb_column2" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Column</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\ColumnDevices</source_model>
+				</field>
+				<field id="heading3" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>For devices have screen width from 768px up to 991px.</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="nb_column3" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Column</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\ColumnDevices</source_model>
+				</field>
+				<field id="heading4" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>For devices have screen width from 480px up to 767px.</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="nb_column4" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Column</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\ColumnDevices</source_model>
+				</field>
+				<field id="heading5" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>For devices have screen width less than or equal 479px.</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="nb_column5" translate="label" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Column</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\ColumnDevices</source_model>
+				</field>
+			</group>
+
+			<group id="source" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Source Options</label>
+				<field id="product_source" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Select Source</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\ListSource</source_model>
+				</field>
+				<field id="product_category" translate="label" type="multiselect" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Select Category</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\ListCategory</source_model>
+				</field>
+				<field id="category_preload" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Category Preload</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\ListCategory</source_model>
+					<depends>
+						<field id="product_source">catalog</field>
+					</depends>
+				</field>
+				<field id="filter_order_by" translate="label" type="multiselect" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Field to Order By</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\OrderBy</source_model>
+					<depends>
+						<field id="product_source">fieldproducts</field>
+					</depends>
+				</field>
+				<field id="field_preload" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Field Preload</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\OrderBy</source_model>
+					<depends>
+						<field id="product_source">fieldproducts</field>
+					</depends>
+				</field>
+				<field id="child_category_products" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Child Category Products</label>
+					<comment>Include or Exclude Products from Child Categories.</comment>
+					<source_model>Sm\ListingDeals\Model\Config\Source\IncludeExclude</source_model>
+				</field>
+				<field id="max_depth" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Category Depth</label>
+					<comment>The number of child category levels to return.</comment>
+					<validate>required-entry integer validate-greater-than-zero</validate>
+					<depends>
+						<field id="child_category_products">1</field>
+					</depends>
+				</field>
+				<field id="product_featured" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Featured Products</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\FeaturedOptions</source_model>
+				</field>
+				<field id="product_order_by" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Field to Order By</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\OrderBy</source_model>
+					<depends>
+						<field id="product_source">catalog</field>
+					</depends>
+				</field>
+				<field id="product_order_dir" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ordering Direction</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\OrderDirection</source_model>
+				</field>
+				<field id="product_limitation" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Limitation</label>
+					<validate>required-entry integer validate-greater-than-zero</validate>
+				</field>
+			</group>
+
+			<group id="tabs_options" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Tabs Options</label>
+				<field id="tab_all_display" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Tab All Display</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="cat_title_maxlength" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Category title max length</label>
+					<validate>required-entry integer validate-greater-than-zero</validate>
+				</field>
+				<field id="category_order_by" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Categories Order By</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\OrderCategory</source_model>
+				</field>
+				<field id="category_order_dir" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Categories Ordering Direction</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\OrderDirection</source_model>
+				</field>
+				<field id="icon_display" translate="label" type="select" sortOrder="5" showInDefault="5" showInWebsite="1" showInStore="1">
+					<label>Display Icon</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="imgcat_from_category_image" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Get Image From Category Image</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="imgcat_from_category_description" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Get Image From Category Description</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="imgcat_order" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Order to Get</label>
+					<validate>required-entry</validate>
+				</field>
+				<field id="imgcat_function" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Resize</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="imgcat_width" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Image Width</label>
+					<validate>required-entry integer validate-greater-than-zero</validate>
+				</field>
+				<field id="imgcat_height" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Image Height</label>
+					<validate>required-entry integer validate-greater-than-zero</validate>
+				</field>
+				<field id="imgcat_background" translate="label" type="text" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Background Color</label>
+					<validate>color</validate>
+					<comment>Please Click the text box to select color.</comment>
+				</field>
+				<field id="imgcat_replacement" translate="label" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Image Replacement</label>
+					<validate>required-entry</validate>
+					<comment>Only when the categories has no image, the module will take photos from placeholder to replace</comment>
+				</field>
+			</group>
+
+			<group id="product" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Product Options</label>
+				<field id="heading_prod_title" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Title</label>
+					<validate>required-entry integer</validate>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="product_title_display" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="product_title_maxlength" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<validate>required-entry integer validate-greater-than-zero</validate>
+					<label>Max Length</label>
+				</field>
+				<field id="heading_prod_desc" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Description</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="product_description_display" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="product_description_maxlength" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<validate>required-entry integer validate-greater-than-zero</validate>
+					<label>Max Length</label>
+				</field>
+				<field id="heading_other" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Others</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="product_price_display" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display Price</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="product_reviews_count" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display Reviews Summary</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				
+				<field id="product_countdown_display" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display Countdown</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="product_readmore_display" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display Readmore Link</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="product_readmore_text" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Readmore Text</label>
+				</field>
+			</group>
+
+			<group id="image" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Image Options</label>
+				<field id="heading_prod_image" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Image</label>
+					<validate>required-entry integer</validate>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="product_image_display" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="product_image_heading" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Get Image from Product Image</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="img_from_product_image" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Get From Product Image</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="product_desc_heading" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Get Image from Product Description</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="img_from_product_description" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Get From Product Description</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="img_order" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Order to Get</label>
+					<validate>required-entry</validate>
+				</field>
+				<field id="img_function" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Resize</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="img_width" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<validate>required-entry integer validate-greater-than-zero</validate>
+					<label>Image Width</label>
+				</field>
+				<field id="img_height" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<validate>required-entry integer validate-greater-than-zero</validate>
+					<label>Image Height</label>
+				</field>
+				<field id="img_background" translate="label"  type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Background Color</label>
+					<validate>color required-entry</validate>
+					<comment>Please Click the text box to select color.</comment>
+				</field>
+				<field id="img_replacement" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Image Replacement</label>
+					<validate>required-entry</validate>
+					<comment>Only when the product has no image, the module will take photos from placeholder to replace</comment>
+				</field>
+			</group>
+
+			<group id="effect_options" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Effect Options</label>
+				<field id="effect" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Effect</label>
+					<source_model>Sm\ListingDeals\Model\Config\Source\OptionEffect</source_model>
+				</field>
+				<field id="duration" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Speed</label>
+					<validate>validate-greater-than-zero required-entry validate-number</validate>
+				</field>
+				<field id="delay" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Interval</label>
+					<validate>validate-greater-than-zero required-entry validate-number</validate>
+				</field>
+				<field id="heading_effect_desc" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Config When Type Module Is Slider.</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="play" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Auto Play</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="autoplaySpeed" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Autoplay Speed</label>
+					<validate>required-entry integer validate-greater-than-zero</validate>
+					<depends>
+						<field id="play">1</field>
+					</depends>
+				</field>
+				<field id="start" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Start</label>
+					<validate>validate-zero-or-greater required-entry validate-number</validate>
+				</field>
+				<field id="slideBy" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Step</label>
+					<validate>validate-greater-than-zero required-entry validate-number</validate>
+				</field>
+				<field id="autoplayHoverPause" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Pause on Hover</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="nav" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Navigation</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="loop" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Loop</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="dots" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Dots</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="margin" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Margin-Right</label>
+					<validate>validate-greater-than-zero required-entry validate-number</validate>
+				</field>
+				<field id="navSpeed" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Nav Speed</label>
+					<validate>validate-greater-than-zero required-entry validate-number</validate>
+				</field>
+				<field id="dotsSpeed" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Dots Speed</label>
+					<validate>validate-greater-than-zero required-entry validate-number</validate>
+				</field>
+				<field id="mouseDrag" translate="label" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Mouse Drag</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="touchDrag" translate="label" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Touch Drag</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+			</group>
+
+			<group id="advanced" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Advanced Options</label>
+				<field id="pretext" translate="label" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Pre-text</label>
+				</field>
+				<field id="posttext" translate="label" type="textarea" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Post-text</label>
+				</field>
+				<field id="use_cache" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Caching</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>Select whether to cache the content of this module.</comment>
+				</field>
+				<field id="cache_time" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Cache Time</label>
+					<validate>integer validate-greater-than-zero</validate>
+					<comment>The time (in seconds) before the module is recached.</comment>
+					<depends>
+						<field id="use_cache">1</field>
+					</depends>
+				</field>
+			</group>
+
+			<group id="product_information" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Product Information</label>
+				<field id="author" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label><![CDATA[<p>Author: <a target="_blank" title="Magentech" href="http://www.magentech.com">Magentech</a></p>
+											<p>Vesion: 1.1.0</p>
+											<p>Userguide: <a target="_blank" title="Userguide" href="http://www.magentech.com/documentation/category/magento/magento-extension/">Userguide</a></p>
+											<p>Support: <a target="_blank" href="http://www.magentech.com/forum">Forum</a></p>
+								]]></label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>
