@@ -64,6 +64,11 @@ class Categories extends \Magento\Catalog\Block\Product\AbstractProduct
 	 */
 	protected $_block;
 
+     /**
+      * @param \Magento\Framework\Registry $registry,
+     */
+	protected $_registry;
+	 
 	/**
 	 * Class constructor
 	 *
@@ -88,6 +93,7 @@ class Categories extends \Magento\Catalog\Block\Product\AbstractProduct
 		$this->_objectManager = $objectManager;
 		$this->_directory = $this->_objectManager->get('\Magento\Framework\Filesystem');
 		$this->_block = $block;
+		$this->_registry = $context->getRegistry();
 		$this->_storeManager = $this->_objectManager->get('\Magento\Store\Model\StoreManagerInterface');
 		$this->_scopeConfigInterface = $this->_objectManager->get('\Magento\Framework\App\Config\ScopeConfigInterface');
 		$this->_storeId = (int)$this->_storeManager->getStore()->getId();
@@ -203,10 +209,20 @@ class Categories extends \Magento\Catalog\Block\Product\AbstractProduct
 	{
 		return $this->_objectManager->get('\Sm\Categories\Helper\Data');
 	}
+	
+	public function _getCurrentCategoryChildren()
+	{
+		$current_category = $this->_registry->registry('current_category');
+		$mycat = array($current_category->getEntityId());
+		//$mycat = array(3);
+		$mychildren = $this->_childCategory($mycat, false, 50, 1);
+		return implode(",",$mychildren);
+	}
 
 	public function _getList()
 	{
-		$catids = $this->_getConfig('product_category');
+		$catids = $this->_getCurrentCategoryChildren();
+		//$catids = $this->_getConfig('product_category');
 		if ($catids == null) return;
 		$_catids = $this->_getCatActive($catids);
 		if (empty($_catids)) return;
