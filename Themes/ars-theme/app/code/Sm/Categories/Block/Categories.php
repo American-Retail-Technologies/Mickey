@@ -212,7 +212,7 @@ class Categories extends \Magento\Catalog\Block\Product\AbstractProduct
 	
 	public function _getCurrentCategoryChildren()
 	{
-		$current_category = $_registry('current_category');
+		$current_category = $this->_registry->registry('current_category');
 		$mycat = array(3);
 		$mychildren = $this->_childCategory($mycat, false, 50, 1);
 		return implode(",",$mychildren);
