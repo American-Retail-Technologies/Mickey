@@ -221,9 +221,9 @@ class Categories extends \Magento\Catalog\Block\Product\AbstractProduct
 
 	public function _getList()
 	{
-		$catids = $this->_getCurrentCategoryChildren();
-		//$catids = $this->_getConfig('product_category');
+		$catids = $this->_getConfig('product_category');
 		if ($catids == null) return;
+		if ($catids == "children") $catids = $this->_getCurrentCategoryChildren();
 		$_catids = $this->_getCatActive($catids);
 		if (empty($_catids)) return;
 		$_list = $this->_getCatinfor($_catids);

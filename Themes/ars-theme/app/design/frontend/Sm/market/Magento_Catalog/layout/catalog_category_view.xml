@@ -10,7 +10,7 @@
         <referenceContainer name="category.view.container">
             <block class="Sm\Categories\Block\Categories" name="category.children" template="Sm_Categories::default.phtml" cacheable="false">
                 <arguments>
-                    <argument name="product_category" xsi:type="string">1445</argument>
+                    <argument name="product_category" xsi:type="string">children</argument>
                 </arguments>
             </block>
         </referenceContainer>
