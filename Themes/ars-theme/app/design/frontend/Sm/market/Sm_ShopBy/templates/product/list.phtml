@@ -156,12 +156,13 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 											<?php endif; ?>
 										<?php } ?>
 										
-										<?php if($_config->getAdvanced('show_compare_button')){?>
+										<!--<?php if($_config->getAdvanced('show_compare_button')){?>
 											<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
 											<a href="#"  class="action tocompare btn-action link-compare"  title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"  data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button">
 												<span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
 											</a>
 										<?php } ?>
+										-->
 									</div>
 								</div>
 							</div>
