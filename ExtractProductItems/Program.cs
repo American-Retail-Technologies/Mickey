@@ -3068,7 +3068,9 @@ namespace ExtractProductItems
                     else if ((lastPointer = fileContents.IndexOf("</select> per page</span><div class=")) != -1)
                     {
                         // extract the table with image links and append that to product description.
-                        string subCategoryTable = ExtractSubCategoryTable(fileContents, lastPointer, strFilePath);
+                        // 5/10/2017: Do not read sub category table.
+                        //string subCategoryTable = ExtractSubCategoryTable(fileContents, lastPointer, strFilePath);
+                        string subCategoryTable = null; // just set it null to bypass next block
                         if (subCategoryTable != null)
                         {
                             // replace ALL occurences of ".eetoolset.com/img????.jpg?set" with ".eetoolset.com/img?set"
@@ -3119,7 +3121,8 @@ namespace ExtractProductItems
                                 metaTitle.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 metaKeywords.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 metaDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
-                                "", fileName));
+                                productImageUrl, 
+                                fileName));
                         }
                         categoryCounter++;
                     }
