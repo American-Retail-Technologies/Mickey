@@ -19,11 +19,7 @@
     $_category  = $block->getCurrentCategory();
     $_imgHtml   = '';
     if ($_imgUrl = $_category->getImageUrl()) {
-      // Find next http:// and trip until there
-        if (($_tempImgUrl = strstr($_imgUrl,'http://yoosh.co')) == FALSE) {
-          $_tempImgUrl = $_imgUrl;
-        }
-        $_imgHtml = '<div class="category-image"><img src="' . $_tempImgUrl . '" alt="' . $block->escapeHtml($_category->getName()) . '" title="SM Market - ' . $block->escapeHtml($_category->getName()) . '" class="image" /></div>';
+        $_imgHtml = '<div class="category-image"><img src="' . $_imgUrl . '" alt="' . $block->escapeHtml($_category->getName()) . '" title="' . $block->escapeHtml($_category->getName()) . '" class="image" /></div>';
         $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
         /* @escapeNotVerified */ echo $_imgHtml;
     }
