@@ -53,6 +53,12 @@ https://codepen.io/martinwolf/pen/qlFdp
   position: relative;
 }
 
+.ellipsis1Line ul > li{
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
 .testimonials-style-2 .testimonials-info .name-company{
 padding-top:10px;
 font-weight:600;
