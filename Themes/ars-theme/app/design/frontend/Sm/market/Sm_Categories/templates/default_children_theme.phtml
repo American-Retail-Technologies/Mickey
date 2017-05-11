@@ -34,19 +34,19 @@
 					
 					
 				</div>
-				<?php if ($this->_getConfig('cat_sub_title_display', 1)) { ?>
 					<!-- Begin -->
 					<div class="child-cat">
 						<?php if ($this->_getConfig('cat_title_display') == 1) { ?>
 							<div class="cat-title">
 								<a href="<?php echo $items['link']; ?>"
+								   class="clamped ellipsis2Line"
 								   title="<?php echo $items['title']; ?>"
 									<?php echo $helper->parseTarget($this->_getConfig('target')); ?> >
 									<?php echo $helper->truncate($items['title'], $this->_getConfig('category_title_max_characs', 25)); ?>
 								</a>
 							</div>
 						<?php } ?>
-					
+					<?php if ($this->_getConfig('cat_sub_title_display', 1)) { ?>
 						<?php
 						if (!empty($items['child_cat'])) { ?>
 							<ul class="sub-cats">
@@ -70,8 +70,8 @@
 								<?php echo 'No sub-categories to show!'; ?>
 							</p>
 						<?php } ?>
+						<?php } ?>
 					</div><!-- END child-cat -->
-				<?php } ?>
 			</div>
 			<?php
 			$clear = 'clr1';
