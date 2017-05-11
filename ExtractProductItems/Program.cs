@@ -408,6 +408,31 @@ namespace ExtractProductItems
             }
             return imageUrl;
         }
+        
+        static string ExtractCategoryImageUrl(string searchContent, int startIndex, out int endIndex)
+        {
+            string imageUrl = null;
+            endIndex = -1;
+            string strToFind = "<div class=\"Content Image\">";
+            int tempIndex = searchContent.IndexOf(strToFind, startIndex);
+            if (tempIndex >= 0)
+            {
+                strToFind = "<img class=\"padright\" src=";
+                endIndex = searchContent.IndexOf("</div>", tempIndex);
+                tempIndex = searchContent.IndexOf(strToFind, tempIndex);
+                // 02/11/2017: In som rare cases product image can be blank. return null in those cases
+                if (endIndex < tempIndex)
+                {
+                    return null;
+                }
+                // now find the index of /img
+                startIndex = searchContent.IndexOf("/img", tempIndex);
+                // find ?
+                endIndex = searchContent.IndexOf("?", startIndex);
+                imageUrl = searchContent.Substring(startIndex, endIndex - startIndex);
+            }
+            return imageUrl;
+        }
 
         static string ExtractProductNameAndText(string searchContent, int startIndex, out int endIndex, out string productText)
         {
@@ -3067,6 +3092,19 @@ namespace ExtractProductItems
                     // Route for the Category page if it contains "</select> per page</span><div class="
                     else if ((lastPointer = fileContents.IndexOf("</select> per page</span><div class=")) != -1)
                     {
+                        if ((lastPointer = fileContents.IndexOf("<div class=\"Dept Page\">")) != -1)
+                        {
+                            productImageUrl = ExtractCategoryImageUrl(fileContents, lastPointer, out lastPointer);
+                            if (productImageUrl != null)
+                            {
+                                productImageUrl = productImageUrl.Replace(".eetoolset.com", "");
+                                productImageCount++;
+                            }
+                            else
+                            {
+                                productImageUrl = "";
+                            }
+                        }
                         // extract the table with image links and append that to product description.
                         // 5/10/2017: Do not read sub category table.
                         //string subCategoryTable = ExtractSubCategoryTable(fileContents, lastPointer, strFilePath);
