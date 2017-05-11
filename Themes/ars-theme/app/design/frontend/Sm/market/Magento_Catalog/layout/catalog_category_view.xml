@@ -7,12 +7,14 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="category.view.container">
-            <block class="Sm\Categories\Block\Categories" name="category.children" template="Sm_Categories::default_children.phtml" cacheable="false">
-                <arguments>
-                    <argument name="product_category" xsi:type="string">children</argument>
-                </arguments>
-            </block>
+        <referenceContainer name="columns.top">
+			<container name="art.category.children" htmlTag="div" htmlClass="art-category-children" after="category.view.container">
+				<block class="Sm\Categories\Block\Categories" name="category.children" template="Sm_Categories::default_children.phtml" cacheable="false">
+					<arguments>
+						<argument name="product_category" xsi:type="string">children</argument>
+					</arguments>
+				</block>
+			</container>
         </referenceContainer>
     </body>
 </page>
