@@ -168,6 +168,16 @@ img.popularCategoryIcon{
 }
 }
 
+@media screen and (max-width: 402px){ 
+.products-grid .item .item-inner .box-info .bottom-action .art.btn-action.btn-cart{
+    padding: 0 4px 0 4px !important;
+}
+
+.products-grid .item .item-inner .box-info .bottom-action .art.btn-action.btn-cart span{
+   font-size:11px;
+}
+}
+
 @media screen and (min-width: 376px) and (max-width: 425px) { 
 
 img.popularCategoryIcon{
