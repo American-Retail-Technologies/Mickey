@@ -53,6 +53,12 @@ https://codepen.io/martinwolf/pen/qlFdp
   position: relative;
 }
 
+.ellipsis1Line ul > li{
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+}
+
 .testimonials-style-2 .testimonials-info .name-company{
 padding-top:10px;
 font-weight:600;
@@ -159,6 +165,16 @@ img.popularCategoryIcon{
     white-space: nowrap;
     text-overflow: ellipsis;
     display: inline-block;
+}
+}
+
+@media screen and (max-width: 402px){ 
+.products-grid .item .item-inner .box-info .bottom-action .art.btn-action.btn-cart{
+    padding: 0 4px 0 4px !important;
+}
+
+.products-grid .item .item-inner .box-info .bottom-action .art.btn-action.btn-cart span{
+   font-size:11px;
 }
 }
 
