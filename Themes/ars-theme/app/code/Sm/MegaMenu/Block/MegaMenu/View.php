@@ -601,8 +601,8 @@ class View extends Template
 		else{
 			$headTitle = $item['depth'] > 1 ? $icon_title : '';
 		}
-
-		if($item['depth']){
+		//Add AND to check for 'show sub-category'
+		if($item['depth'] AND $item['show_sub_category'] == self::STATUS_ENABLED){
 			$html .= $item['depth'] > 1 ? '<div class="'.$prefix.'head_item'.'">' : '';
 
 			if($item['show_title'] OR $this->hasIcon($item)){

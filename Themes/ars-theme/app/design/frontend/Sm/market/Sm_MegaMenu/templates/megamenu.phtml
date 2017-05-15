@@ -43,7 +43,7 @@ $id = ($this->getFrontController()->getRequest()->getParam('id')) ? $this->getFr
 						<span class="icon-bar"></span>
 					</span>
 			<ul class="<?php if ( !$detect->isMobile() && !$detect->isTablet() ) { echo "sm-megamenu-hover";}?> <?php echo $prefix; ?>menu <?php echo $prefix; ?>menu_black" data-jsapi="on">
-		
+				<!--For each root menu item -->
 				<?php 	foreach($itemsStartLv as $itemStartLv){
 					$hasContent = !$this->isLeaf($itemStartLv) OR ($this->isLeaf($itemStartLv) AND $this->hasConntentType($itemStartLv));
 					$hasLinkType = $this->hasLinkType($itemStartLv);
@@ -99,6 +99,7 @@ $id = ($this->getFrontController()->getRequest()->getParam('id')) ? $this->getFr
 							if(count($childItems) > 0)
 							{
 								?>
+								<!--Child category of one root item-->
 								<div class="<?php echo $divClassName?>">
 									<?php echo $this->getItemHtml($itemStartLv, true, $id);	 ?>
 								</div>
