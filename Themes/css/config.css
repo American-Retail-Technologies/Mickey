@@ -231,6 +231,10 @@ img.popularCategoryIcon{
  .sidebar.sidebar-additional .block.products-sidebar{
   display:none;
  }
+ 
+ .breadcrumbs{
+	 display:none;
+ }
 }
 
 /*Mobile & Tablet*/
