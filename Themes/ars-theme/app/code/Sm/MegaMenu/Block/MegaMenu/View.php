@@ -614,7 +614,7 @@ class View extends Template
 				{
 					$html .= $item['depth'] > 1 ? $this->getProduct($item) : '';
 				}
-
+				//Bug: Shows childs, child category when enabled
 				if($item['type'] == self::CATEGORY AND $item['show_sub_category'] == self::STATUS_ENABLED)
 				{
 
