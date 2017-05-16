@@ -251,6 +251,19 @@ width:0%;
 height:0%;
 }
 
+.fancybox-lock .menu-on-top {
+    z-index: 9995;
+  }
+  .menu-on-top {
+    width: 100%;
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    z-index: 10006;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+
 }
 
 /*Tablet*/
