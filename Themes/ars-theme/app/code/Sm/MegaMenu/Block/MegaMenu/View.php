@@ -589,20 +589,20 @@ class View extends Template
 			}
 		}
 
-		$html = '<div data-link="'.$extenal_link.'" class="'.$divClassName.' '.$firstClassName.' '.$align_right.' '.$_active.' '.$item['custom_class'].'">' ;
+		$html = '<!--First Item--><div data-link="'.$extenal_link.'" class="'.$divClassName.' '.$firstClassName.' '.$align_right.' '.$_active.' '.$item['custom_class'].'">' ;
 		$link = ($hasLinkType)?$this->getLinkOfType($item):'#';
 		$title = ($item['show_title']==self::STATUS_ENABLED)?'<span class="'.$prefix.'title_lv-'.$item['depth'].'">'.$item['title'].'</span>':'';
 		$icon_title = ($this->hasIcon($item))?'<span class="icon_items_sub"><img src='.$this->filterImage($item).' alt="icon items sub" /></span><span class="'.$prefix.'icon">'.$title.'</span>':$title;
 
 		if($this->isDrop($item) OR $hasLinkType){
 
-			$headTitle = $item['depth'] > 1 ? '<a  class="'.$aClassName.' " href="'.$link.'" '.$this->getTargetAttr($item['target']).' >'.$icon_title.'</a>' : '';
+			$headTitle = $item['depth'] > 1 ? '<!--Link to Current Category--><a  class="'.$aClassName.' " href="'.$link.'" '.$this->getTargetAttr($item['target']).' >'.$icon_title.'</a>' : '';
 		}
 		else{
 			$headTitle = $item['depth'] > 1 ? $icon_title : '';
 		}
 		//Add AND to check for 'show sub-category'
-		if($item['depth'] AND $item['show_sub_category'] == self::STATUS_ENABLED){
+		if($item['depth'] ){
 			$html .= $item['depth'] > 1 ? '<div class="'.$prefix.'head_item'.'">' : '';
 
 			if($item['show_title'] OR $this->hasIcon($item)){
@@ -615,7 +615,7 @@ class View extends Template
 					$html .= $item['depth'] > 1 ? $this->getProduct($item) : '';
 				}
 
-				if($item['type'] == self::CATEGORY)
+				if($item['type'] == self::CATEGORY AND $item['show_sub_category'] == self::STATUS_ENABLED)
 				{
 
 					$html.= $item['depth'] > 1 ?  $this->getCategory($item, $idActive) : '';
