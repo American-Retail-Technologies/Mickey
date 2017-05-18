@@ -33,6 +33,19 @@
   background-color:#f6f6f6;
 }
 
+.art_category_title .sm_megamenu_title  a span.sm_megamenu_title_lv-3,  .art-megamenu-title{
+  color: #08357a;
+}
+
+.art-megamenu-title{
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.7em;
+}
+
+.art-megamenu-title a{
+  color:white;
+}
 
 /*Ellipsis
 https://codepen.io/martinwolf/pen/qlFdp
