@@ -787,7 +787,7 @@ class View extends Template
 
 	public function getCategory($item, $itemId){
 		$output = '';
-		$dem = 0;
+		$dem = 1;
 		$id_all_cat = '';
 		$limitCat = (int)$item['limit_category'];
 		$limitSubCat = (int)$item['limit_sub_category'];
