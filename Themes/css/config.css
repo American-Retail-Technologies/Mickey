@@ -33,8 +33,20 @@
   background-color:#f6f6f6;
 }
 
-.art_category_title .sm_megamenu_title  a span.sm_megamenu_title_lv-3,  .art-megamenu-title{
+.art-megamenu-title,
+.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > a > .sm_megamenu_title_lv-3,
+.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > span.sm_megamenu_title_lv-3
+{
   color: #08357a;
+}
+
+.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > a > .sm_megamenu_title_lv-3,
+.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > span.sm_megamenu_title_lv-3{
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 108.33% !important;
+  line-height: 2em;
+  padding: 3px 0;
 }
 
 .art-megamenu-title{
