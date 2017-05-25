@@ -53,25 +53,20 @@ function run($sSitemapUrl, $iDelay=0, $bTestOnly=false)
     //--------------------------------------------------------------------------------
     // Try to parse the sitemap file via Simple XML
     //--------------------------------------------------------------------------------
-	$parts = parse_url($sSitemapUrl)
-	$strHostPath = $parts['scheme'].'://'.$parts['host'];
-	$file = $parts['path'];	
+	$parts = parse_url($sSitemapUrl);
+	$strHostPath = $parts['scheme'].'://'.$parts['host']."/";
+	$file = ".".$parts['path'];	
     try {
 		$handle = fopen($file,"r");
     } catch(Exception $e) {
-        die('Failed to parse the URL file' . PHP_EOL . $e->getMessage() . PHP_EOL);
+        die('Failed to open the URL file' . PHP_EOL . $e->getMessage() . PHP_EOL);
     }
     //--------------------------------------------------------------------------------
     // Download the URLs, timing each one
     //--------------------------------------------------------------------------------
-    if($bTestOnly) {
-        echo "Testing with $iNumUrls URLs" . PHP_EOL;
-    } else {
-        echo 'Found ' . $iNumUrls . ' URLs to crawl' . PHP_EOL;
-    }
     $iTotalDownloadTime = 0;
 	$iCur = 0;
-	while (($data = fgetcsv($handle,1000,",","'")) {
+	while ($data = fgetcsv($handle,1000,",","'")) {
 		if (isset($data[0])) {
 			$sUrl = $strHostPath . $data[0];
 			$iPageStartTime = microtime(true);
@@ -114,7 +109,7 @@ function format_milli($ms)
 function usage()
 {
     echo '-------------------------------------' . PHP_EOL;
-    echo 'wfpc - Magento full page cache warmer' . PHP_EOL;
+    echo 'wfpc - Magento full page cache warmer. e.g. php wfpc.php http://dev.americanretailsupply.com/a1.txt' . PHP_EOL;
     echo '-------------------------------------' . PHP_EOL . PHP_EOL;
     echo 'wfpc <-h|-t|-w> [-d=delay] <sitemap url>' . PHP_EOL . PHP_EOL;
     echo 'Run help to see the usage options                       : wfpc -h' . PHP_EOL;
