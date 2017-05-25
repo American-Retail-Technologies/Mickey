@@ -614,8 +614,8 @@ class View extends Template
 				{
 					$html .= $item['depth'] > 1 ? $this->getProduct($item) : '';
 				}
-
-				if($item['type'] == self::CATEGORY AND $item['show_sub_category'] == self::STATUS_ENABLED)
+				//Bug: Shows childs, child category when enabled
+				if($item['type'] == self::CATEGORY )
 				{
 
 					$html.= $item['depth'] > 1 ?  $this->getCategory($item, $idActive) : '';
@@ -787,7 +787,7 @@ class View extends Template
 
 	public function getCategory($item, $itemId){
 		$output = '';
-		$dem = 0;
+		$dem = 1;
 		$id_all_cat = '';
 		$limitCat = (int)$item['limit_category'];
 		$limitSubCat = (int)$item['limit_sub_category'];
@@ -804,6 +804,7 @@ class View extends Template
 		{
 			$id_all_cat = explode(',', $category->getChildren());
 		}
+		
 		if ($item['show_title_category'] == self::STATUS_ENABLED)
 		{
 			$output .= '<div class="'.implode(' ', $addClass).'">';
@@ -812,6 +813,8 @@ class View extends Template
 		}
 		if ($id_all_cat)
 		{
+			$id_all_cat = $this->sortChildCategorty($id_all_cat);
+			#print_r($id_all_cat);
 			if (count($id_all_cat)>$limitCat)
 				$limit = $limitCat;
 			else
@@ -852,7 +855,17 @@ class View extends Template
 		}
 		return $output;
 	}
-
+	//Sort Category based on position from DB
+	private function sortChildCategorty($arrayOfChilds){
+		$sortedCategory = array();
+		$categoryObject = $this->_modelCategory;
+		
+		foreach( $arrayOfChilds as $child){
+			$sortedCategory[$categoryObject->load($child)->getPosition()] = $child;
+		}
+		ksort($sortedCategory);
+		return $sortedCategory;
+	}
 	public function getCategoryChild($item, $id_all_cat_child, $limit, $itemId='')
 	{
 		$dem = 0;
