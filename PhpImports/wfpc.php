@@ -51,40 +51,15 @@ switch($argv[1]) {
 function run($sSitemapUrl, $iDelay=0, $bTestOnly=false)
 {
     //--------------------------------------------------------------------------------
-    // Grab the sitemap URL from the CLI and verify it looks like a URL
-    //--------------------------------------------------------------------------------
-    if(filter_var($sSitemapUrl, FILTER_VALIDATE_URL) === false) {
-        die("$sSitemapUrl is not a valid URL" . PHP_EOL);
-    }
-    //--------------------------------------------------------------------------------
-    // Try downloading the sitemap file
-    //--------------------------------------------------------------------------------
-    $sSitemapXml = file_get_contents($sSitemapUrl);
-    if(!$sSitemapXml) {
-        die('Unable to download the sitemap file at $sSitemapUrl' . PHP_EOL);
-    }
-    //--------------------------------------------------------------------------------
     // Try to parse the sitemap file via Simple XML
     //--------------------------------------------------------------------------------
+	$parts = parse_url($sSitemapUrl)
+	$strHostPath = $parts['scheme'].'://'.$parts['host'];
+	$file = $parts['path'];	
     try {
-        $oSitemap = new SimpleXMLElement($sSitemapXml);
+		$handle = fopen($file,"r");
     } catch(Exception $e) {
-        die('Failed to parse the sitemap file' . PHP_EOL . $e->getMessage() . PHP_EOL);
-    }
-    //--------------------------------------------------------------------------------
-    // Extract the list of URLs from the sitemap that we intend to crawl
-    //--------------------------------------------------------------------------------
-    $aDocNamespaces = $oSitemap->getDocNamespaces();
-    $sXmlns         = array_shift($aDocNamespaces);
-    $oSitemap->registerXPathNamespace('sitemap', $sXmlns);
-    $aMatches = $oSitemap->xpath("//sitemap:loc");
-    $iNumUrls = count($aMatches);
-    //--------------------------------------------------------------------------------
-    // Truncate the list of URLs to 10 if we're in test mode
-    //--------------------------------------------------------------------------------
-    if($bTestOnly === true && $iNumUrls > 10) {
-        $aMatches = array_random($aMatches, 10);
-        $iNumUrls = 10;
+        die('Failed to parse the URL file' . PHP_EOL . $e->getMessage() . PHP_EOL);
     }
     //--------------------------------------------------------------------------------
     // Download the URLs, timing each one
@@ -95,15 +70,20 @@ function run($sSitemapUrl, $iDelay=0, $bTestOnly=false)
         echo 'Found ' . $iNumUrls . ' URLs to crawl' . PHP_EOL;
     }
     $iTotalDownloadTime = 0;
-    foreach($aMatches as $i => $sUrl) {
-        $iPageStartTime = microtime(true);
-        $iCur = $i + 1;
-        echo "($iCur/$iNumUrls) - Fetching " . $sUrl . PHP_EOL;
-        file_get_contents($sUrl);
-    
-        $iTotalDownloadTime += microtime(true) - $iPageStartTime;
-        // Sleep between requests if we're told to
-        sleep($iDelay);
+	$iCur = 0;
+	while (($data = fgetcsv($handle,1000,",","'")) {
+		if (isset($data[0])) {
+			$sUrl = $strHostPath . $data[0];
+			$iPageStartTime = microtime(true);
+			$iCur++;
+			echo "$iCur - Fetching " . $sUrl . PHP_EOL;
+			file_get_contents($sUrl);
+		
+			$iTotalDownloadTime += microtime(true) - $iPageStartTime;
+			// Sleep between requests if we're told to
+			sleep($iDelay);
+		}
+		if ($bTestOnly === true && $iCur > 10) break;
     }
     //--------------------------------------------------------------------------------
     // Report the results
@@ -114,7 +94,7 @@ function run($sSitemapUrl, $iDelay=0, $bTestOnly=false)
     echo "Finished $sFinishType your Magento site performance" . PHP_EOL;
     echo 'Total download time (in seconds)   : ' . $iTotalDownloadTime . PHP_EOL;
     echo 'Total download time (formatted)    : ' . format_milli($iTotalDownloadTime * 1000) . PHP_EOL;
-    echo 'Average page time (in milliseconds): ' . $iTotalDownloadTime * 1000 / $iNumUrls . PHP_EOL;
+    echo 'Average page time (in milliseconds): ' . $iTotalDownloadTime * 1000 / $iCur . PHP_EOL;
 }
 /**
  * Format milliseconds nicely.
@@ -138,8 +118,8 @@ function usage()
     echo '-------------------------------------' . PHP_EOL . PHP_EOL;
     echo 'wfpc <-h|-t|-w> [-d=delay] <sitemap url>' . PHP_EOL . PHP_EOL;
     echo 'Run help to see the usage options                       : wfpc -h' . PHP_EOL;
-    echo 'Run wfpc in test mode to get an idea of page performance: wfpc -t <sitemap url>' . PHP_EOL;
-    echo 'Warm the Magento cache                                  : wfpc -w [-d=delay] <sitemap url>' . PHP_EOL . PHP_EOL;
+    echo 'Run wfpc in test mode to get an idea of page performance: wfpc -t <"hosturl"/"csv in current dir">' . PHP_EOL;
+    echo 'Warm the Magento cache                                  : wfpc -w [-d=delay] <path to csv file>' . PHP_EOL . PHP_EOL;
     echo 'The last form of the command allows a -d option to place a pause of X number of seconds between request' . PHP_EOL;
     exit();
 }
