@@ -31,12 +31,14 @@ $_config = $this->helper('Sm\Market\Helper\Data');
     if ($block->getMode() == 'grid') {
         $viewMode = 'grid';
         $image = 'category_page_grid';
-        $showDescription = false;
+        $showDescription = true;
+		$showReview = false;
         $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
     } else {
         $viewMode = 'list';
         $image = 'category_page_list';
         $showDescription = true;
+		$showReview = false;
         $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
     }
     /**
@@ -105,15 +107,27 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 									$_productNameStripped = $block->stripTags($_product->getName(), null, true);
 								?>
 								<h2 class="product name product-item-name product-name">
-									<a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+									<a class="clamped ellipsis2Line product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
 										<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
 									</a>
 								</h2>
+								<span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
 								
-								<?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>
+								<?php if ($showReview):?>
+									<?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>
+								<?php endif; ?>
+								
 								<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
 								<?php echo $block->getProductDetailsHtml($_product); ?>
-
+								
+								<div class="product-item-inner">
+									<?php if ($showDescription):?>
+										<div class="art-catalog-listing-description ellipsis1Line product description product-item-description">
+											<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+										</div>
+									<?php endif; ?>
+								</div>
+								
 								<div class="bottom-action">
 									<?php if($_config->getAdvanced('show_addtocart_button')){?>
 										<?php if ($_product->isSaleable()): ?>
@@ -216,18 +230,22 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 										$_productNameStripped = $block->stripTags($_product->getName(), null, true);
 									?>
 									<h2 class="product name product-item-name product-name">
-										<a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+										<a class="clamped ellipsis2Line product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
 											<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
 										</a>
 									</h2>
+									<span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
+								
+									<?php if ($showReview):?>
+										<?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>
+									<?php endif; ?>
 									
-									<?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
 									<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
 									<?php echo $block->getProductDetailsHtml($_product); ?>
-
+									
 									<div class="product-item-inner">
 										<?php if ($showDescription):?>
-											<div class="product description product-item-description">
+											<div class="art-catalog-listing-description ellipsis1Line product description product-item-description">
 												<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
 												<a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $_productNameStripped ?>"
 												   class="action more"><?php /* @escapeNotVerified */ echo __('Learn More') ?></a>
