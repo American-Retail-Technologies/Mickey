@@ -15,6 +15,11 @@
  margin-bottom:25px;
 }
 
+.products-grid .item .item-inner .box-image a img.art-category-listing-image{
+ width:80%;
+}
+
+
 /*Menu*/
 .header-style-2 .header-middle{
   padding: 14px 0 8px;
