@@ -18,7 +18,11 @@
 .products-grid .item .item-inner .box-image a img.art-category-listing-image{
  width:80%;
 }
-
+.art-catalog-listing-description ul > li::before{
+ content: '\f00c';
+ font-family: FontAwesome;
+ padding-right:3px;
+}
 
 /*Menu*/
 .header-style-2 .header-middle{
