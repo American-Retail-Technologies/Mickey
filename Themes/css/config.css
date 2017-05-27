@@ -18,10 +18,15 @@
 .products-grid .item .item-inner .box-image a img.art-category-listing-image{
  width:80%;
 }
+
 .art-catalog-listing-description ul > li::before{
- content: '\f00c';
+ content: '\f111';
  font-family: FontAwesome;
- padding-right:3px;
+ padding-right:1em;
+ font-size:.35em;
+ position: relative;
+ bottom: .8em;
+ color: #08357a;
 }
 
 /*Menu*/
