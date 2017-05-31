@@ -285,6 +285,22 @@ img.popularCategoryIcon{
  .breadcrumbs{
 	 display:none;
  }
+ 
+ .body-on-top .header-style-2 .header-middle .middle-right-content .minicart-header .minicart-content .cart-wrapper .minicart-wrapper .showcart{
+	position: fixed;
+    top: 5px;
+    right: 17px;
+ }
+ 
+ .body-on-top .header-style-2 .header-middle .middle-right-content .minicart-header{
+	 z-index:10007;
+ }
+ 
+ .body-on-top .cart-wrapper .mage-dropdown-dialog{
+	position: fixed;
+    top: 43px;
+    right: 14px;
+ }
 }
 
 /*Mobile & Tablet*/
