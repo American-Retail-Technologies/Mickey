@@ -3,6 +3,11 @@
  overflow:hidden;
 }
 
+.art-product-description a{
+ text-decoration: underline;
+ color: #08357a;
+}
+
 /*Category Page*/
 .category-view table{
  display:none;
