@@ -1,5 +1,5 @@
 /*Product Details Page*/
-.art-product-description{
+.art-product-short-description{
  overflow:hidden;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .art-catalog-listing-description ul > li::before,
-.art-product-description .value ul > li::before{
+.art-product-short-description .value ul > li::before{
  content: '\f111';
  font-family: FontAwesome;
  padding-right:1em;
