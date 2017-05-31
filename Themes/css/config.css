@@ -1,3 +1,8 @@
+/*Product Details Page*/
+.art-product-description{
+ overflow:hidden;
+}
+
 /*Category Page*/
 .category-view table{
  display:none;
@@ -19,7 +24,8 @@
  width:80%;
 }
 
-.art-catalog-listing-description ul > li::before{
+.art-catalog-listing-description ul > li::before,
+.art-product-description .value ul > li::before{
  content: '\f111';
  font-family: FontAwesome;
  padding-right:1em;
