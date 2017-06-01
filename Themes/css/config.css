@@ -1,3 +1,8 @@
+/*Footer*/
+.socials-wrap{
+ display:inline-block !important;
+}
+
 /*Product Details Page*/
 .art-product-short-description{
  overflow:hidden;
@@ -301,6 +306,12 @@ img.popularCategoryIcon{
     top: 43px;
     right: 14px;
  }
+}
+
+@media screen and (max-width: 767px) and (orientation: landscape){
+  .footer-container .socials-wrap{
+   top:156px;
+  }
 }
 
 /*Mobile & Tablet*/
