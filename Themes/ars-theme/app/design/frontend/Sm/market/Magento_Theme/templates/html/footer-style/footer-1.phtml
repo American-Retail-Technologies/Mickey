@@ -7,6 +7,7 @@
 // @codingStandardsIgnoreFile
 
 $_config = $this->helper('Sm\Market\Helper\Data');
+$showCategoriesFooter = false;
 ?>
 
 <div class="footer-container">
@@ -32,9 +33,11 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 					
 				</div>
 			</div>
-			<div class="categories-footer">
-				<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-links')->toHtml(); ?>
-			</div>
+			<?php if($showCategoriesFooter){ ?>
+				<div class="categories-footer">
+					<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-links')->toHtml(); ?>
+				</div>
+			<?php } ?>
 		</div>
 		
 		<div class="footer-bottom">
