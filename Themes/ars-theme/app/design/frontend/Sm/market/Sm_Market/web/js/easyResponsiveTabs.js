@@ -1,5 +1,7 @@
 // Easy Responsive Tabs Plugin
 // Author: Samson.Onna <Email : samson3d@gmail.com>
+
+define( [ "jquery" ], function ( $ ) {  
 (function ($) {
     $.fn.extend({
         easyResponsiveTabs: function (options) {
@@ -169,4 +171,5 @@
         }
     });
 })(jQuery);
+});
 

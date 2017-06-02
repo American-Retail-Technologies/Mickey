@@ -9,14 +9,6 @@
     <head>
         <!-- ADD JQUERY -->
 		<meta name="x_ua_compatible" content="IE=edge"/>
-		<script src="jquery.js" />
-		<script src="js/bootstrap/bootstrap.min.js" data-requiremodule="jquery"/>
-		<script src="js/owl.carousel.js" data-requiremodule="jquery"/>
-		<script src="js/jquery.cookie.min.js" data-requiremodule="jquery"/>
-		<script src="js/jquery.fancybox.pack.js" data-requiremodule="jquery"/>
-		<script src="js/easyResponsiveTabs.js" data-requiremodule="jquery"/>
-		<script src="js/yttheme.js" data-requiremodule="jquery"/>
-		
         <!-- ADD CSS  -->
         <css src="css/styles-m.css" />
         <css src="css/styles-l.css" media="screen and (min-width: 768px)"/>

@@ -9,6 +9,7 @@
  * @todo Test Zepto
  * @todo stagePadding calculate wrong active classes
  */
+define( [ "jquery" ], function ( $ ) {  
 ;(function($, window, document, undefined) {
 
 	var drag, state, e;
@@ -3067,3 +3068,4 @@
 	$.fn.owlCarousel.Constructor.Plugins.Hash = Hash;
 
 })(window.Zepto || window.jQuery, window, document);
+});

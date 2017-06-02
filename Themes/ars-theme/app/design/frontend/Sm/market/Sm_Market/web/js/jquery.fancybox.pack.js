@@ -1,4 +1,5 @@
 /*! fancyBox v2.1.5 fancyapps.com | fancyapps.com/fancybox/#license */
+define( [ "jquery" ], function ( $ ) {  
 (function(r, G, f, v) {
 	var J = f("html"),
 		n = f(r),
@@ -869,3 +870,4 @@
 		f("<style type='text/css'>.fancybox-margin{margin-right:" + (d - a) + "px;}</style>").appendTo("head")
 	})
 })(window, document, jQuery);
+});
