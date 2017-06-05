@@ -71,10 +71,11 @@ function run($sSitemapUrl, $iDelay=0, $bTestOnly=false)
 			$sUrl = $strHostPath . $data[0];
 			$iPageStartTime = microtime(true);
 			$iCur++;
-			echo "$iCur - Fetching " . $sUrl . PHP_EOL;
+			echo "$iCur - Downloading: " . $sUrl ;
 			file_get_contents($sUrl);
-		
-			$iTotalDownloadTime += microtime(true) - $iPageStartTime;
+			$currentDownloadTime =  microtime(true) - $iPageStartTime;     
+			echo " ($currentDownloadTime)" . PHP_EOL;
+			$iTotalDownloadTime += $currentDownloadTime;
 			// Sleep between requests if we're told to
 			sleep($iDelay);
 		}
@@ -116,6 +117,7 @@ function usage()
     echo 'Run wfpc in test mode to get an idea of page performance: wfpc -t <"hosturl"/"csv in current dir">' . PHP_EOL;
     echo 'Warm the Magento cache                                  : wfpc -w [-d=delay] <path to csv file>' . PHP_EOL . PHP_EOL;
     echo 'The last form of the command allows a -d option to place a pause of X number of seconds between request' . PHP_EOL;
+    echo 'Hint: To break up input file use: "sed -n -e \'51,100p\' cat-file.csv > cat-051-100.csv"' . PHP_EOL;
     exit();
 }
 function array_random($arr, $num = 1)

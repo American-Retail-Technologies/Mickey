@@ -2915,7 +2915,7 @@ namespace ExtractProductItems
                 // Erase categories outfile file in write mode and write headers
                 using (StreamWriter outputFile = new StreamWriter(args[0] + "-categories.csv"))
                 {
-                    outputFile.WriteLine("category,description,meta_title,meta_keywords,meta_description,image_url,original_file_url");
+                    outputFile.WriteLine("category,description,meta_title,meta_keywords,meta_description,image_url,original_file_url,item_count");
                 }
             }
             catch (Exception ex)
@@ -3153,14 +3153,14 @@ namespace ExtractProductItems
                         ExtractMetaTags(fileContents, out metaTitle, out metaKeywords, out metaDescription, strFilePath);
                         using (StreamWriter outputFile = new StreamWriter(args[0] + "-categories.csv", true))
                         {
-                            outputFile.WriteLine(String.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\"",
+                            outputFile.WriteLine(String.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",{7}",
                                 productCategory.Replace("\"", "\"\""),
                                 categoryDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 metaTitle.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 metaKeywords.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 metaDescription.Replace("\"", "\"\"").Replace("\n", " ").Replace("\r", " "),
                                 productImageUrl, 
-                                fileName));
+                                fileName, productItemsCount));
                         }
                         categoryCounter++;
                     }
