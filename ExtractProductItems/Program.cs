@@ -42,7 +42,13 @@ namespace ExtractProductItems
                 if (c == '<')
                 {
                     insideTag = true;
-                    if (html[i + 1] == 'a')
+                    if (Char.ToUpper(html[i + 1]) == 'A')
+                    {
+                        insideTag = false;
+                    }
+                    else if (i < htmlLength - 3 &&
+                        Char.ToUpper(html[i + 1]) == '/' &&
+                        Char.ToUpper(html[i + 2]) == 'A')
                     {
                         insideTag = false;
                     }
@@ -379,7 +385,7 @@ namespace ExtractProductItems
             description = description.Replace("../../is7.eporia.com", "http://yoosh.co/ars_files/is7.eporia.com");
             description = LatinToAscii(description);
             description = description.Replace("&nbsp;", " ");
-            description = "<p>" + RemoveTags(description) + "</p>";
+            description = RemoveTags(description).Trim();
             return description;
         }
 
