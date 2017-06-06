@@ -14,7 +14,7 @@ if ($_FILES['csv']['size'] > 0) {
     $row_strings = "";
     //loop through the csv file and insert into database 
     do { 
-        $tmp_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 2,'";
+        $tmp_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 1,'";
         if ($data[0]) { 
             // Query 1 to Insert attribute option
 			$tmp_query .= addslashes($data[0])."','".addslashes($data[1])."');";
