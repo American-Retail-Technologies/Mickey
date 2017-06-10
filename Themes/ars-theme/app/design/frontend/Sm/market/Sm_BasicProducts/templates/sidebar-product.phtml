@@ -70,7 +70,7 @@ if (!empty($list)) { ?>
 										echo $block->getReviewsSummaryHtml($_product,$templateType,true); 
 								} ?>
 								
-								<?php if ((int)$this->_getConfig('product_sku_display', 1)) {} ?>
+								<?php if ((int)$this->_getConfig('product_sku_display', 1)) { ?>
 										<span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
 								<?php } ?>
 
