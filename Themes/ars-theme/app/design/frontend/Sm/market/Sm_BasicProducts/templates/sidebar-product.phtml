@@ -69,6 +69,10 @@ if (!empty($list)) { ?>
 										$templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
 										echo $block->getReviewsSummaryHtml($_product,$templateType,true); 
 								} ?>
+								
+								<?php if ((int)$this->_getConfig('product_sku_display', 1)) {} ?>
+										<span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
+								<?php } ?>
 
                                 <?php if ((int)$this->_getConfig('product_price_display', 1)) {
 									echo $this->getProductPrice($_product);
