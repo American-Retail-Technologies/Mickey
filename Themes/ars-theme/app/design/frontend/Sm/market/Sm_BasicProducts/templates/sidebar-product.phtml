@@ -78,35 +78,41 @@ if (!empty($list)) { ?>
 									echo $this->getProductPrice($_product);
                                       } ?>
 									  
-								<?php if((int)$this->_getConfig('product_addcart_display', 1)){?>
-									<div class="bottom-action">
-									<div class="actions-primary">
-										 <?php if ($_product->isSaleable()): ?>
-											<?php $postParams = $this->getAddToCartPostParams($_product); 
-											$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
-											$session = $objectManager->get('\Magento\Framework\View\Element\FormKey');
-											?>
-											<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
-												<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
-												<input type="hidden" name="<?php /* @escapeNotVerified */ echo \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED]; ?>">
-												<?php echo $block->getBlockHtml('formkey')?>
-												<input  name="form_key" type="hidden" value="<?php echo $session->getFormKey(); ?>" />
-												<button type="submit"
-														title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
-														class="action tocart primary btn-action btn-cart">
-													<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
-												</button>
-											</form>
-										<?php else: ?>
-											<?php if ($_product->getIsSalable()): ?>
-												<div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+								<div class="bottom-action">
+									<?php if((int)$this->_getConfig('product_addcart_display', 1)){?>
+										<div class="actions-primary">
+											 <?php if ($_product->isSaleable()): ?>
+												<?php $postParams = $this->getAddToCartPostParams($_product); 
+												$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+												$session = $objectManager->get('\Magento\Framework\View\Element\FormKey');
+												?>
+												<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
+													<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
+													<input type="hidden" name="<?php /* @escapeNotVerified */ echo \Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][\Magento\Framework\App\ActionInterface::PARAM_NAME_URL_ENCODED]; ?>">
+													<?php echo $block->getBlockHtml('formkey')?>
+													<input  name="form_key" type="hidden" value="<?php echo $session->getFormKey(); ?>" />
+													<button type="submit"
+															title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
+															class="action tocart primary btn-action btn-cart">
+														<span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+													</button>
+												</form>
 											<?php else: ?>
-												<div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+												<?php if ($_product->getIsSalable()): ?>
+													<div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
+												<?php else: ?>
+													<div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
+												<?php endif; ?>
 											<?php endif; ?>
-										<?php endif; ?>
-									</div>
-									</div>
-								<?php } ?>
+										</div>
+									<?php } ?>
+									
+									<?php if ($this->helper('Magento\Wishlist\Helper\Data')->isAllow() && (int)$this->_getConfig('product_addwishlist_display', 1)){ ?>
+										<a href="#" data-post='<?php  echo $block->getAddToWishlistParams($_product); ?>'  class="action towishlist btn-action link-wishlist" data-action="add-to-wishlist" title="<?php  echo __('Add to Wish List') ?>">
+											<span><?php  echo __('Add to Wish List') ?></span>
+										</a>
+									<?php } ?>
+								</div>
 								
 							<?php } ?>
 							
