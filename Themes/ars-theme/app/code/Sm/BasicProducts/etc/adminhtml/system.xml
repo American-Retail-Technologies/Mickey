@@ -215,6 +215,10 @@
 					<label>Display Add to Cart</label>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
+				<field id="product_addwishlist_display" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Display Product Wishlist</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
 				
 				<field id="product_readmore_display" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
 					<label>Display Readmore Link</label>
