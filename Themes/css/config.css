@@ -43,6 +43,7 @@
 /*Product Details Page*/
 .art-product-short-description{
  overflow:hidden;
+ font-size:1.2em;
 }
 
 .link,
@@ -50,6 +51,16 @@
  text-decoration: underline;
  color: #08357a;
 }
+
+.prices-tier.items{
+ font-size: 1.15em;
+}
+
+.prices-tier .item > .price-tier_price > span > .price,
+.prices-tier .item > .benefit{
+ color: #e74c3c;
+}
+
 
 /*Category Page*/
 .category-view table{
