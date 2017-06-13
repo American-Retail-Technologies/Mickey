@@ -57,7 +57,8 @@
 }
 
 .prices-tier .item > .price-tier_price > span > .price,
-.prices-tier .item > .benefit{
+.prices-tier .item > .benefit,
+.product-item-details .price-box .minimal-price-link .price-wrapper{
  color: #e74c3c;
 }
 
