@@ -1,3 +1,40 @@
+/*Checkout Page*/
+.checkout-validate-address .form.validate .addressOption .addressRadio{
+  right: -7px;
+  top: 10px;
+}
+
+.checkout-validate-address .form.validate .addressOption .addressLabel{
+  padding: 5px 0 5px 0 !important;
+  margin-left: 25px;
+}
+
+.authentication-wrapper button span{
+   color:black;
+}
+
+/*About Us*/
+.aboutus-page .why-list li > span{
+  display: block;
+  padding: 5px 0 7px;
+  background: 
+ url(http://sample.americanretailsupply.com/pub/static/frontend/Sm/market/en_US/images/border-bottom-bs.png) repeat-x left bottom
+}
+
+.aboutus-page .des-about-us ul > li{
+ margin-left:10px;
+}
+
+.aboutus-page .art-desc h5{
+ color:#ff0000;
+ margin-bottom:5px;
+}
+
+.art-bold-italic{
+ font-weight:bold;
+ font-style:italic;
+}
+
 /*Footer*/
 .socials-wrap{
  display:inline-block !important;
@@ -8,6 +45,7 @@
  overflow:hidden;
 }
 
+.link,
 .art-product-description a{
  text-decoration: underline;
  color: #08357a;
@@ -35,7 +73,9 @@
 }
 
 .art-catalog-listing-description ul > li::before,
-.art-product-short-description .value ul > li::before{
+.art-product-short-description .value ul > li::before,
+.aboutus-page .des-about-us ul > li::before,
+.shipping ul > li >h5::before{
  content: '\f111';
  font-family: FontAwesome;
  padding-right:1em;
@@ -175,6 +215,11 @@ height:0%;
 /*Extra*/
 .mb25{
  margin-bottom:25px;
+}
+
+.shipping ul >li,
+.mb10{
+ margin-bottom:10px;
 }
 
 .mt10{
