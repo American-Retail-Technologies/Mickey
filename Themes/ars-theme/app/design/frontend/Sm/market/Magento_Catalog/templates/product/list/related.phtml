@@ -13,6 +13,7 @@
 $_config = $this->helper('Sm\Market\Helper\Data');
 $limit_product = $_config->getProductDetail('related_limit');
 $detailStyle = $_config->getProductDetail('detail_style');
+$showReview = FALSE;
 
 switch ($type = $block->getType()) {
 
@@ -117,7 +118,11 @@ switch ($type = $block->getType()) {
 									</a>
 								</h2>
 
-								<?php echo $block->getReviewsSummaryHtml($_item, $templateType,true) ?>
+								<span>SKU # <?php /* @escapeNotVerified */ echo $block->escapeHtml($_item->getData('sku')) ?></span>
+								
+								<?php if($showReview === TRUE){
+									echo $block->getReviewsSummaryHtml($_item, $templateType,true);
+								}?>
 								
 								<?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?>
 								
@@ -170,8 +175,11 @@ switch ($type = $block->getType()) {
                 <?php endforeach ?>
             </div>
 			
-			<script>
-				jQuery(document).ready(function($) {
+			<script type="text/javascript">
+				require([
+					'jquery',
+					'owlcarousel'
+				], function ($) {
 					var owl_related = $(".related-block .product-items");
 					owl_related.owlCarousel({
 						
@@ -231,7 +239,10 @@ switch ($type = $block->getType()) {
 								</a>
 							</h2>
 
-							<?php echo $block->getReviewsSummaryHtml($_item, $templateType,true) ?>
+							<span>SKU # <?php /* @escapeNotVerified */ echo $block->escapeHtml($_item->getData('sku')) ?></span>
+							<?php if($showReview === TRUE){
+								echo $block->getReviewsSummaryHtml($_item, $templateType,true);
+							}?>
 								
 							<?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?>
 						</div>
