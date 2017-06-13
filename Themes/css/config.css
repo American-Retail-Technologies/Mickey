@@ -247,6 +247,72 @@ height:0%;
  text-decoration:underline;
 }
 
+
+.art-cart-button button.tocart{
+ float: left;
+ margin-right: 5px;
+ display: inline-block;
+ height: 30px;
+ line-height: 28px;
+ text-align: center;
+ background: none;
+ border-width: 1px !important;
+ border-style: solid !important;
+ border-color: rgb(221, 221, 221) !important;
+ border-image: initial !important;
+ padding: 0 10px 0 10px !important;
+}
+
+.art-cart-button button.tocart span{
+ font-weight: 700;
+ color: rgb(102, 102, 102);
+}
+
+.art-cart-button button.tocart::before{
+ content: "";
+ display: inline-block;
+ width: 17px;
+ height: 15px;
+ position: relative;
+ top: 3px;
+ margin-right: 3px;
+ background: url(pub/static/frontend/Sm/market/en_US/images/icon-image.png) -20px -272px no-repeat;
+}
+
+.art-cart-button a.towishlist{
+    float: left;
+    margin-right: 5px;
+    display: inline-block;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    background: none;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: rgb(221, 221, 221) !important;
+    border-image: initial !important;
+    width: 30px;
+}
+
+.art-cart-button a.towishlist span{ 
+ display:none
+}
+.art-cart-button a.towishlist::before{
+    content: "\f004";
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-kerning: auto;
+    font-feature-settings: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    font-size: 14px;
+    font-variant: normal normal;
+}
+
 /*Mobile*/
 @media screen and (max-width: 320px){ 
 
