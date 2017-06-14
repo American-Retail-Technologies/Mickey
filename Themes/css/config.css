@@ -18,7 +18,7 @@
   display: block;
   padding: 5px 0 7px;
   background: 
- url(http://sample.americanretailsupply.com/pub/static/frontend/Sm/market/en_US/images/border-bottom-bs.png) repeat-x left bottom
+ url(/pub/static/frontend/Sm/market/en_US/images/border-bottom-bs.png) repeat-x left bottom
 }
 
 .aboutus-page .des-about-us ul > li{
@@ -160,6 +160,7 @@ https://codepen.io/martinwolf/pen/qlFdp
   position: relative;
 }
 
+.ellipsis1Line,
 .ellipsis1Line ul > li{
   text-overflow:ellipsis;
   overflow:hidden;
@@ -276,7 +277,7 @@ height:0%;
  position: relative;
  top: 3px;
  margin-right: 3px;
- background: url(pub/static/frontend/Sm/market/en_US/images/icon-image.png) -20px -272px no-repeat;
+ background: url(/pub/static/frontend/Sm/market/en_US/images/icon-image.png) -20px -272px no-repeat;
 }
 
 .art-cart-button a.towishlist{
@@ -298,7 +299,7 @@ height:0%;
  display:none
 }
 .art-cart-button a.towishlist::before{
-    content: "\f004";
+    content: "\f08a";
     display: inline-block;
     font-family: FontAwesome;
     font-style: normal;
@@ -311,6 +312,10 @@ height:0%;
     text-align: center;
     font-size: 14px;
     font-variant: normal normal;
+}
+
+.art-cart-button a.towishlist:hover::before{
+    content: "\f004";
 }
 
 /*Mobile*/
