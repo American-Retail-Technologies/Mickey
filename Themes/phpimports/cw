@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ "$#" -ne 2 ]; then
+ echo "Usage: ./cw [staging,dev,www2]" >&2
+ exit 1
+fi
+php wfpc.php -t http://$1.americanretailsupply.com/cat_files1.csv | tee test.txt
+cat test.txt | awk '{print $5,$4}' | sort -r
+
