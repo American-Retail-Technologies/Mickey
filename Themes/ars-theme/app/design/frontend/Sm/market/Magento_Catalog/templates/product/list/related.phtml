@@ -126,7 +126,7 @@ switch ($type = $block->getType()) {
 								
 								<?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?>
 								
-								<div class="product actions product-item-actions bottom-action">
+								<div class="art-cart-button product actions product-item-actions bottom-action">
 									<?php if($_config->getAdvanced('show_addtocart_button')){?>
 										<?php if ($_item->isSaleable()): ?>
 											<?php if ($_item->getTypeInstance()->hasRequiredOptions($_item)): ?>

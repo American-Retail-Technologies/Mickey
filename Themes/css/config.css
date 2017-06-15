@@ -18,7 +18,7 @@
   display: block;
   padding: 5px 0 7px;
   background: 
- url(http://sample.americanretailsupply.com/pub/static/frontend/Sm/market/en_US/images/border-bottom-bs.png) repeat-x left bottom
+ url(/pub/static/frontend/Sm/market/en_US/images/border-bottom-bs.png) repeat-x left bottom
 }
 
 .aboutus-page .des-about-us ul > li{
@@ -276,7 +276,7 @@ height:0%;
  position: relative;
  top: 3px;
  margin-right: 3px;
- background: url(pub/static/frontend/Sm/market/en_US/images/icon-image.png) -20px -272px no-repeat;
+ background: url(/pub/static/frontend/Sm/market/en_US/images/icon-image.png) -20px -272px no-repeat;
 }
 
 .art-cart-button a.towishlist{
