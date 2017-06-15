@@ -1,3 +1,10 @@
+/*Cart */
+#co-shipping-method-form .items.methods .item-title:nth-child(1),
+#co-shipping-method-form .items.methods .item-options:nth-child(2),
+.table-checkout-shipping-method tbody tr.row:nth-child(1){
+ display:none;
+}
+
 /*Checkout Page*/
 .checkout-validate-address .form.validate .addressOption .addressRadio{
   right: -7px;
@@ -11,6 +18,10 @@
 
 .authentication-wrapper button span{
    color:black;
+}
+
+.table-checkout-shipping-method tbody tr:nth-child(2) td{
+ border:0;
 }
 
 /*About Us*/
@@ -46,7 +57,7 @@
  font-size:1.2em;
 }
 
-.link,
+.art_alink,
 .art-product-description a{
  text-decoration: underline;
  color: #08357a;
@@ -97,6 +108,10 @@
  color: #08357a;
 }
 
+.art-category-description{
+  font-size: 1.15em;
+}
+.
 /*Menu*/
 .header-style-2 .header-middle{
   padding: 14px 0 8px;
@@ -160,6 +175,7 @@ https://codepen.io/martinwolf/pen/qlFdp
   position: relative;
 }
 
+.ellipsis1Line,
 .ellipsis1Line ul > li{
   text-overflow:ellipsis;
   overflow:hidden;
@@ -298,7 +314,7 @@ height:0%;
  display:none
 }
 .art-cart-button a.towishlist::before{
-    content: "\f004";
+    content: "\f08a";
     display: inline-block;
     font-family: FontAwesome;
     font-style: normal;
@@ -311,6 +327,10 @@ height:0%;
     text-align: center;
     font-size: 14px;
     font-variant: normal normal;
+}
+
+.art-cart-button a.towishlist:hover::before{
+    content: "\f004";
 }
 
 /*Mobile*/
@@ -434,6 +454,12 @@ img.popularCategoryIcon{
 @media screen and (max-width: 767px) and (orientation: landscape){
   .footer-container .socials-wrap{
    top:156px;
+  }
+}
+
+@media screen and (max-width: 991px){
+  .header-style-2 .header-middle .middle-right-content .minicart-header .minicart-content .cart-wrapper .minicart-wrapper .showcart{
+  top:11px
   }
 }
 

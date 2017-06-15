@@ -1,0 +1,10 @@
+sudo chown -R bitnami *
+sudo chown -R bitnami .*
+rm -rf pub/media/catalog/category/img1 pub/media/catalog/category/img2 pub/media/catalog/category/img3
+mysql --user=ars_dbroot --password=American1 ars_prod_magento1 < var/backups/$1_db.sql &
+php bin/magento -n setup:rollback -c $1_filesystem_code.tgz -m $1_filesystem_media.tgz
+unzip ~/apps/ars_files/category_images.zip -d pub/media/catalog/category
+sudo chmod -R 777 pub
+sudo chmod -R 777 var
+sudo chmod -R 777 app
+chmod 777 mri stat-rein recover backup regen checkurl

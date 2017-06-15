@@ -1,0 +1,9 @@
+#!/bin/sh
+if [ "$#" -ne 2 ]; then
+ echo "Usage: ./updateUrl [staging,dev,www2]" >&2
+ exit 1
+fi
+
+mysql -u ars_dbroot -D ars_prod_magento1 -e "update core_config_data set value = 'http://$1.americanretailsupply.com/' where config_id = 1;update core_config_data set value = 'https://$1.americanretailsupply.com/' where config_id = 2; select path, value from core_config_data LIMIT 4;" -p
+php /opt/bitnami/apps/magento/htdocs/bin/magento indexer:reindex design_config_grid
+php /opt/bitnami/apps/magento/htdocs/bin/magento cache:flush config

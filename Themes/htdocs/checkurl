@@ -1,0 +1,1 @@
+mysql -u ars_dbroot -D ars_prod_magento1 -e "select path, value from core_config_data LIMIT 4" -p
