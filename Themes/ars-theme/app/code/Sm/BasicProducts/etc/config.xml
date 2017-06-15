@@ -36,8 +36,6 @@
 				<product_price_display>1</product_price_display>
 				<product_reviews_count>1</product_reviews_count>
 				<product_sku_display>1</product_sku_display>
-				<product_addcart_display>1</product_addcart_display>
-				<product_addwishlist_display>1</product_addwishlist_display>
 				<product_addcompare_display>1</product_addcompare_display>
 				<product_readmore_display>1</product_readmore_display>
 				<product_readmore_text>Details</product_readmore_text>
