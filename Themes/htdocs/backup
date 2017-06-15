@@ -1,0 +1,6 @@
+rm -rf pub/media/catalog/category/img1 pub/media/catalog/category/img2 pub/media/catalog/category/img3
+php bin/magento -n setup:backup --code --media --db
+unzip ~/apps/ars_files/category_images.zip -d pub/media/catalog/category
+sudo chmod -R 777 pub
+sudo chmod -R 777 var
+sudo chmod -R 777 app
