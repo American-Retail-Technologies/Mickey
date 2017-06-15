@@ -457,6 +457,12 @@ img.popularCategoryIcon{
   }
 }
 
+@media screen and (max-width: 991px){
+  .header-style-2 .header-middle .middle-right-content .minicart-header .minicart-content .cart-wrapper .minicart-wrapper .showcart{
+  top:11px
+  }
+}
+
 /*Mobile & Tablet*/
 @media screen and (max-width:1024px){
 
