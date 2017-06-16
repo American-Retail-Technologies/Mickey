@@ -352,7 +352,7 @@ class BasicProducts extends \Magento\Catalog\Block\Product\AbstractProduct
 		$collection = [];
 		!is_array($catids) && settype($catids, 'array');
 		if (!empty($catids)) {
-			$attributes = ['name', 'special_to_date', 'description', 'short_description', 'image', 'thumbnail', 'price', 'special_price'];
+			$attributes = ['name', 'special_to_date', 'description', 'short_description', 'image', 'thumbnail', 'price', 'special_price', 'ars_case_quantity'];
 			$collection = $this->_objectManager->get('Magento\Catalog\Model\Product')
 				->getCollection()
 				->addAttributeToSelect($attributes)
@@ -510,7 +510,7 @@ class BasicProducts extends \Magento\Catalog\Block\Product\AbstractProduct
 		$catids = $this->_getConfig('product_ids');
 		!is_array($catids) && $catids = preg_split('/[\s|,|;]/', $catids, -1, PREG_SPLIT_NO_EMPTY);
 		if (empty($catids)) return;
-		$attributes = ['name', 'special_to_date', 'description', 'short_description', 'image', 'thumbnail', 'price', 'special_price'];
+		$attributes = ['name', 'special_to_date', 'description', 'short_description', 'image', 'thumbnail', 'price', 'special_price', 'ars_case_quantity'];
 		$products = $this->_objectManager->get('Magento\Catalog\Model\Product')
 				->getCollection()
 				->addAttributeToSelect($attributes)

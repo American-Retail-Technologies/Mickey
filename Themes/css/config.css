@@ -1,3 +1,46 @@
+/*SM Basic Product*/
+
+.art-case-quantity .price-box{
+ display:inline;
+}
+
+/*Checkout Page*/
+.checkout-validate-address .form.validate .addressOption .addressRadio{
+  right: -7px;
+  top: 10px;
+}
+
+.checkout-validate-address .form.validate .addressOption .addressLabel{
+  padding: 5px 0 5px 0 !important;
+  margin-left: 25px;
+}
+
+.authentication-wrapper button span{
+   color:black;
+}
+
+/*About Us*/
+.aboutus-page .why-list li > span{
+  display: block;
+  padding: 5px 0 7px;
+  background: 
+ url(/pub/static/frontend/Sm/market/en_US/images/border-bottom-bs.png) repeat-x left bottom
+}
+
+.aboutus-page .des-about-us ul > li{
+ margin-left:10px;
+}
+
+.aboutus-page .art-desc h5{
+ color:#ff0000;
+ margin-bottom:5px;
+}
+
+.art-bold-italic{
+ font-weight:bold;
+ font-style:italic;
+}
+
 /*Footer*/
 .socials-wrap{
  display:inline-block !important;
@@ -6,12 +49,25 @@
 /*Product Details Page*/
 .art-product-short-description{
  overflow:hidden;
+ font-size:1.2em;
 }
 
+.art_alink,
 .art-product-description a{
  text-decoration: underline;
  color: #08357a;
 }
+
+.prices-tier.items{
+ font-size: 1.15em;
+}
+
+.prices-tier .item > .price-tier_price > span > .price,
+.prices-tier .item > .benefit,
+.product-item-details .price-box .minimal-price-link .price-wrapper{
+ color: #e74c3c;
+}
+
 
 /*Category Page*/
 .category-view table{
@@ -35,7 +91,9 @@
 }
 
 .art-catalog-listing-description ul > li::before,
-.art-product-short-description .value ul > li::before{
+.art-product-short-description .value ul > li::before,
+.aboutus-page .des-about-us ul > li::before,
+.shipping ul > li >h5::before{
  content: '\f111';
  font-family: FontAwesome;
  padding-right:1em;
@@ -45,6 +103,10 @@
  color: #08357a;
 }
 
+.art-category-description{
+  font-size: 1.15em;
+}
+.
 /*Menu*/
 .header-style-2 .header-middle{
   padding: 14px 0 8px;
@@ -108,6 +170,7 @@ https://codepen.io/martinwolf/pen/qlFdp
   position: relative;
 }
 
+.ellipsis1Line,
 .ellipsis1Line ul > li{
   text-overflow:ellipsis;
   overflow:hidden;
@@ -177,6 +240,11 @@ height:0%;
  margin-bottom:25px;
 }
 
+.shipping ul >li,
+.mb10{
+ margin-bottom:10px;
+}
+
 .mt10{
  margin-top:10px;
 }
@@ -188,6 +256,76 @@ height:0%;
 .static-image-block-2 .fs108 a{
  color:#08357a;
  text-decoration:underline;
+}
+
+
+.art-cart-button button.tocart{
+ float: left;
+ margin-right: 5px;
+ display: inline-block;
+ height: 30px;
+ line-height: 28px;
+ text-align: center;
+ background: none;
+ border-width: 1px !important;
+ border-style: solid !important;
+ border-color: rgb(221, 221, 221) !important;
+ border-image: initial !important;
+ padding: 0 10px 0 10px !important;
+}
+
+.art-cart-button button.tocart span{
+ font-weight: 700;
+ color: rgb(102, 102, 102);
+}
+
+.art-cart-button button.tocart::before{
+ content: "";
+ display: inline-block;
+ width: 17px;
+ height: 15px;
+ position: relative;
+ top: 3px;
+ margin-right: 3px;
+ background: url(/pub/static/frontend/Sm/market/en_US/images/icon-image.png) -20px -272px no-repeat;
+}
+
+.art-cart-button a.towishlist{
+    float: left;
+    margin-right: 5px;
+    display: inline-block;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+    background: none;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: rgb(221, 221, 221) !important;
+    border-image: initial !important;
+    width: 30px;
+}
+
+.art-cart-button a.towishlist span{ 
+ display:none
+}
+.art-cart-button a.towishlist::before{
+    content: "\f08a";
+    display: inline-block;
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-kerning: auto;
+    font-feature-settings: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    text-align: center;
+    font-size: 14px;
+    font-variant: normal normal;
+}
+
+.art-cart-button a.towishlist:hover::before{
+    content: "\f004";
 }
 
 /*Mobile*/
@@ -311,6 +449,12 @@ img.popularCategoryIcon{
 @media screen and (max-width: 767px) and (orientation: landscape){
   .footer-container .socials-wrap{
    top:156px;
+  }
+}
+
+@media screen and (max-width: 991px){
+  .header-style-2 .header-middle .middle-right-content .minicart-header .minicart-content .cart-wrapper .minicart-wrapper .showcart{
+  top:11px
   }
 }
 

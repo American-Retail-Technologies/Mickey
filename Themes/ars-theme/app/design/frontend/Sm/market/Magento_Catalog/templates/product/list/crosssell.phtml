@@ -22,7 +22,7 @@ switch ($type = $block->getType()) {
             $items = $block->getItemCollection();
 
             $showWishlist = true;
-            $showCompare = true;
+            $showCompare = false;
             $showCart = true;
             $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
             $description = false;
@@ -40,7 +40,7 @@ switch ($type = $block->getType()) {
             $items = $block->getItems();
 
             $showWishlist = true;
-            $showCompare = true;
+            $showCompare = false;
             $showCart = true;
             $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
             $description = false;
@@ -121,7 +121,7 @@ switch ($type = $block->getType()) {
 								
 								<?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?>
 								
-								<div class="bottom-action">
+								<div class="art-cart-button bottom-action">
 									<?php if($_config->getAdvanced('show_addtocart_button')){?>
 										<?php if ($_item->isSaleable()): ?>
 											<?php if ($_item->getTypeInstance()->hasRequiredOptions($_item)): ?>
@@ -153,7 +153,7 @@ switch ($type = $block->getType()) {
 										<?php endif; ?>
 									<?php } ?>
 									
-									<?php if($_config->getAdvanced('show_compare_button')){?>
+									<?php if($_config->getAdvanced('show_compare_button') && $showCompare){?>
 										<?php if ($block->getAddToCompareUrl()): ?>
 											<?php  $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
 											<a href="#" class="action tocompare btn-action link-compare" data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_item);?>' data-role="add-to-links" title="<?php /* @escapeNotVerified */ echo __('Add to Compare'); ?>">

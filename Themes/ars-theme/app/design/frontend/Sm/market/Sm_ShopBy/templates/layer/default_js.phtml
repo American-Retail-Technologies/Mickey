@@ -69,7 +69,7 @@
 				if(windowWidth <= 768)
 					_collapsible($('#layered-filter-block'));
 				_accordion($('#narrow-by-list')); */
-									
+
 				if(typeof(_SmQuickView) != 'undefined')
 					_SmQuickView();										
 				if(typeof(loadaJax) != 'undefined')
@@ -207,7 +207,27 @@
 				return;
 			});		
 			
+			//https://stackoverflow.com/questions/9720294/jquery-how-to-detect-window-width-on-the-fly
+			var $window = $(window);
+			var $artShopBy = $('#layered-filter-block');
 			
+			if ($window.width() <= 768) {
+				$artShopBy.collapsible({ active: false});
+				/*$('#layered-filter-block').collapsible('option', 'active', true);*/
+			}
+			
+			function checkWidth() {
+				var windowsize = $window.width();
+				if (windowsize <= 768) {
+					$artShopBy.collapsible("deactivate");
+					/*$('#layered-filter-block').collapsible('option', 'active', true);*/
+				}else{
+					$artShopBy.collapsible("activate");
+				}
+			}
+			
+			// Bind event listener
+			$(window).resize(checkWidth);
 		});
 		
 	});

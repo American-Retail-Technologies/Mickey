@@ -21,11 +21,12 @@
         <li class="item">
             <?php if ($filterItem->getCount() > 0): ?>
                 <a href="<?php echo $block->escapeUrl($filterItem->getUrl()) ?>">
-                    <?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
                     <?php if ($this->helper('\Magento\Catalog\Helper\Data')->shouldDisplayProductCountOnLayer()): ?>
                         <span class="count"><?php /* @escapeNotVerified */ echo $filterItem->getCount()?><span class="filter-count-label">
                             <?php if ($filterItem->getCount() == 1):?> <?php /* @escapeNotVerified */ echo __('item')?><?php else:?> <?php /* @escapeNotVerified */ echo __('items') ?><?php endif;?></span></span>
                     <?php endif; ?>
+					<?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
+                    
                 </a>
             <?php else:?>
                 <?php /* @escapeNotVerified */ echo $filterItem->getLabel() ?>
