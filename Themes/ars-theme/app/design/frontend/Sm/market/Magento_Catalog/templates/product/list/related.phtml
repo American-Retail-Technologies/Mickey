@@ -40,7 +40,7 @@ switch ($type = $block->getType()) {
             $class = $type;
 
             $image = 'related_products_list';
-            $title = __('People Also Bought...');
+            $title = __('People Also Bought ...');
             $items = $block->getItems();
             $limit = 0;
             $shuffle = 0;
@@ -112,7 +112,7 @@ switch ($type = $block->getType()) {
 							</div>
 							
 							<div class="product details product-item-details box-info">
-								<h2 class="product name product-item-name product-name">
+								<h2 class="product name product-item-name product-name clamped ellipsis2Line">
 									<a class="product-item-link" title="<?php echo $block->escapeHtml($_item->getName()) ?>" href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>">
 										<?php echo $block->escapeHtml($_item->getName()) ?>
 									</a>
