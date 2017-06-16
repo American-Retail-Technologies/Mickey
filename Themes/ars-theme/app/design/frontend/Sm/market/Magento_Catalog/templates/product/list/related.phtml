@@ -118,13 +118,22 @@ switch ($type = $block->getType()) {
 									</a>
 								</h2>
 
-								<span>SKU # <?php /* @escapeNotVerified */ echo $block->escapeHtml($_item->getData('sku')) ?></span>
+								<div class="ellipsis1Line">
+									<span>SKU # <?php /* @escapeNotVerified */ echo $block->escapeHtml($_item->getData('sku')) ?></span>
+								</div>
 								
 								<?php if($showReview === TRUE){
 									echo $block->getReviewsSummaryHtml($_item, $templateType,true);
 								}?>
 								
-								<?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?>
+								<div class="art-case-quantity ellipsis1Line">
+										<?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?>
+										<div class="price-box">
+											<span class="price"> | </span>
+											<span>
+											<?php /* @escapeNotVerified */ echo $block->escapeHtml($_item->getData('ars_case_quantity')) ?> </span>
+										</div>
+								</div>
 								
 								<div class="art-cart-button product actions product-item-actions bottom-action">
 									<?php if($_config->getAdvanced('show_addtocart_button')){?>
@@ -217,6 +226,7 @@ switch ($type = $block->getType()) {
         </div>
 		
 	<?php } else {?>
+	<!--This html is seen on Product Details Page-->
 		<div class="block products-sidebar block-related">
 			<div class="block-title">
 				<strong><?php echo $title ?></strong>
@@ -233,18 +243,26 @@ switch ($type = $block->getType()) {
 						</div>
 							
 						<div class="box-info">
-							<h2 class="product name product-item-name product-name">
+							<h2 class="product name product-item-name product-name clamped ellipsis2Line">
 								<a class="product-item-link" title="<?php echo $block->escapeHtml($_item->getName()) ?>" href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>">
 									<?php echo $block->escapeHtml($_item->getName()) ?>
 								</a>
 							</h2>
-
-							<span>SKU # <?php /* @escapeNotVerified */ echo $block->escapeHtml($_item->getData('sku')) ?></span>
+							<div class="ellipsis1Line">
+								<span>SKU # <?php /* @escapeNotVerified */ echo $block->escapeHtml($_item->getData('sku')) ?></span>
+							</div>
 							<?php if($showReview === TRUE){
 								echo $block->getReviewsSummaryHtml($_item, $templateType,true);
 							}?>
 								
-							<?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?>
+							<div class="art-case-quantity ellipsis1Line">
+										<?php /* @escapeNotVerified */ echo $block->getProductPrice($_item); ?>
+										<div class="price-box">
+											<span class="price"> | </span>
+											<span>
+											<?php /* @escapeNotVerified */ echo $block->escapeHtml($_item->getData('ars_case_quantity')) ?> </span>
+										</div>
+							</div>
 							
 							<div class="art-cart-button product actions product-item-actions bottom-action">
 									<?php if($_config->getAdvanced('show_addtocart_button')){?>
