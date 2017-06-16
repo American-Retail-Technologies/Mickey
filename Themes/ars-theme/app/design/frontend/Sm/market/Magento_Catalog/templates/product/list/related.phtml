@@ -32,7 +32,7 @@ switch ($type = $block->getType()) {
 
         }
     break;
-
+	/*Product Details Page*/
     case 'related':
         /** @var \Magento\Catalog\Block\Product\ProductList\Related $block */
         if ($exist = $block->getItems()->getSize()) {
@@ -40,7 +40,7 @@ switch ($type = $block->getType()) {
             $class = $type;
 
             $image = 'related_products_list';
-            $title = __('Related Products');
+            $title = __('People Also Bought...');
             $items = $block->getItems();
             $limit = 0;
             $shuffle = 0;
@@ -58,7 +58,7 @@ switch ($type = $block->getType()) {
 <?php if ($exist):?>
 	<?php if($detailStyle == 'detail-1'){?>
 		<div class="detail-title">
-			<span><?php echo __('Related Products')?></span>
+			<span><?php echo $title ?></span>
 		</div>
 		
         <div class="related-block products-grid">
@@ -219,7 +219,7 @@ switch ($type = $block->getType()) {
 	<?php } else {?>
 		<div class="block products-sidebar block-related">
 			<div class="block-title">
-				<strong><?php echo __('Related Products')?></strong>
+				<strong><?php echo $title ?></strong>
 			</div>
 			
 			<div class="block-content">
