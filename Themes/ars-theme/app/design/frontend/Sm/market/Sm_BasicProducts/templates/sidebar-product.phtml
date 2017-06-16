@@ -74,9 +74,16 @@ if (!empty($list)) { ?>
 										<span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
 								<?php } ?>
 
-                                <?php if ((int)$this->_getConfig('product_price_display', 1)) {
-									echo $this->getProductPrice($_product);
-                                      } ?>
+                                <?php if ((int)$this->_getConfig('product_price_display', 1)) { ?>
+									<div class="art-case-quantity">
+										<?php echo $this->getProductPrice($_product); ?>
+										<div class="price-box">
+											<span class="price"> | </span>
+											<span>
+											<?php /* @escapeNotVerified */ echo $_product->getData('ars_case_quantity') ?> </span>
+										</div>
+									</div>
+								<?php } ?>
 									  
 								<div class="art-cart-button bottom-action">
 									<div class="actions-primary">

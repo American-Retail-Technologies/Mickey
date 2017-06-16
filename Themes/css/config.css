@@ -1,3 +1,9 @@
+/*SM Basic Product*/
+
+.art-case-quantity .price-box{
+ display:inline;
+}
+
 /*Checkout Page*/
 .checkout-validate-address .form.validate .addressOption .addressRadio{
   right: -7px;
@@ -443,12 +449,6 @@ img.popularCategoryIcon{
 @media screen and (max-width: 767px) and (orientation: landscape){
   .footer-container .socials-wrap{
    top:156px;
-  }
-}
-
-@media screen and (max-width: 991px){
-  .header-style-2 .header-middle .middle-right-content .minicart-header .minicart-content .cart-wrapper .minicart-wrapper .showcart{
-  top:11px
   }
 }
 
