@@ -30,9 +30,10 @@ if (!empty($list)) { ?>
 		<?php } ?>
         <!-- Begin bs-items     -->
         <div class="block-content block-content-products">
-            <?php foreach ($list as $_product) { ?>
-                <!-- Begin bs-item-cf -->
-                <div class="item bs-item cf">
+            <div class="row">
+			<?php foreach ($list as $_product) { ?>
+				<!-- Begin bs-item-cf -->
+                <div class="col-lg-12 col-sm-6 mb10 item bs-item cf">
                     <!-- Begin bs-item-inner -->
                     <div class="item-inner">
                         <?php if ($_product->_image) { ?>
@@ -156,6 +157,7 @@ if (!empty($list)) { ?>
                     <!-- End bs-item-inner -->
                 </div><!-- End bs-item-cf -->
             <?php } ?>
+			</div>
         </div>
         <!-- End bs-items -->
     </div><!-- End Sm-basic-products -->
