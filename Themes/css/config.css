@@ -202,6 +202,43 @@ font-weight:600;
 
 .block-subscribe-home {
 background: url('http://yoosh.co/ars_files/images/wysiwyg/Newsletter/Newsletter_Background_270x250.png') no-repeat 0 0;
+background-position:center;
+}
+.art-request-catalog-block{
+	background: url('/pub/media/catalog/product/6/5/65v6043-65424_base.jpg');
+}
+
+.art-request-catalog-block .art-request-catalog-button a{
+	background-color: #08357a;
+}
+@media screen and (min-width: 769px) {
+.art-request-catalog-block .art-request-catalog-button a::after{
+    content: '\f1d8';
+    color: #fff;
+    font-family: FontAwesome;
+    width: 47px;
+    height: 40px;
+}
+}
+
+@media screen and (max-width: 768px) {
+.art-request-catalog-block .description-newsletter{
+	margin:0;
+}
+	
+.art-request-catalog-block .art-request-catalog-button{
+	padding:0;
+}
+.art-request-catalog-block .art-request-catalog-button a{
+    background-image: url(/pub/static/version1497729795/frontend/Sm/market/en_US/images/icon-image.png);
+    background-repeat: no-repeat;
+    background-position: -110px -6px;
+    width: 47px;
+    height: 40px;
+}
+.art-request-catalog-block .art-request-catalog-button a span{
+	display:none;
+}
 }
 
 img.popularCategoryIcon{
