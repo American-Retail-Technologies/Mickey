@@ -1,7 +1,16 @@
 /*SM Basic Product*/
-
-.art-case-quantity .price-box{
+.art-featured-product .price-box{
  display:inline;
+}
+
+@media screen and (max-width: 425px){ 
+.art-featured-product .item .item-inner .box-image{
+	float:none;
+	width:auto;
+}
+.art-featured-product .item .item-inner .box-info{
+	margin-left:0;
+}
 }
 
 /*Checkout Page*/

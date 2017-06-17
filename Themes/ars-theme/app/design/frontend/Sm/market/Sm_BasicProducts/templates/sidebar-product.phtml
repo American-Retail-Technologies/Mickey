@@ -20,7 +20,7 @@ if (!empty($list)) { ?>
 
 	
 
-    <div class="block products-sidebar">
+    <div class="art-featured-product block products-sidebar">
 		<?php if ($this->_getConfig('display_title', 1)) { ?>
 			<?php if ($this->_getConfig('title')) { ?>
 				<div class="block-title filter-title">
@@ -33,11 +33,11 @@ if (!empty($list)) { ?>
             <div class="row">
 			<?php foreach ($list as $_product) { ?>
 				<!-- Begin bs-item-cf -->
-                <div class="col-lg-12 col-sm-6 mb10 item bs-item cf">
+                <div class="col-lg-12 col-sm-6 col-xs-6 mb10 item bs-item cf">
                     <!-- Begin bs-item-inner -->
                     <div class="item-inner">
                         <?php if ($_product->_image) { ?>
-                            <div class="box-image">
+                            <div class="box-image mb10 ">
                                 <a href="<?php echo $_product->link ?>"
                                    title="<?php echo $_product->title; ?>"
                                     <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
@@ -45,6 +45,7 @@ if (!empty($list)) { ?>
                                     <img src="<?php echo $_product->_image; ?>"
                                          title="<?php echo $_product->title; ?>"
                                          alt="<?php echo $_product->title; ?>"
+										 class="center-block"
                                         >
                                 </a>
                             </div>
@@ -55,7 +56,7 @@ if (!empty($list)) { ?>
 						<div class="box-info">
 
                             <?php if ((int)$this->_getConfig('product_title_display', 1)) { ?>
-                                <h2 class="product name product-item-name product-name">
+                                <h2 class="product name product-item-name product-name clamped ellipsis2Line">
                                     <a href="<?php echo $_product->link; ?>" title="<?php echo $_product->title; ?>"
                                         <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
                                         >
@@ -78,7 +79,7 @@ if (!empty($list)) { ?>
 								<?php } ?>
 
                                 <?php if ((int)$this->_getConfig('product_price_display', 1)) { ?>
-									<div class="art-case-quantity ellipsis1Line">
+									<div class="ellipsis1Line">
 										<?php echo $this->getProductPrice($_product); ?>
 										<div class="price-box">
 											<span class="price"> | </span>
