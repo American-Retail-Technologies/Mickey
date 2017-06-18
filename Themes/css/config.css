@@ -3,16 +3,6 @@
  display:inline;
 }
 
-@media screen and (max-width: 425px){ 
-.art-featured-product .item .item-inner .box-image{
-	float:none;
-	width:auto;
-}
-.art-featured-product .item .item-inner .box-info{
-	margin-left:0;
-}
-}
-
 /*Checkout Page*/
 .checkout-validate-address .form.validate .addressOption .addressRadio{
   right: -7px;
@@ -205,14 +195,22 @@ background: url('http://yoosh.co/ars_files/images/wysiwyg/Newsletter/Newsletter_
 background-position:center;
 }
 .art-request-catalog-block{
-	background: url('/pub/media/catalog/product/6/5/65v6043-65424_base.jpg');
+	background: url('/pub/media/wysiwyg/request-catalog/Request_Catalog.jpg');
+}
+.art-request-catalog-bloc .art-request-catalog-button{
+	height:40px;
 }
 
 .art-request-catalog-block .art-request-catalog-button a{
 	background-color: #08357a;
 }
-@media screen and (min-width: 769px) {
-.art-request-catalog-block .art-request-catalog-button a::after{
+
+.art-request-catalog-block .art-request-catalog-button a:hover{
+	background-color: #444;
+}
+
+@media screen and (min-width: 1200px) {
+.art-request-catalog-block .art-request-catalog-button a:after{
     content: '\f1d8';
     color: #fff;
     font-family: FontAwesome;
@@ -221,7 +219,15 @@ background-position:center;
 }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1199px) {
+.art-request-catalog-block .newsletter-title{
+	margin-bottom:0;
+}	
+
+.description-newsletter{
+	display:none;
+}
+
 .art-request-catalog-block .description-newsletter{
 	margin:0;
 }
@@ -581,6 +587,7 @@ height:0%;
 
 .block-subscribe-home{
 background-size:cover;
+background-position: center;
 }
 
 /*------------Dept Prod Table------------*/
