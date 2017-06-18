@@ -3,6 +3,10 @@
  display:inline;
 }
 
+.art-featured-product .item{
+	height:116px;
+}
+
 /*Checkout Page*/
 .checkout-validate-address .form.validate .addressOption .addressRadio{
   right: -7px;
