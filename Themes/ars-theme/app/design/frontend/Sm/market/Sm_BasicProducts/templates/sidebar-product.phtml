@@ -33,11 +33,11 @@ if (!empty($list)) { ?>
             <div class="row">
 			<?php foreach ($list as $_product) { ?>
 				<!-- Begin bs-item-cf -->
-                <div class="col-lg-12 col-sm-6 col-xs-6 mb10 item bs-item cf">
+                <div class="col-lg-12 col-sm-6 item bs-item cf">
                     <!-- Begin bs-item-inner -->
                     <div class="item-inner">
                         <?php if ($_product->_image) { ?>
-                            <div class="box-image mb10 ">
+                            <div class="box-image">
                                 <a href="<?php echo $_product->link ?>"
                                    title="<?php echo $_product->title; ?>"
                                     <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
