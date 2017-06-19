@@ -110,7 +110,22 @@
 .art-category-description{
   font-size: 1.15em;
 }
-.
+
+.art-category-children .cat-wrap.theme2 .content-box .child-cat .cat-title a{
+  font-size: 125%;
+}
+
+@media screen and (max-width:425px){
+.art-product-list .price-box .minimal-price-link{
+  display: block;
+}
+
+.products-grid .art-product-list .item .item-inner .box-info  .price-box{
+ height:auto;
+}
+
+}
+
 /*Menu*/
 .header-style-2 .header-middle{
   padding: 14px 0 8px;
