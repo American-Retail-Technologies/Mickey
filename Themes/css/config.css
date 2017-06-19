@@ -1,5 +1,6 @@
 /*SM Basic Product*/
-.art-featured-product .price-box{
+.art-featured-product .price-box,
+.art-case-quantity .price-box{
  display:inline;
 }
 
