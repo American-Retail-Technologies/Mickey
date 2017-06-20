@@ -50,5 +50,12 @@
 			</a>
 		</li>
 		<?php } ?>
+		<?php if($_helper->getSocial('show_phone')){ ?>
+		<li class="li-social art-phone-social">
+			<a title="<?php echo $_helper->getSocial('phone_name');?>" href="<?php echo $_helper->getSocial('phone_url');?>"> 
+				<span class="fa art-fa-phone icon-social"></span> <span class="name-social"><?php echo $_helper->getSocial('phone_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
 	</ul>
 </div>
