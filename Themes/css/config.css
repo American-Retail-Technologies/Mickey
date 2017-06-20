@@ -128,8 +128,10 @@
   font-size: 1.15em;
 }
 
+@media screen and (min-width:426px){
 .art-category-children .cat-wrap.theme2 .content-box .child-cat .cat-title a{
   font-size: 125%;
+}
 }
 
 @media screen and (max-width:425px){
