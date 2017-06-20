@@ -43,5 +43,12 @@
 			</a>
 		</li>
 		<?php } ?>
+		<?php if($_helper->getSocial('show_email')){ ?>
+		<li class="li-social art-email-social">
+			<a title="<?php echo $_helper->getSocial('email_name');?>" href="<?php echo $_helper->getSocial('email_url');?>"> 
+				<span class="fa art-fa-email icon-social"></span> <span class="name-social"><?php echo $_helper->getSocial('email_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
 	</ul>
 </div>

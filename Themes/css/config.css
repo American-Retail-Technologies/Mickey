@@ -50,6 +50,15 @@
  display:inline-block !important;
 }
 
+.footer-container .socials-wrap ul .li-social.art-email-social a{
+	background-color: rgb(60, 159, 64);
+}
+
+.art-fa-email:before{
+	content: "\f003";
+}
+
+
 /*Product Details Page*/
 .art-product-short-description{
  overflow:hidden;
