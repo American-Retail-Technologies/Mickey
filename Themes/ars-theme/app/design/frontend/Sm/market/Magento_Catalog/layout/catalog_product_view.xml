@@ -157,10 +157,6 @@
 						</arguments>
 					</block>
 				</container>
-				<container name="newsletter" htmlTag="div" htmlClass="art-newsletter" after="-">
-					<block class="Magento\Newsletter\Block\Subscribe" template="subscribe-home.phtml">
-					</block>
-				</container>
 			</block>
         </referenceContainer>
         <referenceContainer name="content.aside">
