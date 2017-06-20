@@ -58,6 +58,14 @@
 	content: "\f003";
 }
 
+.footer-container .socials-wrap ul .li-social.art-phone-social a{
+	background-color: #fbbc05;
+}
+
+.art-fa-phone:before{
+	content: "\f095";
+}
+
 
 /*Product Details Page*/
 .art-product-short-description{
