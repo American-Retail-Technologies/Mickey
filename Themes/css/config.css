@@ -74,7 +74,8 @@
 }
 
 .art_alink,
-.art-product-description a{
+.art-product-description a,
+.art-category-description a{
  text-decoration: underline;
  color: #08357a;
 }
@@ -156,6 +157,11 @@
 
 .sm_megamenu_wrapper_horizontal_menu ul.sm_megamenu_menu{
   font-size:11px;
+}
+
+.sm_megamenu_wrapper_horizontal_menu ul.sm_megamenu_menu #sm_megamenu_125{
+	font-size:145%;
+	color: #e74c3c;
 }
 
 .sm_megamenu_wrapper_horizontal_menu .sm_megamenu_menu li:hover .sm_megamenu_dropdown_2columns{
