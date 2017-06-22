@@ -89,7 +89,13 @@
 				<linkedin_url>#</linkedin_url>
 				<show_pinterest>1</show_pinterest>
 				<pinterest_name>Pinterest</pinterest_name>	
-				<pinterest_url>#</pinterest_url>				
+				<pinterest_url>#</pinterest_url>
+				<show_email>1</show_email>
+				<email_name>Contact Us</email_name>	
+				<email_url>#</email_url>
+				<show_phone>1</show_phone>
+				<phone_name>Call Us</phone_name>	
+				<phone_url>#</phone_url>				
 			</socials>			
 			
 			<advanced>

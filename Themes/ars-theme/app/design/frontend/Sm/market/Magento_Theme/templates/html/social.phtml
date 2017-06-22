@@ -4,6 +4,13 @@
 <div class="socials-wrap">
 	<div class="title-follow"><?php echo __('Follow Us');?></div>
 	<ul>
+		<?php if($_helper->getSocial('show_email')){ ?>
+		<li class="li-social art-email-social">
+			<a title="<?php echo $_helper->getSocial('email_name');?>" href="<?php echo $_helper->getSocial('email_url');?>"> 
+				<span class="fa art-fa-email icon-social"></span> <span class="name-social"><?php echo $_helper->getSocial('email_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
 		<?php if($_helper->getSocial('show_facebook')){ ?>
 		<li class="li-social facebook-social">
 			<a title="<?php echo $_helper->getSocial('facebook_name');?>" href="<?php echo $_helper->getSocial('facebook_url');?>" target="_blank"> 
@@ -40,6 +47,13 @@
 		<li class="li-social pinterest-social">
 			<a title="<?php echo $_helper->getSocial('pinterest_name');?>" href="<?php echo $_helper->getSocial('pinterest_url');?>" target="_blank"> 
 				<span class="fa fa-pinterest icon-social"></span> <span class="name-social"><?php echo $_helper->getSocial('pinterest_name');?></span> 
+			</a>
+		</li>
+		<?php } ?>
+		<?php if($_helper->getSocial('show_phone')){ ?>
+		<li class="li-social art-phone-social">
+			<a title="<?php echo $_helper->getSocial('phone_name');?>" href="<?php echo $_helper->getSocial('phone_url');?>"> 
+				<span class="fa art-fa-phone icon-social"></span> <span class="name-social"><?php echo $_helper->getSocial('phone_name');?></span> 
 			</a>
 		</li>
 		<?php } ?>
