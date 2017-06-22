@@ -47,11 +47,13 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
         $viewMode = 'grid';
         $image = 'category_page_grid';
         $showDescription = true;
+		$showReview = false;
         $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
     } else {
         $viewMode = 'list';
         $image = 'category_page_list';
         $showDescription = true;
+		$showReview = false;
         $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
     }
 	$pos = $block->getPositioned();
@@ -120,9 +122,10 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 											<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
 										</a>
 									</h2>
-                  SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?>
-
-									<!--<?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>-->
+                                    <span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
+                                    <?php if ($showReview):?>
+                                        <?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>
+                                    <?php endif; ?>
 									<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
 									<?php echo $block->getProductDetailsHtml($_product); ?>
 									
@@ -239,9 +242,11 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 												<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
 											</a>
 										</h2>
-										SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?>
-                    
-										<?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
+										<span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
+                                        
+                                        <?php if ($showReview):?>
+                                            <?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>
+                                        <?php endif; ?>
 										<?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
 										<?php echo $block->getProductDetailsHtml($_product); ?>
 
