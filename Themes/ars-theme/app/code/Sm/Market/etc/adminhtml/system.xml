@@ -593,9 +593,61 @@
 				</field>
 				
 				<field id="pinterest_url" translate="label" type="text" sortOrder="95" showInDefault="1" showInWebsite="1" showInStore="1">
-					<label>Linkedin Url</label>
+					<label>Pinterest Url</label>
 					<depends>
 						<field id="show_pinterest">1</field>
+					</depends>
+				</field>
+				
+				<!--EMAIL-->
+				
+				<field id="email_heading" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Email</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				
+				<field id="show_email" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Email</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				
+				<field id="email_name" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Email Name</label>
+					<depends>
+						<field id="show_email">1</field>
+					</depends>
+				</field>
+				
+				<field id="email_url" translate="label" type="text" sortOrder="115" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Email Url</label>
+					<depends>
+						<field id="show_email">1</field>
+					</depends>
+				</field>
+				
+				<!--Phone-->
+				
+				<field id="phone_heading" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Call Us</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				
+				<field id="show_phone" translate="label" type="select" sortOrder="125" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Phone</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				
+				<field id="phone_name" translate="label" type="text" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Phone Name</label>
+					<depends>
+						<field id="show_phone">1</field>
+					</depends>
+				</field>
+				
+				<field id="phone_url" translate="label" type="text" sortOrder="135" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Phone Url</label>
+					<depends>
+						<field id="show_phone">1</field>
 					</depends>
 				</field>
 				
