@@ -41,7 +41,7 @@
 						<?php if($customerSession->isLoggedIn()){?>
 							<a href="<?php echo $this->getUrl('customer/account/logout')?>" title="<?php echo __('Logout')?>"><?php echo __('Logout')?></a>
 						<?php } else {?>
-							<a href="<?php echo $this->getUrl('customer/account/create')?>" title="<?php echo __('Create Your Account')?>"><?php echo __('Join Free')?></a> <?php echo __('or')?> <a href="<?php echo $this->getUrl('customer/account/login')?>" title="<?php echo __('Sign In')?>"><?php echo __('Sign in')?></a>
+							<a href="<?php echo $this->getUrl('customer/account/login')?>" title="<?php echo __('Sign In')?>"><?php echo __('Sign in')?></a>
 						<?php } ?>
 					</div>
 				</div>
