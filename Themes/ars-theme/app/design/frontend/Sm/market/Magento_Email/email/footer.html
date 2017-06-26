@@ -12,19 +12,64 @@
                     <!-- End Content -->
                     </td>
                 </tr>
-				<tr><td><h3>Needing Store Supplies?</h3></td>
-                </tr>
-                <tr><td>Call us: <a href="tel:{{config path="general/store_information/phone"}}">{{config path="general/store_information/phone"}}</a></td>
-                </tr>
-                <tr><td>Email Us: <a href="mailto:{{config path="trans_email/ident_general/email"}}">{{config path="trans_email/ident_general/email"}}</a></td>
-                </tr>
-                <tr><td><a href="{{store url=""}}" target="_blank">Shop Now</a></td>
-                </tr>
                 <tr>
                     <td class="footer">
                         <p class="closing">{{trans "Thank you, %store_name" store_name=$store.getFrontendName()}}!</p>
                     </td>
                 </tr>
+				<tr><td align="center" style="border-top:5px double gray"><h3>Needing Store Supplies?</h3></td>
+                </tr>
+                <tr><td align="center"><h4>Call us: <a href="tel:{{config path="general/store_information/phone"}}">{{config path="general/store_information/phone"}}</a></h4></td>
+                </tr>
+                <tr><td align="center"><h4>Email Us: <a href="mailto:{{config path="trans_email/ident_general/email"}}">{{config path="trans_email/ident_general/email"}}</a></h4></td>
+                </tr>
+                <tr>
+					<td>
+					<table class="button" width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td>
+								<table class="inner-wrapper" border="0" cellspacing="0" cellpadding="0" align="center">
+									<tr>
+										<td align="center">
+											<a href="{{store url=""}}" target="_blank">{{trans "Shop Now"}}</a>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+					</td>
+                </tr>
+				<tr>
+					<td>
+					<table class="main" align="center" width="100%" style="border-bottom:5px double gray" cellspacing="0" cellpadding="0">
+						<tr>
+							<td align="center">
+								<div style="content:'\f0d3'; font-family:FontAwesome; color:black;"></div>
+								<a href="https://www.pinterest.com/americanretail/">Pinterest</a>
+							</td>
+							<td align="center">
+								<a href="https://www.facebook.com/americanretailsupply">Facebook</a>
+							</td>
+							<td align="center">
+								<a href="https://www.instagram.com/americanretailsupply">Instagram</a>
+							</td>
+							<td align="center">
+								<a href="https://twitter.com/American_Retail">Twitter</a>
+							</td>
+						</tr>
+					</table>
+					</td>
+                </tr>
+				<tr>
+					<td align="center"><em>Copyright © 2017 American Retail Supply Corp, All rights reserved.</em>
+					</td>
+                </tr>
+				<tr>
+					<td align="center"><h5>Our Mailing Address:</h5>
+					 <p class="address"> {{var store.getFormattedAddress()|raw}}</p>
+					</td>
+				</tr>
             </table>
         </td>
     </tr>
