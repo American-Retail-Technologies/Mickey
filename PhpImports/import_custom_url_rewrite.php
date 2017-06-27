@@ -2,7 +2,7 @@
 
 //connect to the database 
 //$connect = mysqli_connect("ars-mysql1.c6cjzokfsjyi.us-west-2.rds.amazonaws.com","ars_dbroot","American1","sm_market_quickstart2"); 
-$connect = mysqli_connect("localhost","ars_dbroot","American1","bitnami_magento"); 
+$connect = mysqli_connect("localhost","ars_dbroot","American1","ars_prod_magento1"); 
 // http://stackoverflow.com/questions/4565195/mysql-how-to-insert-into-multiple-tables-with-foreign-keys
 // 
 
@@ -14,7 +14,7 @@ if ($_FILES['csv']['size'] > 0) {
     $row_strings = "";
     //loop through the csv file and insert into database 
     do { 
-        $tmp_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 1,'";
+        $tmp_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 0,'";
         if ($data[0]) { 
             // Query 1 to Insert attribute option
 			$tmp_query .= addslashes($data[0])."','".addslashes($data[1])."');";
