@@ -536,6 +536,9 @@ img.popularCategoryIcon{
 }
 
 @media screen and (max-width: 768px){
+.checkout-payment-method .payment-methods{
+	margin:0;
+}
  .sidebar.sidebar-additional .block.products-sidebar{
   display:none;
  }
