@@ -243,7 +243,7 @@ font-weight:600;
 }
 
 .block-subscribe-home {
-background: url('http://yoosh.co/ars_files/images/wysiwyg/Newsletter/Newsletter_Background_270x250.png') no-repeat 0 0;
+background: url('/pub/media/wysiwyg/Newsletter/Newsletter_Background_270x250.png') no-repeat 0 0;
 background-position:center;
 }
 .art-request-catalog-block{
