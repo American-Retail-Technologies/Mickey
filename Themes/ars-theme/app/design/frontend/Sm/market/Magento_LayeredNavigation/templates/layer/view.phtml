@@ -16,12 +16,12 @@
 ?>
 
 <?php if ($block->canShowBlock()): ?>
-    <div class="block filter">
-        <div class="block-title filter-title">
-            <strong><?php /* @escapeNotVerified */ echo __('Filter By') ?></strong>
+    <div class="block filter _collapsed" id="layered-filter-block" data-mage-init='{"collapsible":{"openedState": "_show", "closedState": "_hide", "animate": 200, "collapsible": true, "active": true}}'>
+        <div class="block-title filter-title" data-role="title" >
+            <div class="_collapsible"><strong><?php /* @escapeNotVerified */ echo __('Filter By') ?></strong></div>
         </div>
 
-        <div class="block-content filter-content">
+        <div class="block-content filter-content" data-role="content">
             <?php echo $block->getChildHtml('state') ?>
 
             <?php if ($block->getLayer()->getState()->getFilters()): ?>
