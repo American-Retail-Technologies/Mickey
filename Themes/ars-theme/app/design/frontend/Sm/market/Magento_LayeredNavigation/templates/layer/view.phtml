@@ -44,5 +44,38 @@
                 </dl>
             <?php endif; ?>
         </div>
+		<script type="text/javascript">
+			require([
+			"jquery",
+			"jquery/ui",
+			"accordion",
+			"mage/collapsible"
+		], function ($) {
+			$(document).ready(function($){
+			//https://stackoverflow.com/questions/9720294/jquery-how-to-detect-window-width-on-the-fly
+			var $window = $(window);
+			var $artShopBy = $('#layered-filter-block');
+			
+			if ($window.width() <= 768) {
+				$artShopBy.collapsible({ active: false});
+				/*$('#layered-filter-block').collapsible('option', 'active', true);*/
+			}
+			
+			function checkWidth() {
+				var windowsize = $window.width();
+				if (windowsize <= 768) {
+					$artShopBy.collapsible("deactivate");
+					/*$('#layered-filter-block').collapsible('option', 'active', true);*/
+				}else{
+					$artShopBy.collapsible("activate");
+				}
+			}
+			
+			// Bind event listener
+			$(window).resize(checkWidth);
+			});
+		
+		});
+		</script>
     </div>
 <?php endif; ?>
