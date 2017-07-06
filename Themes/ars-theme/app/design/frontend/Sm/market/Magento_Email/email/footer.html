@@ -17,18 +17,20 @@
                         <p class="closing">{{trans "Thank you, %store_name" store_name=$store.getFrontendName()}}!</p>
                     </td>
                 </tr>
-				<tr><td align="center" style="border-top:5px double gray"><h3>Needing Store Supplies?</h3></td>
+				<tr><td align="center" style="border-top:5px double gray"><h2>Needing Store Supplies?</h2></td>
                 </tr>
-                <tr><td align="center"><h4>Call us: <a href="tel:{{config path="general/store_information/phone"}}">{{config path="general/store_information/phone"}}</a></h4></td>
+				<tr><td align="center" style=""><h4 style="margin-top:0px;margin-bottom:0px;">You can check stock by:</h4></td>
                 </tr>
-                <tr><td align="center"><h4>Email Us: <a href="mailto:{{config path="trans_email/ident_general/email"}}">{{config path="trans_email/ident_general/email"}}</a></h4></td>
+                <tr><td align="center"><h4 style="margin-top:0px;margin-bottom:0px;">{{trans 'Call us: <a href="tel:%store_phone">%store_phone</a>' store_phone=$store_phone |raw}}</h4></td>
+                </tr>
+                <tr><td align="center"><h4 style="margin-top:0;">{{trans 'Email Us: <a href="mailto:%store_email">%store_email</a>' store_email=$store_email |raw}}</h4></td>
                 </tr>
                 <tr>
 					<td>
-					<table class="button" width="100%" border="0" cellspacing="0" cellpadding="0">
+					<table class="button" style="width:800px;" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td>
-								<table class="inner-wrapper" border="0" cellspacing="0" cellpadding="0" align="center">
+								<table style="width:100%;" class="inner-wrapper" border="0" cellspacing="0" cellpadding="0" align="center">
 									<tr>
 										<td align="center">
 											<a href="{{store url=""}}" target="_blank">{{trans "Shop Now"}}</a>
@@ -42,20 +44,20 @@
                 </tr>
 				<tr>
 					<td>
-					<table class="main" align="center" width="100%" style="border-bottom:5px double gray" cellspacing="0" cellpadding="0">
+					<table class="main" align="center" style="border-bottom:3px solid #d9d9d9; width:350px; margin:10px auto;" cellspacing="0" cellpadding="0">
 						<tr>
-							<td align="center">
+							<td align="center" style="padding-bottom:10px;">
 								<div style="content:'\f0d3'; font-family:FontAwesome; color:black;"></div>
-								<a href="https://www.pinterest.com/americanretail/">Pinterest</a>
+								<a href="https://www.pinterest.com/americanretail/"><img title="Pinterest" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/email/pinterst.png"/></a>
 							</td>
 							<td align="center">
-								<a href="https://www.facebook.com/americanretailsupply">Facebook</a>
+								<a href="https://www.facebook.com/americanretailsupply"><img title="Facebook" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/email/facebook.png"/></a>
 							</td>
 							<td align="center">
-								<a href="https://www.instagram.com/americanretailsupply">Instagram</a>
+								<a href="https://www.instagram.com/americanretailsupply"><img title="Instagram" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/email/instagram.png"/></a>
 							</td>
 							<td align="center">
-								<a href="https://twitter.com/American_Retail">Twitter</a>
+								<a href="https://twitter.com/American_Retail"><img title="Twitter" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/email/twitter.png"/></a>
 							</td>
 						</tr>
 					</table>
