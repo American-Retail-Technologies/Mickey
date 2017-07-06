@@ -24,6 +24,11 @@
 }
 
 /*About Us*/
+.aboutus-page .des-about-us{
+  font-size: 112%;
+  line-height:1.5;
+}
+
 .aboutus-page .why-list li > span{
   display: block;
   padding: 5px 0 7px;
