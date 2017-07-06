@@ -6,22 +6,28 @@ $connect = mysqli_connect("localhost","ars_dbroot","American1","ars_prod_magento
 // http://stackoverflow.com/questions/4565195/mysql-how-to-insert-into-multiple-tables-with-foreign-keys
 // 
 
-if ($_FILES['csv']['size'] > 0) { 
-
+if ($_FILES['csv']['size'] > 0) {
+	
     //get the csv file 
     $file = $_FILES['csv']['tmp_name']; 
     $handle = fopen($file,"r"); 
     $row_strings = "";
     //loop through the csv file and insert into database 
     do { 
-        $tmp_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 0,'";
         if ($data[0]) { 
-            // Query 1 to Insert attribute option
-			$tmp_query .= addslashes($data[0])."','".addslashes($data[1])."');";
-            mysqli_query($connect, $tmp_query);
+            //equest_path = addslashes($data[0]);
+            //arget_path = addslashes($data[1]);
+            $request_path = $data[0];
+            $target_path = $data[1];
+            $update_query = "UPDATE url_rewrite SET target_path='".$target_path."' WHERE request_path='".$request_path."';";
+            $insert_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 0,'";
+			$insert_query .= $request_path."','".$target_path."');";
+			$overall_query = "IF EXISTS(SELECT * FROM url_rewrite WHERE request_path='".$request_path."') THEN ";
+			$overall_query .= $update_query . " ELSE " . $insert_query . " END IF;";
+            mysqli_query($connect, $overall_query);
 			$new_option_id = mysqli_insert_id($connect);
             $row_strings .= $new_option_id.", ";
-            //$row_strings = $tmp_query;
+            $row_strings = $overall_query;
         } 
     } while ($data = fgetcsv($handle,2000,",","'")); 
     // 
