@@ -6,7 +6,8 @@ var config = {
 			jquerycookie: "Sm_Market/js/jquery.cookie.min",
 			jqueryfancyboxpack: "Sm_Market/js/jquery.fancybox.pack",	
 			easyResponsiveTabs: "Sm_Market/js/easyResponsiveTabs",	
-			yttheme: "Sm_Market/js/yttheme"			
+			yttheme: "Sm_Market/js/yttheme",
+			artjs: "Sm_Market/js/artjs"
 		}
 	}
 };
