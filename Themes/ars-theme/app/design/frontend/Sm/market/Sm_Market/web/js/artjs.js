@@ -9,15 +9,15 @@ define( [ "jquery" ], function ( $ ) {
 		  var $breadcrumb = $('.breadcrumbs ul li');
 
 		  $.each($breadcrumb, function(index, elem) {
-			if( 0 < index && index < ($totalBreadcrumb - 1)){
+			if( 0 < index && index < ($totalBreadcrumb - 2)){
 			  $(elem).find('a').text('...');;
-			}else if( index == ($totalBreadcrumb - 1)){
+			}else if( index == ($totalBreadcrumb - 2)){
 			  //Previous category can only hold 22 characters for iphone6
 			  //substring and add '...' to the end if greater than
 			  var $previousCategory = $(elem).find('a').text().length > 22 ? ($(elem).find('a').text().substring(0, 19) + '...') : $(elem).find('a').text();
 			  $(elem).find('a').text($previousCategory);
 			}
-			else if( index == $totalBreadcrumb ){
+			else if( index == $totalBreadcrumb -1 ){
 			  $(elem).css('display', 'none');
 			}
 		  });
