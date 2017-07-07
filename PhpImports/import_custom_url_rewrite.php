@@ -15,8 +15,8 @@ if ($_FILES['csv']['size'] > 0) {
     //loop through the csv file and insert into database 
     do { 
         if ($data[0]) { 
-            $request_path = mysql_real_escape_string($data[0]);
-            $target_path = mysql_real_escape_string($data[1]);
+            $request_path = $data[0];
+            $target_path = $data[1];
             $update_query = "UPDATE url_rewrite SET target_path='".$target_path."' WHERE request_path='".$request_path."';";
             $insert_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 0,'";
             $insert_query .= $request_path."','".$target_path."');";
