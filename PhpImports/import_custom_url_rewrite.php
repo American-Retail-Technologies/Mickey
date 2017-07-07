@@ -15,19 +15,26 @@ if ($_FILES['csv']['size'] > 0) {
     //loop through the csv file and insert into database 
     do { 
         if ($data[0]) { 
-            //equest_path = addslashes($data[0]);
-            //arget_path = addslashes($data[1]);
-            $request_path = $data[0];
-            $target_path = $data[1];
+            $request_path = mysql_real_escape_string($data[0]);
+            $target_path = mysql_real_escape_string($data[1]);
             $update_query = "UPDATE url_rewrite SET target_path='".$target_path."' WHERE request_path='".$request_path."';";
             $insert_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 0,'";
-			$insert_query .= $request_path."','".$target_path."');";
-			$overall_query = "IF EXISTS(SELECT * FROM url_rewrite WHERE request_path='".$request_path."') THEN ";
-			$overall_query .= $update_query . " ELSE " . $insert_query . " END IF;";
-            mysqli_query($connect, $overall_query);
-			$new_option_id = mysqli_insert_id($connect);
+            $insert_query .= $request_path."','".$target_path."');";
+            $select_query = "SELECT url_rewrite_id FROM url_rewrite WHERE request_path='".$request_path."';";
+            //$overall_query = $update_query . " OR " . $insert_query . ";";
+            $new_option_id = 0;
+            $result = mysqli_query($connect, $select_query);
+            if ($result->num_rows === 0) {
+              mysqli_query($connect, $insert_query);
+              $new_option_id = mysqli_insert_id($connect);
+            } else {
+              mysqli_query($connect, $update_query);
+              $uw = $result->fetch_assoc();
+              $new_option_id = $uw['url_rewrite_id'];
+            }
+			
             $row_strings .= $new_option_id.", ";
-            $row_strings = $overall_query;
+            //$row_strings = $overall_query;
         } 
     } while ($data = fgetcsv($handle,2000,",","'")); 
     // 
