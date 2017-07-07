@@ -3,19 +3,24 @@ define( [ "jquery" ], function ( $ ) {
 	
 	//Reduce the number of breadcrumbs if there is more than 4 categories
 	function reduceBreadCrumb(){
-		var $breadcrumb = $('.breadcrumbs ul li');
-		var $disableBreadcrumb = $('.breadcrumbs ul li').length > 3 ? true : false;
+		var $totalBreadcrumb = $('.breadcrumbs ul li').length > 3 ? $('.breadcrumbs ul li').length : false;
 		
-		//console.log(disableBreadcrumb);
-		
-		if($disableBreadcrumb){
-		  var $end = $('.breadcrumbs ul li').length - 2;
-		  //console.log(end);
+		if($totalBreadcrumb){
+		  var $breadcrumb = $('.breadcrumbs ul li');
+
 		  $.each($breadcrumb, function(index, elem) {
-			if( index > 0 && index < $end){
-				$(elem).css("display","none");
+			if( 0 < index && index < ($totalBreadcrumb - 1)){
+			  $(elem).find('a').text('...');;
+			}else if( index == ($totalBreadcrumb - 1)){
+			  //Previous category can only hold 22 characters for iphone6
+			  //substring and add '...' to the end if greater than
+			  var $previousCategory = $(elem).find('a').text().length > 22 ? ($(elem).find('a').text().substring(0, 19) + '...') : $(elem).find('a').text();
+			  $(elem).find('a').text($previousCategory);
 			}
-			});
+			else if( index == $totalBreadcrumb ){
+			  $(elem).css('display', 'none');
+			}
+		  });
 		}
 	}
 	$( document ).ready(function() {
