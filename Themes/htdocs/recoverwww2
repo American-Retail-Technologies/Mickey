@@ -5,4 +5,4 @@ php bin/magento -n setup:rollback -c $1_filesystem_code.tgz -m $1_filesystem_med
 sudo chmod -R 777 pub
 sudo chmod -R 777 var
 sudo chmod -R 777 app
-chmod 777 mri stat-rein recover backup regen checkurl
+chmod 777 mri stat-rein recover backup regen checkurl recoverwww2

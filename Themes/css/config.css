@@ -582,6 +582,10 @@ padding: 15px 0 0;
 width:0%;
 height:0%;
 }
+
+.block-viewed-products-list{
+display:none;	
+}
 }
 
 /*Tablet*/
