@@ -574,6 +574,10 @@ img.popularCategoryIcon{
 width:0%;
 height:0%;
 }
+
+.block-viewed-products-list{
+display:none;	
+}
 }
 
 /*Tablet*/
