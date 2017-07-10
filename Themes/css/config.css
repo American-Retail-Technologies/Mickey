@@ -526,6 +526,14 @@ img.popularCategoryIcon{
 }
 
 @media screen and (max-width: 768px){
+.breadcrumbs{
+padding: 15px 0 0;
+}
+
+.page-main{
+	padding:15px 0;
+}
+
 .checkout-payment-method .payment-methods{
 	margin:0;
 }
