@@ -32,8 +32,7 @@
 .aboutus-page .why-list li > span{
   display: block;
   padding: 5px 0 7px;
-  background: 
- url(/pub/static/frontend/Sm/market/en_US/images/border-bottom-bs.png) repeat-x left bottom
+  background: url(/pub/static/frontend/Sm/market/en_US/images/border-bottom-bs.png) repeat-x left bottom;
 }
 
 .aboutus-page .des-about-us ul > li{
@@ -339,10 +338,6 @@ text-transform:uppercase;
 /*Extra*/
 .mb25{
  margin-bottom:25px;
-}
-
-.mb10{
- margin-bottom:10px;
 }
 
 .shipping ul >li,
@@ -734,7 +729,7 @@ font-size: 112.67%;
 text-align:center;
 }
 .toolbar{
-border-top:0
+border-top:0;
 }
 
 .body .name
