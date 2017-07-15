@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ "$#" -ne 3 ]; then
+ echo "  Usage: ./cacheWarm [staging,dev,www2] [file with url] [result file prefix]" >&2
+ echo "  Example: ./cacheWarm staging prod_files1.csv result-1" >&2
+ echo "  Results are stored into var/cachewarm/" >&2
+ exit 1
+fi
+
+cd /opt/bitnami/apps/magento/htdocs/pub/phpimports
+rm ../../var/cachewarm/$3.txt
+php wfpc.php -w https://$1.americanretailsupply.com/$2 >> ../../var/cachewarm/$3.txt &
