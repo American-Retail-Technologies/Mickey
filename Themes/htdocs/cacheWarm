@@ -1,11 +1,14 @@
+# used by the cron jobs
+# add following 2 lines using crontab -e
+# 0 7 * * * /opt/bitnami/apps/magento/htdocs/cacheWarm www2 cat-prod-0726-1210.csv result1
+# 0 8 * * * /opt/bitnami/apps/magento/htdocs/cacheWarm www2 prod_files1.csv result2
 #!/bin/sh
 if [ "$#" -ne 3 ]; then
  echo "  Usage: ./cacheWarm [staging,dev,www2] [file with url] [result file prefix]" >&2
  echo "  Example: ./cacheWarm staging prod_files1.csv result-1" >&2
- echo "  Results are stored into var/cachewarm/" >&2
+ echo "  Results are stored into var/warmcache/" >&2
  exit 1
 fi
 
 cd /opt/bitnami/apps/magento/htdocs/pub/phpimports
-rm ../../var/cachewarm/$3.txt
-php wfpc.php -w https://$1.americanretailsupply.com/$2 >> ../../var/cachewarm/$3.txt &
+/opt/bitnami/php/bin/php wfpc.php -w https://$1.americanretailsupply.com/$2 >> ../../var/warmcache/$3_$(date +%Y%m%d_%H%M%S).txt &
