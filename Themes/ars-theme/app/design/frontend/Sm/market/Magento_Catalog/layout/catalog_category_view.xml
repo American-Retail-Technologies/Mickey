@@ -16,9 +16,5 @@
 				</block>
 			</container>
         </referenceContainer>
-		<referenceContainer name="content">
-			<block class="Magento\Newsletter\Block\Subscribe" template="subscribe-home.phtml" after="-">
-			</block>
-		</referenceContainer>
     </body>
 </page>
