@@ -9,5 +9,14 @@
     <body>
 		<attribute name="class" value="art-page-no-filter"/>
 		<referenceBlock name="catalog.leftnav" remove="true"/>
+		<referenceContainer name="div.container">
+			<container name="art.div.row" as="someContainer" label="Some Container" htmlTag="div" htmlClass="row art-before-footer">
+				<block class="Magento\Cms\Block\Block" name="NoAnchorBlock">
+					<arguments>
+						<argument name="block_id" xsi:type="string">no-anchor-block</argument>
+					</arguments>
+				</block>
+			</container>
+		</referenceContainer>
     </body>
 </page>
