@@ -12,8 +12,19 @@ $showCategoriesFooter = false;
 
 <div class="footer-container">
 	<div class="footer-wrapper">
-		<div class="container">
+		<div class="footer-style-4">
 			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 newsletter-footer">
+							<?php echo $block->getChildHtml('form.subscribe.footer'); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="footer-middle">
 				<div class="row">
 					<div class="col-md-3 col-sm-6 col-xs-12 about-store">
 						<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('about-footer')->toHtml(); ?>
