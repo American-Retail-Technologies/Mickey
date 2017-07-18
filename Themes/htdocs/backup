@@ -1,4 +1,0 @@
-php bin/magento -n setup:backup --code --media --db
-sudo chmod -R 777 pub
-sudo chmod -R 777 var
-sudo chmod -R 777 app

@@ -1,0 +1,2 @@
+php ../bin/magento indexer:reindex
+sudo chmod -R 777 ../var ../pub ../app/etc

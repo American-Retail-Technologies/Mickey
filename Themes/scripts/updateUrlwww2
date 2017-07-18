@@ -5,5 +5,5 @@ if [ "$#" -ne 1 ]; then
 fi
 
 mysql --host=ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com -u ars_dbroot -D ars_prod_magento1 -e "update core_config_data set value = 'https://$1.americanretailsupply.com/' where config_id = 1;update core_config_data set value = 'https://$1.americanretailsupply.com/' where config_id = 2; select path, value from core_config_data LIMIT 4;" -p
-cd /opt/bitnami/apps/magento/htdocs
+cd /opt/bitnami/apps/magento/htdocs/scripts
 ./regen

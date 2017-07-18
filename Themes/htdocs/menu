@@ -1,1 +1,0 @@
-php bin/magento indexer:reindex catalogrule_rule

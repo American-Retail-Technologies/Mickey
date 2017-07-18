@@ -2,8 +2,8 @@
 # add following 4 lines using crontab -e
 # 58 6 * * * /opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento cache:flush #cachWarm-cron
 # 59 6 * * * sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/var #cachWarm-cron
-# 0 7 * * * /opt/bitnami/apps/magento/htdocs/cacheWarm www2 cat-prod-0726-1210.csv result1 #cacheWarm-cron
-# 0 8 * * * /opt/bitnami/apps/magento/htdocs/cacheWarm www2 prod_files1.csv result2 #cacheWarm-cron
+# 0 7 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www2 cat-prod-0726-1210.csv result1 #cacheWarm-cron
+# 0 8 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www2 prod_files1.csv result2 #cacheWarm-cron
 
 #!/bin/sh
 if [ "$#" -ne 3 ]; then

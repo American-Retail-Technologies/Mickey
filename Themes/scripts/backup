@@ -1,0 +1,2 @@
+php ../bin/magento -n setup:backup --code --media --db
+sudo chmod -R 777 ../pub ../var ../app/etc

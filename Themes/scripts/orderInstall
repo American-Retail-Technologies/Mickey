@@ -1,0 +1,4 @@
+unzip ~/apps/ars_files/magento2-order-import-export-v11.zip -d ..
+rm -f ../magento_2_import_export_sales_orders_documentation.pdf
+php ../bin/magento module:enable CommerceExtensions_OrderImportExport
+

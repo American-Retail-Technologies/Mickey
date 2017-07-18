@@ -1,0 +1,4 @@
+php ../bin/magento cache:flush
+php ../bin/magento setup:static-content:deploy
+php ../bin/magento indexer:reindex
+sudo chmod -R 777 ../pub ../var ../app ../scripts
