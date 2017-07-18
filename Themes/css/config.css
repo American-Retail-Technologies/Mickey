@@ -440,7 +440,10 @@ text-transform:uppercase;
  color:#08357a;
  text-decoration:underline;
 }
-
+.art-before-footer .static-image-block-2{
+	margin: 30px 0 25px;
+	
+}
 
 .art-cart-button button.tocart{
  float: left;
