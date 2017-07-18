@@ -1,8 +1,8 @@
 #!/bin/sh
-sudo rm -rf ../var/view_preprocessed/* ../var/cache/* ../var/page_cache/* ../var/generation/* ../pub/static/*
-php ../bin/magento cache:flush
-php ../bin/magento setup:upgrade
-php ../bin/magento setup:di:compile
-php ../bin/magento setup:static-content:deploy
-php ../bin/magento indexer:reindex
-sudo chmod -R 777 ../pub ../var ../app ../scripts
+sudo rm -rf /opt/bitnami/apps/magento/htdocs/var/view_preprocessed/* /opt/bitnami/apps/magento/htdocs/var/cache/* /opt/bitnami/apps/magento/htdocs/var/page_cache/* /opt/bitnami/apps/magento/htdocs/var/generation/* /opt/bitnami/apps/magento/htdocs/pub/static/*
+php /opt/bitnami/apps/magento/htdocs/bin/magento cache:flush
+php /opt/bitnami/apps/magento/htdocs/bin/magento setup:upgrade
+php /opt/bitnami/apps/magento/htdocs/bin/magento setup:di:compile
+php /opt/bitnami/apps/magento/htdocs/bin/magento setup:static-content:deploy
+php /opt/bitnami/apps/magento/htdocs/bin/magento indexer:reindex
+sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/pub /opt/bitnami/apps/magento/htdocs/var /opt/bitnami/apps/magento/htdocs/app /opt/bitnami/apps/magento/htdocs/scripts

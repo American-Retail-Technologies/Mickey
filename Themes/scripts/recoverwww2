@@ -1,7 +1,7 @@
 #!/bin/sh
 sudo chown -R bitnami *
 sudo chown -R bitnami .*
-mysql --host=ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com --user=ars_dbroot --password=American1 ars_prod_magento1 < ../var/backups/$1_db.sql &
-php ../bin/magento -n setup:rollback -c $1_filesystem_code.tgz -m $1_filesystem_media.tgz
-sudo chmod -R 777 ../pub ../var ../app ../scripts
-cp ../app/etc/env.aurora.noredis.php ../app/etc/env.php
+mysql --host=ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com --user=ars_dbroot --password=American1 ars_prod_magento1 < /opt/bitnami/apps/magento/htdocs/var/backups/$1_db.sql &
+php /opt/bitnami/apps/magento/htdocs/bin/magento -n setup:rollback -c $1_filesystem_code.tgz -m $1_filesystem_media.tgz
+sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/pub /opt/bitnami/apps/magento/htdocs/var /opt/bitnami/apps/magento/htdocs/app /opt/bitnami/apps/magento/htdocs/scripts
+cp /opt/bitnami/apps/magento/htdocs/app/etc/env.aurora.noredis.php /opt/bitnami/apps/magento/htdocs/app/etc/env.php
