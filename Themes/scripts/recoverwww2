@@ -1,3 +1,4 @@
+#!/bin/sh
 sudo chown -R bitnami *
 sudo chown -R bitnami .*
 mysql --host=ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com --user=ars_dbroot --password=American1 ars_prod_magento1 < ../var/backups/$1_db.sql &
