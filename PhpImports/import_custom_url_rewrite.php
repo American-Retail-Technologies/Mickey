@@ -1,8 +1,10 @@
 <?php  
 
 //connect to the database 
-//$connect = mysqli_connect("ars-mysql1.c6cjzokfsjyi.us-west-2.rds.amazonaws.com","ars_dbroot","American1","sm_market_quickstart2"); 
-$connect = mysqli_connect("localhost","ars_dbroot","American1","ars_prod_magento1"); 
+$connect = mysqli_connect("ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com","ars_dbroot","American1","ars_prod_magento1"); 
+//$connect = mysqli_connect("ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com","ars_dbroot","American1","ars_staging_magento1"); 
+//$connect = mysqli_connect("ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com","ars_dbroot","American1","ars_dev_magento1"); 
+//$connect = mysqli_connect("localhost","ars_dbroot","American1","ars_prod_magento1"); 
 // http://stackoverflow.com/questions/4565195/mysql-how-to-insert-into-multiple-tables-with-foreign-keys
 // 
 
