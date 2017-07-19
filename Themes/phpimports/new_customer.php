@@ -1,16 +1,26 @@
 <?php
 //https://stackoverflow.com/questions/5004233/jquery-ajax-post-example-with-php?noredirect=1&lq=1
 
-$connect = mysqli_connect("ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com","ars_dbroot","American1","ars_staging_magento1");
+$connect = new mysqli("ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com","ars_dbroot","American1","ars_staging_magento1");
 //$customers = "SELECT * FROM customer_entity ORDER BY created_at DESC";
 if($_POST["fromDate"]){
-	$customers = "SELECT email FROM customer_entity where created_at LIKE '%2017-06%' ORDER BY created_at DESC;";
-
-	$result = mysqli_query($connect, $customers);
+	if (mysqli_connect_errno()) {
+		printf("Connect failed: %s\n", mysqli_connect_error());
+		exit();
+	}
+	$customers = "SELECT email, firstname, lastname FROM `customer_entity` WHERE `created_at` >= '".$_POST["fromDate"]."' ORDER BY `created_at` DESC";
+	//echo $customers;
 	
-	echo json_encode($result);
+	$queryResult = $connect->query($customers);
+	//$result = $queryResult->fetch_all();
+	while($result = $queryResult->fetch_row()){
+		echo json_encode($result);
+	}
 	
-	header('Location: import_custom_url_rewrite.php?success=1');
+	// Free result set
+	mysqli_free_result($result);
+	mysqli_close($connect);
+	
 }
 ?>
 
@@ -30,12 +40,12 @@ if($_POST["fromDate"]){
   <input name="fromDate" type="date" />
   <input type="submit" name="Submit" value="Submit" />
 </form>
-<?php if (!empty($_GET[success])) {?>
-<h1>Success!</h1>
-<?php } ?>
 
-<div id="result"> </div>
+<form action="" enctype="multipart/form-data" name="form2" id="form2">
+<input type="checkbox" name="emails" checked="checked">tenzin@americanretailsupply</input>
+</form>
 
+<div id="response"></div>
 <script>
 $("#form1").submit(function(event) {
 	/* Stop form from submitting normally */
@@ -47,22 +57,23 @@ $("#form1").submit(function(event) {
 	var values = $(this).serialize();
 	
 	ajaxRequest= $.ajax({
-		url: "https://staging.americanretailsupply.com/pub/phpimports/new_customer.php",
 		type: "post",
 		data: values
     });
 	
 	ajaxRequest.done(function (response, textStatus, jqXHR){
 		// show successfully for submit message
-		$("#result").html('Submitted successfully');
+		console.log(response);
+		
+		//$("#form2").html('<input type="checkbox" name="">' + response + '</li>');
     });
 	
 	/* On failure of request this function will be called  */
      ajaxRequest.fail(function (){
 		// show error
-		$("#result").html('There is error while submit');
+		$("#response").html('There is error while submit');
      });
-}
+});
 </script>
 </body>
 </html>
