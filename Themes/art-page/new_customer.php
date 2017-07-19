@@ -1,29 +1,3 @@
-<?php
-//https://stackoverflow.com/questions/5004233/jquery-ajax-post-example-with-php?noredirect=1&lq=1
-
-$connect = mysqli_connect("ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com","ars_dbroot","American1","ars_staging_magento1");
-//$customers = "SELECT * FROM customer_entity ORDER BY created_at DESC";
-if($_POST["fromDate"]){
-	if (mysqli_connect_errno()) {
-		printf("Connect failed: %s\n", mysqli_connect_error());
-		exit();
-	}
-	$customers = "SELECT email, firstname, lastname FROM `customer_entity` WHERE `created_at` >= '".$_POST["fromDate"]."' ORDER BY `created_at` DESC";
-	//echo $customers;
-	
-	$queryResult = mysqli_query($connect, $customers);
-	//$result = $queryResult->fetch_all();
-	while($result = $queryResult->fetch_row()){
-		echo json_encode($result);
-	}
-	
-	// Free result set
-	mysqli_free_result($result);
-	mysqli_close($connect);
-	
-}
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -57,6 +31,7 @@ $("#form1").submit(function(event) {
 	var values = $(this).serialize();
 	
 	ajaxRequest= $.ajax({
+		url: "https://staging.americanretailsupply.com/pub/art-page/get_customer_list_from_date.php",
 		type: "post",
 		data: values
     });
