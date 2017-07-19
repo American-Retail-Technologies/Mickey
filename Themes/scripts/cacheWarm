@@ -14,4 +14,4 @@ if [ "$#" -ne 3 ]; then
 fi
 
 cd /opt/bitnami/apps/magento/htdocs/pub/phpimports
-/opt/bitnami/php/bin/php wfpc.php -w https://$1.americanretailsupply.com/$2 >> ../../var/warmcache/$3_$(date +%Y%m%d_%H%M%S).txt &
+/opt/bitnami/php/bin/php wfpc.php -w https://$1.americanretailsupply.com/$2 >> /opt/bitnami/apps/magento/htdocs/var/warmcache/$3_$(date +%Y%m%d_%H%M%S).txt &
