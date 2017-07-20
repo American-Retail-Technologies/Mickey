@@ -23,6 +23,10 @@
    color:black;
 }
 
+.product-item-details .art-overweight{
+	color: #fe0202;
+}
+
 /*About Us*/
 .aboutus-page .des-about-us{
   font-size: 112%;

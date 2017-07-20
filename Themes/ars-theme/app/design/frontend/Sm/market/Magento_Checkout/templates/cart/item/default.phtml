@@ -40,10 +40,12 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
                         <?php echo $block->escapeHtml($block->getProductName()) ?>
                     <?php endif; ?>
                     <p style="text-transform: none;" class="sku"><strong>SKU: </strong><?php echo $product->getSku() ?></p>
-					<?php
-						if($product->getWeight() > 99) echo "Shipping will be quoted separately. Weight=" . $product->getWeight();
-					?>
                 </strong>
+
+				<?php if($product->getWeight() > 99) { ?>
+					<p class="art-overweight"><?php echo "HEAVY ITEM: Shipping will be quoted separately. We'll contact you and work to get excellent rates for heavy items." ?></p>
+				<?php } ?>
+
                 <?php if ($_options = $block->getOptionList()):?>
                     <dl class="item-options">
                         <?php foreach ($_options as $_option) : ?>
