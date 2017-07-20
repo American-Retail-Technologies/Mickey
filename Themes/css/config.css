@@ -181,6 +181,9 @@ font-weight: 700;
  color: #e74c3c;
 }
 
+.catalog-product-view .fotorama__stage__frame .fotorama__img{
+	position:initial;
+}
 
 /*Category Page*/
 .category-view table{
