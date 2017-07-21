@@ -23,6 +23,10 @@
    color:black;
 }
 
+.product-item-details .art-overweight{
+	color: #fe0202;
+}
+
 /*About Us*/
 .aboutus-page .des-about-us{
   font-size: 112%;
@@ -177,6 +181,9 @@ font-weight: 700;
  color: #e74c3c;
 }
 
+.catalog-product-view .fotorama__stage__frame .fotorama__img{
+	position:initial;
+}
 
 /*Category Page*/
 .category-view table{
@@ -247,6 +254,7 @@ font-weight: 700;
 
 .header-style-2 .header-middle .middle-right-content .minicart-header{
   bottom: -54px;
+  z-index: 1041;
 }
 
 .sm_megamenu_wrapper_horizontal_menu ul.sm_megamenu_menu{
@@ -287,6 +295,14 @@ font-weight: 700;
 
 .art-megamenu-image a.btn{
   color:white;
+}
+
+.header-style-2 .header-bottom .sidebar-megamenu .megamenu-content-sidebar .menu-ver-content{
+	z-index: 1041 !important;
+}
+
+.sm_megamenu_wrapper_vertical_menu{
+	z-index: 1041;
 }
 
 /*Ellipsis
