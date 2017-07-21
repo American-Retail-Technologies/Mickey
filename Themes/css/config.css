@@ -209,7 +209,8 @@ font-weight: 700;
 .art-catalog-listing-description ul > li::before,
 .art-product-short-description .value ul > li::before,
 .aboutus-page .des-about-us ul > li::before,
-.shipping ul > li >h5::before{
+.shipping ul > li >h5::before,
+.art-category-description ul > li::before{
  content: '\f111';
  font-family: FontAwesome;
  padding-right:1em;
