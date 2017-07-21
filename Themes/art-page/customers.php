@@ -39,8 +39,15 @@ $("#form1").submit(function(event) {
 	ajaxRequest.done(function (response, textStatus, jqXHR){
 		// show successfully for submit message
 		console.log(response);
-		
-		//$("#form2").html('<input type="checkbox" name="">' + response + '</li>');
+		response.split(']');
+		$.each(response, function(index, value) { 
+			console.log(index + ': ' + value);
+		});
+		/*
+		$.each(response, function(index, value){
+			$("#form2").html('<input type="checkbox" >' + value + '</input>');
+		});
+		*/
     });
 	
 	/* On failure of request this function will be called  */
