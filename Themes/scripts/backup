@@ -1,3 +1,3 @@
 #!/bin/sh
-php /opt/bitnami/apps/magento/htdocs/bin/magento -n setup:backup --code --media --db
+/opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento -n setup:backup --code --media --db
 sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/pub /opt/bitnami/apps/magento/htdocs/var /opt/bitnami/apps/magento/htdocs/app/etc

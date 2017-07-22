@@ -1,5 +1,5 @@
 #!/bin/sh
-php /opt/bitnami/apps/magento/htdocs/bin/magento cache:flush
-php /opt/bitnami/apps/magento/htdocs/bin/magento setup:static-content:deploy
-php /opt/bitnami/apps/magento/htdocs/bin/magento indexer:reindex
+/opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento cache:flush
+/opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento setup:static-content:deploy
+/opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento indexer:reindex
 sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/pub /opt/bitnami/apps/magento/htdocs/var /opt/bitnami/apps/magento/htdocs/app /opt/bitnami/apps/magento/htdocs/scripts

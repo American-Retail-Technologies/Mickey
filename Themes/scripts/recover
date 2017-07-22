@@ -2,5 +2,5 @@
 sudo chown -R bitnami *
 sudo chown -R bitnami .*
 mysql --user=ars_dbroot --password=American1 ars_prod_magento1 < /opt/bitnami/apps/magento/htdocs/var/backups/$1_db.sql &
-php /opt/bitnami/apps/magento/htdocs/bin/magento -n setup:rollback -c $1_filesystem_code.tgz -m $1_filesystem_media.tgz
+/opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento -n setup:rollback -c $1_filesystem_code.tgz -m $1_filesystem_media.tgz
 sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/pub /opt/bitnami/apps/magento/htdocs/var /opt/bitnami/apps/magento/htdocs/app /opt/bitnami/apps/magento/htdocs/scripts
