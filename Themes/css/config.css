@@ -23,8 +23,9 @@
    color:black;
 }
 
-.product-item-details .art-overweight{
-	color: #fe0202;
+.product-item-details .art-overweight,
+.art-red{
+	color: #fe0000;
 }
 
 /*About Us*/
