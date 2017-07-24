@@ -194,7 +194,8 @@ font-weight: 700;
 
 /*Category Page*/
 
-.category-view .category-image img{
+.category-view .category-image img,
+.art-fr{
  float:right;
 }
 
