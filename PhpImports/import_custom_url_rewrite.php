@@ -20,7 +20,7 @@ if ($_FILES['csv']['size'] > 0) {
             $request_path = $data[0];
             $target_path = $data[1];
             $update_query = "UPDATE url_rewrite SET target_path='".$target_path."' WHERE request_path='".$request_path."';";
-            $insert_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 0,'";
+            $insert_query = "INSERT INTO url_rewrite (entity_type, entity_id, redirect_type, store_id, request_path, target_path) VALUES ('custom', 0, 301, 1,'";
             $insert_query .= $request_path."','".$target_path."');";
             $select_query = "SELECT url_rewrite_id FROM url_rewrite WHERE request_path='".$request_path."';";
             //$overall_query = $update_query . " OR " . $insert_query . ";";
