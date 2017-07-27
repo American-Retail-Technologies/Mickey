@@ -1,3 +1,15 @@
+.btn-art,
+.art-category-description .btn-art{
+    color: #fff;
+    background-color: #08357a;
+    border-color: #08357a;
+}
+
+.btn-art:visited,
+.art-category-description .btn-art:visited{
+    color: #fff;
+}
+
 /*SM Basic Product*/
 .art-featured-product .price-box,
 .art-case-quantity .price-box{
@@ -538,16 +550,6 @@ margin-top:25px;
 
 .art-cart-button a.towishlist:hover::before{
     content: "\f004";
-}
-
-.btn-art{
-    color: #fff;
-    background-color: #08357a;
-    border-color: #08357a;
-}
-
-.btn-art:visited{
-    color: #fff;
 }
 
 /*Mobile*/
