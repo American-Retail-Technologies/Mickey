@@ -2,11 +2,11 @@ DELIMITER $$
 
 DROP PROCEDURE IF EXISTS spTokenize $$
  
-CREATE PROCEDURE spTokenize (str nvarchar(255), delim char(1))
+CREATE PROCEDURE spTokenize (str varchar(255), delim char(1))
 BEGIN
   DECLARE i INT DEFAULT 0;
   DECLARE ilen INT;
-  create temporary table if not exists `tmptokens`(val nvarchar(50));
+  create temporary table if not exists `tmptokens`(val varchar(50));
   truncate table `tmptokens`;
   
   SET ilen = (length(replace(str, delim, concat(delim, ' ')))  - length(str));
@@ -22,10 +22,10 @@ END $$
 
 DROP PROCEDURE IF EXISTS `spGetPath` $$
  
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spGetPath`(INOUT pf nvarchar(1200))
+CREATE DEFINER=`ars_dbroot`@`localhost` PROCEDURE `spGetPath`(INOUT pf varchar(1200))
 BEGIN
 	DECLARE l_id int;
-    DECLARE l_part nvarchar(255);
+    DECLARE l_part varchar(255);
     DECLARE done int default FALSE;
     
 	DECLARE cursor_i CURSOR FOR 
@@ -61,17 +61,17 @@ END $$
 
 DROP PROCEDURE IF EXISTS `spGetCatPathNames` $$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `spGetCatPathNames`()
+CREATE DEFINER=`ars_dbroot`@`localhost` PROCEDURE `spGetCatPathNames`()
 BEGIN
 	DECLARE l_id int;
---    DECLARE l_path nvarchar(255);
-    DECLARE l_pathname nvarchar(1200);
+--    DECLARE l_path varchar(255);
+    DECLARE l_pathname varchar(1200);
     DECLARE done int default FALSE;
     
 	DECLARE cursor_i CURSOR FOR SELECT entity_id, path FROM catalog_category_flat_store_1;
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
-	create table if not exists `art_category_path_name`(entity_id int, path_name nvarchar(1200));
+	create table if not exists `art_category_path_name`(entity_id int, path_name varchar(1200));
 	truncate table `art_category_path_name`;
 
 	OPEN cursor_i;
