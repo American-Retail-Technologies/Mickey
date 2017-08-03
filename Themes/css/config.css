@@ -272,6 +272,10 @@ ul.art-bullet-list > li::before{
 }
 
 /*Shop By Store*/
+.shop-by-store .col-lg-6{
+	height: 100px;
+}
+
 .store-supplies-subcat-images{
 	float:left;
 	width:90px;
@@ -279,6 +283,16 @@ ul.art-bullet-list > li::before{
 
 .store-supplies-subcat-content{
 	margin-left:100px;
+}
+@media screen and (max-width: 1199px) {
+.sm-imageslider-inner.theme2 .item .item-info .item-desc .item-desc-inner{
+	font-size:10px;
+}
+
+.sm-imageslider-inner.theme2 .item .item-info .item-title{
+	display:none;
+}
+
 }
 
 /*Menu*/
@@ -321,6 +335,7 @@ ul.art-bullet-list > li::before{
   padding: 3px 0;
 }
 
+
 .art-megamenu-title{
   font-weight: bold;
   text-transform: uppercase;
@@ -342,13 +357,23 @@ ul.art-bullet-list > li::before{
 /*Ellipsis
 https://codepen.io/martinwolf/pen/qlFdp
 */
+.ellipsis2Line,
+.cat-wrap.theme2 .content-box .child-cat .cat-title a.ellipsis2Line,
+.ellipsis3Line{
+  display: block; /* Fallback for non-webkit */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
+}
+
+.ellipsis3Line{
+  -webkit-line-clamp: 3;
+  height:55px;
+}
 
 .ellipsis2Line,
 .cat-wrap.theme2 .content-box .child-cat .cat-title a.ellipsis2Line{
-  display: block; /* Fallback for non-webkit */
-  display: -webkit-box;
   -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
 }
 
 .clamped,
@@ -480,6 +505,10 @@ margin-top:25px;
 
 .mt10{
  margin-top:10px;
+}
+
+.art-np{
+	padding:0;
 }
 
 .fs108, .fs108 a {
