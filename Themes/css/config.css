@@ -35,8 +35,7 @@
    color:black;
 }
 
-.product-item-details .art-overweight,
-.art-red{
+.product-item-details .art-overweight{
 	color: #fe0000;
 }
 
@@ -196,7 +195,8 @@ font-weight: 700;
 
 .prices-tier .item > .price-tier_price > span > .price,
 .prices-tier .item > .benefit,
-.product-item-details .price-box .minimal-price-link .price-wrapper{
+.product-item-details .price-box .minimal-price-link .price-wrapper,
+.art-red{
  color: #e74c3c;
 }
 
@@ -269,6 +269,16 @@ ul.art-bullet-list > li::before{
  height:auto;
 }
 
+}
+
+/*Shop By Store*/
+.store-supplies-subcat-images{
+	float:left;
+	width:90px;
+}
+
+.store-supplies-subcat-content{
+	margin-left:100px;
 }
 
 /*Menu*/
