@@ -334,7 +334,14 @@ ul.art-bullet-list > li::before{
   line-height: 2em;
   padding: 3px 0;
 }
+.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > a > .sm_megamenu_title_lv-3:hover,
+.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > .sm_megamenu_title > a > .sm_megamenu_title_lv-3:hover{
+	color:#e74c3c;
+}
 
+.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > .sm_megamenu_title > a > .sm_megamenu_title_lv-3:hover{
+	text-decoration: underline;
+}
 
 .art-megamenu-title{
   font-weight: bold;
