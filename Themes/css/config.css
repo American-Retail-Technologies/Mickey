@@ -295,6 +295,21 @@ ul.art-bullet-list > li::before{
 
 }
 
+/*Checkpoint System */
+.art-checkpoint img{
+	margin-right:25px;
+}
+@media screen and (max-width: 1199px) {
+	.art-checkpoint img{
+		float:none;
+	}
+}
+@media screen and (min-width: 1200px) { 
+	.art-checkpoint{
+		height:300px;
+	}
+}
+	
 /*Menu*/
 .header-style-2 .header-middle{
   padding: 14px 0 8px;
@@ -346,11 +361,15 @@ ul.art-bullet-list > li::before{
 .art-megamenu-title{
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 1.7em;
+  font-size: 125%;
 }
 
 .art-megamenu-image a.btn{
   color:white;
+}
+
+.art-megamenu-image img.tissuepaper{
+	float:left;
 }
 
 .header-style-2 .header-bottom .sidebar-megamenu .megamenu-content-sidebar .menu-ver-content{
@@ -512,6 +531,10 @@ margin-top:25px;
 
 .mt10{
  margin-top:10px;
+}
+
+.art-fl{
+	float:left;
 }
 
 .art-np{
