@@ -245,7 +245,8 @@ ul.art-bullet-list > li::before{
 	margin:0;
 }
 
-.category-electronic-surveillance-eas-systems .modal-footer{
+.category-electronic-surveillance-eas-systems .modal-footer,
+.category-flat-organza-bags .modal-footer{
 	display:none;
 }
 
