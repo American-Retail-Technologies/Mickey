@@ -1,0 +1,84 @@
+<?php
+/**
+ * Solwin Infotech
+ * Solwin Contact Form Widget Extension
+ *
+ * @category   Solwin
+ * @package    Solwin_Contactwidget
+ * @copyright  Copyright © 2006-2016 Solwin (https://www.solwininfotech.com)
+ * @license    https://www.solwininfotech.com/magento-extension-license/ 
+ */
+$widgetEnable = $this->getConfigValue('contactwidget_section/general/enable');
+$captchaSitekey = $this->getConfigValue('contactwidget_section/recaptcha/recaptcha_sitekey');
+$captchaTheme = $this->getConfigValue('contactwidget_section/recaptcha/recaptcha_theme');
+$formActionUrl = $this->getFormActionUrl();
+$helper = $this->helper('Solwin\Contactwidget\Helper\Data');
+$currPageUrl = $helper->getCurrentUrls();
+?>
+<?php if($widgetEnable){?>
+<form class="form contact" action="<?php echo $formActionUrl;?>" id="contact-form" method="post" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>" data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?php /* @escapeNotVerified */ echo $this->getData('cc_title') ?></span></legend><br />
+        <div class="field note no-label"><?php /* @escapeNotVerified */ echo $this->getData('cc_content') ?></div>
+        <div class="field name required">
+            <label class="label" for="name"><span><?php /* @escapeNotVerified */ echo __('Name') ?></span></label>
+            <div class="control">
+                <input name="name" id="name" title="<?php /* @escapeNotVerified */ echo __('Name') ?>" class="input-text" type="text" data-validate="{required:true}"/>
+            </div>
+        </div>
+        <div class="field email required">
+            <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
+            <div class="control">
+                <input name="email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+            </div>
+        </div>
+        <?php
+            if ($this->getData('cc_enable_phoneno')) {
+                ?>
+        <div class="field telephone">
+            <label class="label" for="telephone"><span><?php /* @escapeNotVerified */ echo __('Phone Number') ?></span></label>
+            <div class="control">
+                <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */ echo __('Phone Number') ?>" value="" class="input-text" type="text" />
+            </div>
+        </div>
+        <?php } ?>
+        <div class="field name required">
+            <label class="label" for="subject"><span><?php /* @escapeNotVerified */ echo __('Subject') ?></span></label>
+            <div class="control">
+                <input name="subject" id="subject" title="<?php /* @escapeNotVerified */ echo __('Subject') ?>" class="input-text" type="text" data-validate="{required:true}"/>
+            </div>
+        </div>
+        <div class="field comment required">
+            <label class="label" for="comment"><span><?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?></span></label>
+            <div class="control">
+                <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"></textarea>
+            </div>
+        </div>
+         <?php
+            if ($this->getData('cc_enable_recaptcha')) {
+                ?>
+        <div class="field comment required">
+            <label class="label" for="captcha"><span><?php /* @escapeNotVerified */ echo __('ReCaptcha') ?></span></label>
+            <div class="control">
+                <script src="https://www.google.com/recaptcha/api.js"></script>
+                <div class="g-recaptcha" data-sitekey="<?php echo $captchaSitekey;?>" data-theme="<?php echo $captchaTheme; ?>"></div>
+            </div>
+        </div>       
+        <?php } ?>
+        
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input type="hidden" name="currUrl" id="currUrl" value="<?php echo $currPageUrl; ?>" />
+            <input type="hidden" name="enablerecaptcha" id="currUrl" value="<?php echo $this->getData('cc_enable_recaptcha'); ?>" />
+            <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="action submit primary">
+                <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<?php 
+}
+?>
+
+

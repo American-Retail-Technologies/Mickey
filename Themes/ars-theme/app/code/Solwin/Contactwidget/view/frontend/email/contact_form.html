@@ -1,0 +1,55 @@
+<!--@subject Contact Us@-->
+
+{{template config_path="design/email/header_template"}}
+<div style="font:11px/1.35em Verdana, Arial, Helvetica, sans-serif;">
+    <h3>We love hearing from you, Our Customers.Please Contact us about anything at all. Customer details have been submitted with the following details.</h3>
+    <table cellspacing="0" cellpadding="0" border="0" width="98%" style="margin-top:10px; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; margin-bottom:10px;">
+        <tr>
+            <td align="center" valign="top">
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td align="center" style="text-align:left;width:30%;font-weight:bold;">Name:</td>
+                        <td align="center" style="padding-left:5px;text-align:left;width:70%;">{{var data.name}}</td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td align="center" style="text-align:left;width:30%;font-weight:bold;">E-mail: </td>
+                        <td align="center" style="padding-left:5px;text-align:left;width:70%;">{{var data.email}}</td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td align="center" style="text-align:left;width:30%;font-weight:bold;">Telephone: </td>
+                        <td align="center" style="padding-left:5px;text-align:left;width:70%;"> {{var data.telephone}}</td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="text-align:left;width:30%;font-weight:bold;">Subject:</td>
+                        <td align="center" style="padding-left:5px;text-align:left;width:70%;"> {{var data.subject}}</td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td align="center" style="text-align:left;vertical-align:top;width:30%;font-weight:bold;">What’s on your mind?</td>
+                        <td align="center" style="padding-left:5px;text-align:left;width:70%;">
+                            {{var data.comment}}
+                        </td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td align="center" style="text-align:left;width:30%;">&nbsp;</td>
+                        <td align="center" style="padding-left:5px;text-align:left;width:70%;">&nbsp;</td>
+                    </tr>
+                </table>
+                <table cellspacing="0" cellpadding="0" border="0" width="650">
+                    <tr>
+                        <td align="center" style="text-align:left;width:30%;font-weight:bold;">Regards, {{var data.name}}</td>
+                        <td align="center" style="padding-left:5px;text-align:left;width:70%;">&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+{{template config_path="design/email/footer_template"}}

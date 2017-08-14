@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Solwin Infotech
+ * Solwin Contact Form Widget Extension
+ *
+ * @category   Solwin
+ * @package    Solwin_Contactwidget
+ * @copyright  Copyright © 2006-2016 Solwin (https://www.solwininfotech.com)
+ * @license    https://www.solwininfotech.com/magento-extension-license/ 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+    <default>
+        <contactwidget_section>
+            <general>
+                <enable>1</enable>
+            </general>
+            <recaptcha>
+                <recaptcha_theme>light</recaptcha_theme>
+                <recaptcha_errormessage>Invalid captcha. Please try again.</recaptcha_errormessage>
+            </recaptcha>
+            <emailsend>
+                <emailto><![CDATA[hello@example.com]]></emailto>
+                <emailsenderto>custom2</emailsenderto>
+                <emailtemplate>contactwidget_section_emailsend_emailtemplate</emailtemplate>
+            </emailsend>
+        </contactwidget_section>
+    </default>
+</config>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Solwin Infotech
+ * Solwin Contact Form Widget Extension
+ *
+ * @category   Solwin
+ * @package    Solwin_Contactwidget
+ * @copyright  Copyright © 2006-2016 Solwin (https://www.solwininfotech.com)
+ * @license    https://www.solwininfotech.com/magento-extension-license/ 
+ */
+-->
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="contactus_widget_custom" class="Solwin\Contactwidget\Block\Widget\ContactUsWidget">
+        <label translate="true">ContactUs - custom widget</label>
+        <description>ContactUs - custom widget</description>
+        <parameters>
+            <parameter name="cc_title" xsi:type="text" visible="true" required="true" sort_order="0" >
+                <label translate="true">Title</label>
+            </parameter>
+            <parameter name="cc_content" xsi:type="block" visible="true" sort_order="10">
+                <label translate="true">Description</label>
+                <block class="Solwin\Contactwidget\Block\Widget\TextField"/>
+            </parameter>
+            <parameter name="cc_enable_recaptcha" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="20">
+                <label translate="true">Enable reCaptcha</label>
+                <description>Enable/Disable reCaptcha</description>
+            </parameter>
+            <parameter name="cc_enable_phoneno" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="30">
+                <label translate="true">Show Phone Number Field</label>
+                <description>Show Phone Number field in contact us form</description>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

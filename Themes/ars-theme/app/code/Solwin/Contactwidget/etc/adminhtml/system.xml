@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Solwin Infotech
+ * Solwin Contact Form Widget Extension
+ *
+ * @category   Solwin
+ * @package    Solwin_Contactwidget
+ * @copyright  Copyright © 2006-2016 Solwin (https://www.solwininfotech.com)
+ * @license    https://www.solwininfotech.com/magento-extension-license/ 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd">
+    <system>
+        <tab id="contactwidget" translate="label" sortOrder="100">
+            <label>Contact Form Widget</label>
+        </tab>
+        <!-- Contact Form Widget -->
+        <section id="contactwidget_section" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Configuration</label>
+            <tab>contactwidget</tab>
+            <resource>Solwin_Contactwidget::contactwidget_config</resource>
+            <!-- General Group -->
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <!-- Block Enable/Disable -->
+                <field id="enable" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Contact Form Widget</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <!-- reCaptcha Group -->
+            <group id="recaptcha" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>reCaptcha</label>
+                <!-- Captcha Theme -->
+                <field id="recaptcha_theme" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Captcha Theme</label>
+                    <source_model>Solwin\Contactwidget\Model\Config\Source\Theme</source_model>
+                </field>
+                <!-- Captcha Site Key -->
+                <field id="recaptcha_sitekey" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Captcha Site Key</label>
+                </field>
+                <!-- Captcha Secret key -->
+                <field id="recaptcha_secretkey" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Captcha Secret key</label>
+                </field>
+                <!-- Captcha Error Message -->
+                <field id="recaptcha_errormessage" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Captcha Error Message</label>
+                </field>
+            </group>
+            <!-- Email Setup Options Group -->
+            <group id="emailsend" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Email Setup Options</label>
+                <!-- Send Emails To -->
+                <field id="emailto" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Emails To</label>
+                    <validate>validate-email</validate>
+                </field>
+                <!-- Email Sender -->
+                <field id="emailsenderto" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <!-- Email Template -->
+                <field id="emailtemplate" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Solwin Infotech
+ * Solwin Contact Form Widget Extension
+ *
+ * @category   Solwin
+ * @package    Solwin_Contactwidget
+ * @copyright  Copyright © 2006-2016 Solwin (https://www.solwininfotech.com)
+ * @license    https://www.solwininfotech.com/magento-extension-license/ 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Solwin_Contactwidget::contact_widget" title="Contact Form Widget" module="Solwin_Contactwidget" sortOrder="5" parent="Solwin_Contactwidget::extension" resource="Solwin_Contactwidget::contact_widget"/>
+        <add id="Solwin_Contactwidget::contactwidget_config" title="Configuration" module="Solwin_Contactwidget" sortOrder="10" parent="Solwin_Contactwidget::contact_widget" action="adminhtml/system_config/edit/section/contactwidget_section" resource="Solwin_Contactwidget::config"/>
+        <add id="Solwin_Contactwidget::extension" title="Solwin" module="Solwin_Contactwidget" sortOrder="65" resource="Solwin_Contactwidget::extension"/>
+    </menu>
+</config>
