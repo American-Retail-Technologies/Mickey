@@ -42,6 +42,12 @@ $currPageUrl = $helper->getCurrentUrls();
             </div>
         </div>
         <?php } ?>
+		<div class="field address">
+            <label class="label" for="address"><span><?php /* @escapeNotVerified */ echo __('Address') ?></span></label>
+            <div class="control">
+                <input name="address" id="address" title="<?php /* @escapeNotVerified */ echo __('Address') ?>" class="input-text" type="text"/>
+            </div>
+        </div>
         <div class="field name required">
             <label class="label" for="subject"><span><?php /* @escapeNotVerified */ echo __('Subject') ?></span></label>
             <div class="control">
