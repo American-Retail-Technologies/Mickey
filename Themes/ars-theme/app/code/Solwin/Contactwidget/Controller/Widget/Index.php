@@ -132,7 +132,11 @@ class Index extends \Magento\Framework\App\Action\Action
                 $error = true;
             }
 
-            if (!\Zend_Validate::is(trim($data['subject']), 'NotEmpty')) {
+            if (!\Zend_Validate::is(trim($data['address']), 'NotEmpty')) {
+                $error = true;
+            }
+			
+			if (!\Zend_Validate::is(trim($data['address2']), 'NotEmpty')) {
                 $error = true;
             }
 

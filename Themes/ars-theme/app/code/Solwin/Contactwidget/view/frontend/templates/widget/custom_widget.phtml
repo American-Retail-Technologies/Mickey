@@ -32,16 +32,16 @@ $currPageUrl = $helper->getCurrentUrls();
                 <input name="email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
             </div>
         </div>
-		<div class="field address">
+		<div class="field address required">
             <label class="label" for="address"><span><?php /* @escapeNotVerified */ echo __('Street Address') ?></span></label>
             <div class="control">
-                <input name="address" id="address" title="<?php /* @escapeNotVerified */ echo __('Street Address') ?>" class="input-text" type="text"/>
+                <input name="address" id="address" title="<?php /* @escapeNotVerified */ echo __('Street Address') ?>" class="input-text" type="text" data-validate="{required:true}"/>
             </div>
         </div>
-		<div class="field address2">
+		<div class="field address2 required">
             <label class="label" for="address2"><span><?php /* @escapeNotVerified */ echo __('City, State Zipcode') ?></span></label>
             <div class="control">
-                <input name="address2" id="address2" title="<?php /* @escapeNotVerified */ echo __('City, State Zipcode') ?>" class="input-text" type="text"/>
+                <input name="address2" id="address2" title="<?php /* @escapeNotVerified */ echo __('City, State Zipcode') ?>" class="input-text" type="text" data-validate="{required:true}"/>
             </div>
         </div>
         <?php
@@ -54,16 +54,10 @@ $currPageUrl = $helper->getCurrentUrls();
             </div>
         </div>
         <?php } ?>
-        <div class="field name required">
-            <label class="label" for="subject"><span><?php /* @escapeNotVerified */ echo __('Subject') ?></span></label>
-            <div class="control">
-                <input name="subject" id="subject" title="<?php /* @escapeNotVerified */ echo __('Subject') ?>" class="input-text" type="text" data-validate="{required:true}"/>
-            </div>
-        </div>
         <div class="field comment required">
-            <label class="label" for="comment"><span><?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?></span></label>
+            <label class="label" for="comment"><span><?php /* @escapeNotVerified */ echo __('We would like to hear from you') ?></span></label>
             <div class="control">
-                <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('What’s on your mind?') ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"></textarea>
+                <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('We would like to hear from you') ?>" class="input-text" cols="5" rows="3" data-validate="{required:true}"></textarea>
             </div>
         </div>
          <?php
