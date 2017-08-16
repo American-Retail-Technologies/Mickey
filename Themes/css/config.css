@@ -599,7 +599,8 @@ margin-top:25px;
 
 .art-cart-button a.towishlist span,
 .art-display-none,
-.category-view table{ 
+.category-view table,
+#social-login-popup button.mfp-close{ 
  display:none
 }
 .art-cart-button a.towishlist::before{
