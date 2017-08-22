@@ -1,0 +1,5 @@
+#!/bin/sh
+/opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento -n setup:backup --db &>/dev/null &
+sleep 2
+rm /opt/bitnami/apps/magento/htdocs/var/.maintenance.flag 
+sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/pub /opt/bitnami/apps/magento/htdocs/var /opt/bitnami/apps/magento/htdocs/app/etc
