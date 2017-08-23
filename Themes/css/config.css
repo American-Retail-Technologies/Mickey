@@ -599,8 +599,7 @@ margin-top:25px;
 
 .art-cart-button a.towishlist span,
 .art-display-none,
-.category-view table,
-#social-login-popup button.mfp-close{ 
+.category-view table{ 
  display:none
 }
 .art-cart-button a.towishlist::before{
@@ -621,6 +620,15 @@ margin-top:25px;
 
 .art-cart-button a.towishlist:hover::before{
     content: "\f004";
+}
+
+div#social-login-popup button.mfp-close{
+    width: 44px !important;
+    font-size: 28px !important;
+    position:absolute !important;
+    margin-top:-1px;
+    padding: 0px !important;
+    height: 44px !important;
 }
 
 /*Mobile*/
