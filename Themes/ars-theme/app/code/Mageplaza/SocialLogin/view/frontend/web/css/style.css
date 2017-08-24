@@ -34,6 +34,15 @@
 #social-login-popup .mfp-close {color: #ffffff;}
 #social-login-popup .message.error > *:first-child:before{top: 50% !important;}
 #social-login-popup .message.success > *:first-child:before{top: 50% !important;}
+/*2017/08/24 Tenzin - Close Button Fix*/
+#social-login-popup button.mfp-close{
+    width: 44px !important;
+    font-size: 28px !important;
+    position:absolute !important;
+    margin-top:-1px;
+    padding: 0px !important;
+    height: 44px !important;
+}
 /* Authentication Popup */
 .social-login-authentication-popup {width: 100% !important;}
 .social-login-authentication-popup .block-content {display: block !important;}
