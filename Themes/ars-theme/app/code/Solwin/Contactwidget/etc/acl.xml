@@ -14,8 +14,8 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Solwin_Contactwidget::extension">
-                    <resource id="Solwin_Contactwidget::contact_widget" title="Contact Widget" sortOrder="12168232" />
+                <resource id="Solwin_Contactwidget::extension" title="Solwin" sortOrder="61">
+                    <resource id="Solwin_Contactwidget::contact_widget" title="Contact Widget" sortOrder="10" />
                 </resource>
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
