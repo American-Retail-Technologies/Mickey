@@ -4,13 +4,7 @@
 RED='\033[0;31m'
 NC='\033[0m' #No color
 
-if [ "$#" -ne 1 ]; then
- echo "Used for ${RED}Development${NC} purposes only"
- echo "Usage: ./updateUrl [staging,dev]" >&2
- exit 1
-fi
-
-WEBSITE="https://$1.americanretailsupply.com/"
+WEBSITE="https://dev.americanretailsupply.com/"
 ROBOT_NO_FOLLOW="NOINDEX,NOFOLLOW"
 ROBOT_FILE="User-agent: *
 Disallow: /index.php/
