@@ -1,0 +1,47 @@
+<?php
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+ ?>
+
+<div class="field">
+    <label for="<?php echo $block->getFieldId('month') ?>"<?php if ($block->isRequired()) echo ' class="required"' ?>><?php if ($block->isRequired()) echo '<em>*</em>' ?><?php echo $block->getLabel() ?></label>
+    <div class="input-box customer-dob">
+    <?php
+        $block->setDateInput('d',
+            '<div class="dob-day">
+                 <input type="number" min="1" max="31" id="' . $block->getFieldId('day') . '" name="' . $block->getFieldName('day') . '" value="' . $block->getDay() . '" placeholder="' . __('DD') . '" title="' . __('Day') . '" class="input-text validate-custom' . ($block->isRequired()? ' required-entry' : '') . '" />
+                 <label for="' . $block->getFieldId('day') . '">' . __('DD') . '</label>
+             </div>'
+        );
+
+        $block->setDateInput('m',
+            '<div class="dob-month">
+                 <input type="number" min="1" max="12" id="' . $block->getFieldId('month') . '" name="' . $block->getFieldName('month') . '" value="' . $block->getMonth() . '" placeholder="' . __('MM') . '" title="' . __('Month') . '" class="input-text validate-custom' . ($block->isRequired()? ' required-entry' : '') . '" />
+                 <label for="' . $block->getFieldId('month') . '">' . __('MM') . '</label>
+             </div>'
+        );
+
+        $block->setDateInput('y',
+            '<div class="dob-year">
+                 <input type="number" min="1900" id="' . $block->getFieldId('year') . '" name="' . $block->getFieldName('year') . '" value="' . $block->getYear() . '" placeholder="' . __('YYYY') . '" title="' . __('Year') . '" class="input-text validate-custom' . ($block->isRequired()? ' required-entry' : '') . '" />
+                 <label for="' . $block->getFieldId('year') . '">' . __('YYYY') . '</label>
+             </div>'
+        );
+
+        echo $block->getSortedDateInputs();
+    ?>
+    </div>
+</div>

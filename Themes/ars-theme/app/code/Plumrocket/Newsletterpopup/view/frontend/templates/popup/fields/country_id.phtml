@@ -1,0 +1,43 @@
+<?php
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+ ?>
+
+<?php $activeFields = $this->helper('Plumrocket\Newsletterpopup\Helper\Data')->getPopupFormFieldsKeys($block->getPopup()->getId(), true); ?>
+<div class="field">
+    <label for="<?php echo $block->getFieldId() ?>" class="required"><em>*</em><?php echo $block->getLabel() ?></label>
+    <div class="input-box">
+        <?php echo $block->getLayout()->createBlock('Magento\Directory\Block\Data')->getCountryHtmlSelect(null, 'country_id', $block->getFieldId(), $block->getLabel()) ?>
+
+        <?php if (!in_array('region', $activeFields)): ?>
+            <div style="display:none;">
+                <input type="text" id="<?php echo $block->getFieldId('region') ?>" />
+                <select id="<?php echo $block->getFieldId('region_id') ?>"></select>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    require([
+        'mage/adminhtml/form',
+        'domReady!'
+    ], function() {
+        new RegionUpdater('<?php echo $block->getFieldId() ?>', '<?php echo $block->getFieldId("region") ?>', '<?php echo $block->getFieldId("region_id") ?>', <?php echo $this->helper('Magento\Directory\Helper\Data')->getRegionJson() ?>, undefined, '<?php echo $block->getFieldId("postcode") ?>');
+    });
+    //]]>
+</script>

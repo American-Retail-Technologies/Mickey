@@ -1,0 +1,1 @@
+Newsletter Popup Extension for M2

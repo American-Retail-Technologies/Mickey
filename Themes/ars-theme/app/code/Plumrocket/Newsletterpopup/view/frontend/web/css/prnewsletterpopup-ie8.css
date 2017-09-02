@@ -1,0 +1,30 @@
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+
+/* Plumrocket Newletter Page ie8*/
+
+.cf, .clearfix{ min-height: 1%;}
+
+.newspopup_up_bg {background: url(../images/bg-black.png) repeat left top;}
+.newspopup-up-form .signup-form .send-btn {background: #37940f;}
+.newspopup-up-form .signup-form .send-btn:hover {background: #40b60d;}
+
+.newspopup-up-form .signup-form>.input-box { *display: inline!important; zoom:1;}
+
+
+.newspopup-up-form.form_v_5>div.hld-pop {background: #f7f7f7;}
+.newspopup-up-form.form_v_5 .send-btn2{background: #fb780e;}
+.newspopup-up-form.form_v_5 .send-btn2:hover{background: #fca644;}

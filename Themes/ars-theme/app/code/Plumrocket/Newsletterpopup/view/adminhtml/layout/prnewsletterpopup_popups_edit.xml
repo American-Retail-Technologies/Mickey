@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- <action method="setCanLoadExtJs"><flag>1</flag></action> -->
+        <!-- <action method="setCanLoadTinyMce"><flag>1</flag></action> -->
+
+        <css src="Plumrocket_Newsletterpopup::js/codemirror/lib/codemirror.css" />
+        <css src="Plumrocket_Newsletterpopup::js/codemirror/addon/hint/show-hint.css" />
+        <css src="Plumrocket_Newsletterpopup::js/codemirror/addon/display/fullscreen.css" />
+        <css src="Plumrocket_Newsletterpopup::js/codemirror/theme/monokai.css" />
+        <css src="Plumrocket_Newsletterpopup::css/prnewsletterpopup.css" />
+
+        <title>Newsletter Popup / Plumrocket / Magento Admin</title>
+    </head>
+    <!-- <update handle="editor"/> -->
+    <body>
+        <referenceContainer name="content">
+            <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit" name="prnewsletterpopup_popups_edit" />
+        </referenceContainer>
+
+        <referenceContainer name="left">
+            <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs" name="prnewsletterpopup_popups_edit_tabs">
+                <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs\General" name="prnewsletterpopup_general">
+                    <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs\General\Main" name="prnewsletterpopup_general_main"/>
+                    <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs\General\Coupon" name="prnewsletterpopup_general_coupon"/>
+                    <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs\General\SignupForm" name="prnewsletterpopup_general_signupForm"/>
+                    <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs\General\Mailchimp" name="prnewsletterpopup_general_mailchimp"/>
+                </block>
+                <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs\Display" name="prnewsletterpopup_display" />
+                <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs\Labels" name="prnewsletterpopup_labels" />
+                <block class="Plumrocket\Newsletterpopup\Block\Adminhtml\Popups\Edit\Tabs\Template" name="prnewsletterpopup_template" />
+
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">general_section</argument>
+                    <argument name="block" xsi:type="string">prnewsletterpopup_general</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">display_section</argument>
+                    <argument name="block" xsi:type="string">prnewsletterpopup_display</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">labels_section</argument>
+                    <argument name="block" xsi:type="string">prnewsletterpopup_labels</argument>
+                </action>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">template_section</argument>
+                    <argument name="block" xsi:type="string">prnewsletterpopup_template</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

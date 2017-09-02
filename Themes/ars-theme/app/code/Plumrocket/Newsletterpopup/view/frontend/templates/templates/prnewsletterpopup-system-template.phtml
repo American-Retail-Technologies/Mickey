@@ -1,0 +1,45 @@
+<?php
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+?>
+
+<?php $popup = $block->getPopup() ?>
+
+<div class="newspopup-message-success" style="display: none;">
+    <span class="newspopup-message-icon"></span>
+    <div class="newspopup-message-content"><?php echo $popup->getData('text_success') ?></div>
+    <button class="newspopup-message-close"><?php echo __('Ok'); ?></button>
+</div>
+
+<div class="newspopup-animated-form newspopup-up-form cf <?php echo $block->getAnimation();?> newspopup-theme">
+
+    <div class="newspopup-messages-holder">
+        <div class="newspopup-messages-holder-tr"></div>
+    </div>
+
+    <div class="hld-pop newspopup_clear">
+        <?php echo $block->getPopupTemplate() ?>
+    </div>
+</div>
+
+<style type="text/css">
+    <?php echo $block->getPopupStyle() ?>
+</style>
+<?php if ($this->hasPsloginCall()): ?>
+    <script type="text/javascript">
+        requirejs(['pslogin']);
+    </script>
+<?php endif; ?>

@@ -1,0 +1,2 @@
+For installation Instructions please read our online documentation:
+http://wiki.plumrocket.com/wiki/Magento_2_Newsletter_Popup_v3.x_Extension

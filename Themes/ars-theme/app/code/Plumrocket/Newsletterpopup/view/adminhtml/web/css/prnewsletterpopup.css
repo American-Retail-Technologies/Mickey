@@ -1,0 +1,522 @@
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+.form-list td.value table input.input-text, .form-list td.value table textarea {
+    width: 95%;
+}
+
+#popup_signup_fieldset td.value div.grid, #popup_mailchimp_fieldset td.value div.grid {
+    width: 600px;
+}
+
+#row_prnewsletterpopup_mailchimp_fields_tag table.data-grid td {
+    padding: 5px 10px;
+}
+
+.CodeMirror {
+    border: 1px solid #eee;
+    height: 300px;
+    max-width: 1100px;
+}
+
+.cm-mustache {color: #0ca;}
+
+.form-list td.label {
+    width: 140px;
+}
+
+.form-list td.label label {
+    width: 100%;
+}
+
+.columns .form-list td.value {
+    width: auto;
+    max-width: 500px;
+}
+
+.columns .form-list {
+    width: 80%;
+}
+
+#popup_display_fieldset .hor-scroll {
+    overflow: visible;
+}
+
+#popup_display_fieldset .hor-scroll .form-list {
+    width: 100%;
+}
+
+#template_id_picker {
+    font-size: 12px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
+    min-height: 100px;
+    overflow: visible;
+}
+
+#template_id_picker .template-wrapper {
+    position: relative;
+}
+
+#template_id_picker .shadow {
+    background-image: url("../images/shadow.png");
+    width: 90px;
+    position: absolute;
+    right: 0px;
+    height: 255px;
+    top: 0px;
+    z-index: 100;
+}
+
+#template_id_picker .shadow.shadow-hide {
+    display: none;
+}
+
+
+/*=== current template ===*/
+#template_id_picker .template-current {
+    margin: 17px 0 15px 2px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-block;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+#template_id_picker .template-current:hover {
+    opacity: 0.7;
+}
+
+#template_id_picker .template-current button {
+    display: none;
+}
+
+#template_id_picker .template-current .list-table-td {
+    width: 98px;
+    height: 68px;
+    position: relative;
+    display: block;
+    border: 3px solid #ffffff;
+    transition: all 0.3s;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 5px;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    -webkit-box-shadow: 0 0 3px 0 #ccc;
+    -moz-box-shadow: 0 0 3px 0 #ccc;
+    box-shadow: 0 0 3px 0 #ccc;
+}
+
+#template_id_picker .template-current .list-table-td:before {
+    content: "";
+    display: block;
+    background-image: url("../images/none.jpg");
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    background-size: cover;
+}
+
+#template_id_picker .template-current .list-table-td:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-box-shadow: inset 0 0 100px 0 rgba(0, 0, 0, 0.17);
+    -moz-box-shadow: inset 0 0 100px 0 rgba(0, 0, 0, 0.17);
+    box-shadow: inset 0 0 100px 0 rgba(0, 0, 0, 0.17);
+    z-index: 10;
+    left: 0;
+    top: 0;
+}
+
+#template_id_picker .template-current .list-table-td .screen-image {
+    width: 100%;
+    height: 100%;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    z-index: 10;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+}
+
+
+/*=== template list ===*/
+#template_id_picker .template-list {
+    display: none;
+    background-color: #fff;
+    padding: 15px;
+    width: 100%;
+    border: 2px solid #ececec;
+    position: absolute;
+    top: 48px;
+    z-index: 50;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    left: 0%;
+}
+
+#template_id_picker .template-list:before {
+    display: block;
+    width: 0;
+    height: 0;
+    content: "";
+    border-style: solid;
+    border-color: transparent transparent #E6E4E4 transparent;
+    border-width: 0 12px 11px 12px;
+    position: absolute;
+    top: -13px;
+    left: 23%;
+}
+
+#template_id_picker .template-list:after {
+    display: block;
+    width: 0;
+    height: 0;
+    content: "";
+    border-style: solid;
+    border-color: transparent transparent #ffffff transparent;
+    border-width: 0 12px 11px 12px;
+    position: absolute;
+    top: -11px;
+    left: 23%;
+}
+
+#template_id_picker div.template-title {
+    height: 40px;
+    line-height: 40px;
+    background-color: #e2e2e2;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 25px;
+    font-size: 16px;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+#template_id_picker div.template-title .template-expand,
+#template_id_picker div.template-title .template-minify {
+    float: right;
+    height: 40px;
+    width: 120px;
+    line-height: 40px;
+    color: #a8a4a4;
+    font-size: 14px;
+    padding: 0 15px 0 10px;
+    border-left: 2px solid #d1d1d1;
+}
+
+#template_id_picker div.template-title .template-expand:after {
+    content: "expand";
+}
+
+#template_id_picker div.template-title .template-minify:after {
+    content: "minimize";
+}
+
+#template_id_picker div.template-title .template-expand:hover {
+    cursor: pointer;
+    background-color: #F2F2F2;
+}
+
+#template_id_picker div.template-title .template-expand span {
+    display: inline-block;
+    width: 20px;
+    height: 19px;
+    border: 2px solid #bababa;
+    position: relative;
+    top: 5px;
+    margin-right: 10px;
+}
+
+#template_id_picker div.template-title .template-expand span:before {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 8px 7px 0px 7px;
+    border-color: #bababa transparent transparent transparent;
+    top: 5px;
+    position: relative;
+    left: 1px;
+}
+
+#template_id_picker div.template-title .template-expand.template-minify span:before {
+    display: block;
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0px 7px 8px 7px;
+    border-color: transparent transparent #bababa transparent;
+    top: 5px;
+    position: relative;
+    left: 1px;
+}
+
+#template_id_picker ul {
+    height: 275px;
+    background-color: #efefef;
+    white-space: nowrap;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    padding-left: 15px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+}
+
+#template_id_picker ul.expand-all {
+    height: auto;
+    white-space: normal;
+    padding-bottom: 12px;
+}
+
+#template_id_picker .template-wrapper + .template-title {
+    margin-top: 15px;
+}
+
+#template_id_picker ul li {
+    margin: 15px 5px 0 5px;
+    padding: 5px 5px 15px 5px;
+    text-align: center;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    -webkit-transition: all 0.15s;
+    -moz-transition: all 0.15s;
+    transition: all 0.15s;
+    min-height: 235px;
+    vertical-align: top;
+    border: 1px solid #EFEFEF;
+    display: inline-block;
+    width: 225px;
+}
+
+#template_id_picker ul li:last-child {
+    margin-right: 80px;
+}
+
+#template_id_picker ul.expand-all li:last-child {
+    margin-right: 0;
+}
+
+#template_id_picker li:hover,
+#template_id_picker li.active {
+    border: 1px solid #CACACA;
+    background-color: #FAFAFA;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0 4px 0 #D3D3D3;
+    -moz-box-shadow: 0 0 4px 0 #D3D3D3;
+    box-shadow: 0 0 4px 0 #D3D3D3;
+}
+
+#template_id_picker li.active .list-table-td + span + div:before {
+    display: inline-block;
+    content: "Selected";
+    font-size: 12px;
+    padding-right: 7px;
+    color: #528F36;
+    background-image: url("../images/1442249144_check.png");
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 19px;
+    background-position: 0px -2px;
+    padding-left: 21px;
+}
+
+#template_id_picker li .list-table-td {
+    position: relative;
+    display: block;
+    border: 3px solid #ffffff;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    width: 214px;
+    height: 148px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    text-align: center;
+    vertical-align: middle;
+    margin-bottom: 5px;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+#template_id_picker li .list-table-td:hover {
+    cursor: pointer;
+}
+
+#template_id_picker li .list-table-td:before {
+    content: "";
+    display: block;
+    background-image: url("../images/none.jpg");
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    background-size: cover;
+}
+
+#template_id_picker li .list-table-td:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-box-shadow: inset 0 0 100px 0 rgba(0, 0, 0, 0.17);
+    -moz-box-shadow: inset 0 0 100px 0 rgba(0, 0, 0, 0.17);
+    box-shadow: inset 0 0 100px 0 rgba(0, 0, 0, 0.17);
+    z-index: 100;
+    left: 0;
+    top: 0;
+}
+
+#template_id_picker li .list-table-td + span {
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 7px;
+    font-weight: 700;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#template_id_picker li div button {
+    border: 0px;
+    background: none;
+    background-color: #fc9b35;
+    height: 22px;
+    line-height: 22px;
+    font-size: 12px;
+    padding: 0 15px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin: 0 3px;
+    display: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+#template_id_picker li div button.select_template {
+    color: #fff;
+}
+
+#template_id_picker li div button.preview_template {
+    background-image: url("../images/eye_preview_see_seen_view.png");
+    background-repeat: no-repeat;
+    background-position: 6px center;
+    padding: 0 10px 0 30px;
+    color: #fff;
+}
+
+#template_id_picker li.active div button.preview_template {
+    display: inline-block;
+    background-color: #61B031;
+}
+
+#template_id_picker li.active div button.preview_template:hover {
+    background-color: #4F8D2A;
+}
+
+#template_id_picker li.active:hover div button.select_template {
+    display: none;
+}
+
+#template_id_picker li:hover div button {
+    display: inline-block;
+}
+
+#template_id_picker li div button:hover {
+    background-color: #F28C20;
+}
+
+#template_id_picker li .screen-image {
+    display: inline-block;
+    width: 100%;
+    height: 142px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    vertical-align: middle;
+    position: relative;
+    z-index: 50;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    background-size: cover!important;
+}
+
+body.prnewsletterpopup-templates-edit .field-code .control,
+body.prnewsletterpopup-templates-edit .field-style .control,
+body.prnewsletterpopup-popups-edit .field-code .control,
+body.prnewsletterpopup-popups-edit .field-style .control { width: 76%!important; }
+
+@media only screen and (max-width: 1600px) {
+    .columns .form-list {
+        width: 100%;
+    }
+    #template_id_picker ul {
+        height: 250px;
+    }
+    #template_id_picker ul li {
+        min-height: 210px;
+        width: 187px;
+    }
+    #template_id_picker li .list-table-td {
+        width: 100%;
+        height: 124px;
+    }
+
+    #template_id_picker li .screen-image {
+        max-width: 170px;
+        max-height: 118px;
+    }
+    #template_id_picker .shadow {
+        height: 235px;
+    }
+}

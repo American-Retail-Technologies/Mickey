@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Plumrocket_Newsletterpopup::base" title="Newsletter Popup" module="Plumrocket_Newsletterpopup" parent="Plumrocket_Base::elements" sortOrder="8096099" resource="Plumrocket_Newsletterpopup::base" action="prnewsletterpopup/base" />
+        <add id="Plumrocket_Newsletterpopup::popups" title="Manage Popups" module="Plumrocket_Newsletterpopup" parent="Plumrocket_Newsletterpopup::base" sortOrder="10" action="prnewsletterpopup/popups/" resource="Plumrocket_Newsletterpopup::popups" />
+        <add id="Plumrocket_Newsletterpopup::templates" title="Manage Themes" module="Plumrocket_Newsletterpopup" parent="Plumrocket_Newsletterpopup::base" sortOrder="20" action="prnewsletterpopup/templates/" resource="Plumrocket_Newsletterpopup::templates" />
+        <add id="Plumrocket_Newsletterpopup::history" title="History" module="Plumrocket_Newsletterpopup" parent="Plumrocket_Newsletterpopup::base" sortOrder="30" action="prnewsletterpopup/history/" resource="Plumrocket_Newsletterpopup::history" />
+        <add id="Plumrocket_Newsletterpopup::config" title="Configuration" module="Plumrocket_Newsletterpopup" parent="Plumrocket_Newsletterpopup::base" sortOrder="40" action="adminhtml/system_config/edit/section/prnewsletterpopup" resource="Plumrocket_Newsletterpopup::config" />
+    </menu>
+</config>

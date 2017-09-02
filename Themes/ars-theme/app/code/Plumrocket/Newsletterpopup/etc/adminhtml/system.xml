@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="prnewsletterpopup" translate="label" type="text" sortOrder="8096099" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label><![CDATA[Newsletter Popup]]></label>
+            <tab>plumrocket</tab>
+            <resource>Plumrocket_Newsletterpopup::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <attribute type="expanded">1</attribute>
+                <field id="version" type="text" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Plumrocket\Newsletterpopup\Block\Adminhtml\System\Config\Form\Version</frontend_model>
+                </field>
+                <field id="enable" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Extension</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="serial" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Serial Key</label>
+                    <frontend_model>Plumrocket\Base\Block\Adminhtml\System\Config\Form\Serial</frontend_model>
+                    <comment><![CDATA[
+                        Your can find <strong>Serial Key</strong> in your account at <a target="_blank" href="https://store.plumrocket.com/downloadable/customer/products/">store.plumrocket.com</a>. For manual <a target="_blank" href="http://wiki.plumrocket.com/wiki/License_Installation">click here</a>.
+                    ]]></comment>
+                    <hint>Newsletterpopup</hint>
+                </field>
+                <field id="enable_analytics" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Google Analytics Tracking</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Add auto-generated Google Analytics Event Tracking code on popup form buttons</comment>
+                </field>
+                <field id="enable_history" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Subscription History</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If enabled, all user interactions with newsletter popup will be saved in magento database.</comment>
+                </field>
+                <field id="erase_history" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Erase Old Subscription History</label>
+                    <source_model>Plumrocket\Newsletterpopup\Model\Config\Source\Erase</source_model>
+                    <depends>
+                        <field id="enable_history">1</field>
+                    </depends>
+                </field>
+                <field id="ip_skip" translate="label comment" type="textarea" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Disable History for IP-addresses</label>
+                    <depends>
+                        <field id="enable_history">1</field>
+                    </depends>
+                </field>
+                <field id="cookies_usage" translate="label comment" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cookie Timeout Usage</label>
+                    <source_model>Plumrocket\Newsletterpopup\Model\Config\Source\Cookies</source_model>
+                    <comment>Separate cookie for each popup allows you to record time when popup was closed for each popup independently. When 2 or more popups are enabled at the same time, the user will see 2nd popup after the page refresh even if the 1st popup was just closed.</comment>
+                </field>
+                <field id="htmltoimage" translate="label comment" type="label" sortOrder="90" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Newsletter Popup Thumbnail</label>
+                    <frontend_model>Plumrocket\Newsletterpopup\Block\Adminhtml\System\Config\Form\Htmltoimage</frontend_model>
+                </field>
+            </group>
+
+            <group id="mailchimp" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Mailchimp Synchronization</label>
+
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Synchronization</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>If enabled, collected emails will be transferred to your Mailchimp List(s)</comment>
+                </field>
+                <field id="key" translate="label comment" type="obscure" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mailchimp API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <comment>You can find API key in your Mailchimp account.</comment>
+                </field>
+                <field id="list" translate="label comment" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Mailchimp Lists</label>
+                    <source_model>Plumrocket\Newsletterpopup\Model\Config\Source\MailchimpList</source_model>
+                    <frontend_model>Plumrocket\Newsletterpopup\Block\Adminhtml\System\Config\Form\MailchimpList</frontend_model>
+                    <comment>You will be able to enable mailchimp lists in each newsletter popup individually</comment>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="send_email" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Double opt-in</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[<strong>Important:</strong> Should be set to <strong>Yes</strong>. Abusing this may cause your account to be suspended.<br><a href="http://kb.mailchimp.com/article/how-does-confirmed-optin-or-double-optin-work/" target="_blank">How does double opt-in work?</a>]]></comment>
+                </field>
+                <field id="info" translate="label comment" type="label" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Account Details</label>
+                    <frontend_model>Plumrocket\Newsletterpopup\Block\Adminhtml\System\Config\Form\Info</frontend_model>
+                </field>
+                <field id="fields_tag" translate="label comment" type="text" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Mailchimp Fields Mapping</label>
+                    <frontend_model>Plumrocket\Newsletterpopup\Block\Adminhtml\System\Config\Form\FieldsTag</frontend_model>
+                    <backend_model>Plumrocket\Newsletterpopup\Model\Backend\FieldsTag</backend_model>
+                </field>
+            </group>
+
+            <group id="size" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Device Screen Sizes</label>
+
+                <field id="desktop" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Desktop</label>
+                    <frontend_model>Plumrocket\Newsletterpopup\Block\Adminhtml\System\Config\Form\Size</frontend_model>
+                    <comment>Width of Desktop screen in pixels. Used to recognize device type to display newsletter popup. Default value is: "equals or greater than 992 px".</comment>
+                </field>
+                <field id="tablet" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tablet</label>
+                    <frontend_model>Plumrocket\Newsletterpopup\Block\Adminhtml\System\Config\Form\Size</frontend_model>
+                    <comment>Width of Tablet screen in pixels. Default value is: "equals or greater than 768 px".</comment>
+                </field>
+                <field id="mobile" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Mobile</label>
+                    <frontend_model>Plumrocket\Newsletterpopup\Block\Adminhtml\System\Config\Form\Size</frontend_model>
+                    <comment>Width of Mobile screen in pixels. Default value is: "less than 768 px".</comment>
+                </field>
+            </group>
+
+            <group id="disposable_emails" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Disposable Emails</label>
+
+                <field id="disable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reject Subscriptions from Disposable Email Addresses</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="domains" translate="label comment" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Disposable Email Services</label>
+                    <comment>Black listed domain names. Newsletter subscriptions will be rejected for the email addresses from the above domains.</comment>
+                    <depends>
+                        <field id="disable">1</field>
+                    </depends>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

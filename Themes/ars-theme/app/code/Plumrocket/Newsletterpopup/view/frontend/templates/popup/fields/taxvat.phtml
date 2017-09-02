@@ -1,0 +1,24 @@
+<?php
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+ ?>
+
+<div class="field">
+    <label for="<?php echo $block->getFieldId() ?>"<?php if ($block->isRequired()) echo ' class="required"' ?>><?php if ($block->isRequired()) echo '<em>*</em>' ?><?php echo $block->getLabel() ?></label>
+    <div class="input-box">
+        <input type="text" id="<?php echo $block->getFieldId() ?>" name="<?php echo $block->getFieldName() ?>" value="" placeholder="<?php echo $block->getLabel() ?>" title="<?php echo $block->getLabel() ?>" class="input-text <?php echo $block->getAttributeValidationClass('taxvat') ?>" />
+    </div>
+</div>

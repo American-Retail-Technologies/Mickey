@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="empty" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <remove src="mage/calendar.css" />
+        <remove src="css/styles-l.css" />
+        <remove src="requirejs/require.js" />
+        <meta name="robots" content="noindex,nofollow" />
+    </head>
+
+    <body>
+        <container name="root">
+            <block class="Plumrocket\Newsletterpopup\Block\Preview\Template" name="prnewsletterpopup.preview" template="Plumrocket_Newsletterpopup::snapshot.phtml" cacheable="false">
+                <block class="Plumrocket\Newsletterpopup\Block\Preview\Popup" name="popup.body">
+                    <action method="noAnimation" />
+                </block>
+            </block>
+        </container>
+    </body>
+</page>
