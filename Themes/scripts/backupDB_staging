@@ -1,0 +1,24 @@
+#!/bin/bash
+#Date: 2017-09-05
+#Take a SQL backup & upload to FTP
+
+BACKUP_FOLDER=/opt/bitnami/apps/magento/htdocs/var/backups
+BACKUP_FILENAME=$(date +%Y%m%d_%H%M%S)_db.sql
+BACKUP_HOST=ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com
+BACKUP_DBNAME=ars_staging_magento1
+BACKUP_USER=ars_dbroot
+BACKUP_PASSWORD=`echo QW1lcmljYW4xCg== | base64 --decode`
+
+FTP_FOLDER=ars_files/backups/staging
+FTP_HOST=yoosh.co
+FTP_USER=yoosh_ftp@yoosh.co
+FTP_PASSWORD=`echo WW9vc2hAMTIzCg== | base64 --decode`
+
+mysqldump --host=$BACKUP_HOST --user=$BACKUP_USER --password=$BACKUP_PASSWORD $BACKUP_DBNAME > $BACKUP_FOLDER/$BACKUP_FILENAME
+cd $BACKUP_FOLDER
+ftp -inp $FTP_HOST <<EOF
+user $FTP_USER $FTP_PASSWORD
+cd $FTP_FOLDER
+put $BACKUP_FILENAME
+bye
+EOF

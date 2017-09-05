@@ -1,0 +1,16 @@
+*/1 * * * * /opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento cron:run -vvv 2>&1 >> /opt/bitnami/apps/magento/htdocs/var/log/magento-cron.log #magento-cron
+*/1 * * * * /opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/update/cron.php 2>&1 >> /opt/bitnami/apps/magento/htdocs/var/log/magento-update-cron.log #magento-update-cron
+*/1 * * * * /opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento setup:cron:run -vvv 2>&1 >> /opt/bitnami/apps/magento/htdocs/var/log/magento-setup-cron.log #magento-setup-cron
+10 * * * * cp /opt/bitnami/apps/magento/htdocs/var/log/exception.log.blank /opt/bitnami/apps/magento/htdocs/var/log/exception.log #erase-exception-log-cron
+# 58 6 * * * /opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento cache:flush #cache-flush-cron
+30 5 * * * /opt/bitnami/apps/magento/htdocs/scripts/backupDB &>/dev/null &
+59 6 * * * sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/var #cachWarm-cron
+#0 8 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www cat-prod-801-1488.csv result1
+0 8 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www cat_files1.csv result1
+30 8 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www top-500-links.csv result2
+#0 10 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www prod_files1.csv result2
+0 11 * * * sudo chmod -R 777 /opt/bitnami/apps/magento/htdocs/var #cachWarm-cron
+30 11 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www cat_files1.csv result3
+30 12 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www top-500-links.csv result4
+#45 12 * * * /opt/bitnami/apps/magento/htdocs/scripts/cacheWarm www prod_files1.csv result4
+#5 * * * * /opt/bitnami/apps/magento/htdocs/scripts/cw2 www testCache.csv result5
