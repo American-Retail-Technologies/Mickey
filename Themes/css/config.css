@@ -10,6 +10,12 @@
     color: #fff;
 }
 
+.art-category-description h2{
+    font-weight:bold;
+    font-size:x-large;
+    margin-bottom:5px;
+}
+
 /*SM Basic Product*/
 .art-featured-product .price-box,
 .art-case-quantity .price-box{
