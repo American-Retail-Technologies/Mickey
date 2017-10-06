@@ -6,6 +6,7 @@
 	$store_id = $_config->getStoreId();
 	$locale = $_config->getLocale();
 	$config_href = $url_static . 'frontend/Sm/market/'.$locale.'/css/config_' . $store_id . '.css';
+	$art_custom_css = $url_static . 'frontend/Sm/market/'.$locale.'/css/art_custom_css.css';
 ?>
 
 <?php
@@ -23,6 +24,8 @@
 <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=<?php echo $element_google_font_name ?>' />
 <?php } ?>
 <link  rel="stylesheet" type="text/css"  media="all" href="<?php echo $config_href;?>" />
+<!-- 2017/10/05 Tenzin - Moved Custom CSS to external file-->
+<link  rel="stylesheet" type="text/css"  media="all" href="<?php echo $art_custom_css;?>" />
 <!-- 2017/08/24 Tenzin - Adding Lead Forensic script-->
 <script type="text/javascript" src="https://secure.leadforensics.com/js/83284.js"></script>
 <noscript><img src="https://secure.leadforensics.com/83284.png" style="display:none;" /></noscript>
