@@ -15,10 +15,27 @@
  */
 ?>
 
-<?php 
+<?php
+	$_config = $this->helper('Sm\Market\Helper\Data');
+	$locale = $_config->getLocale();
+
+	$full_path =  dirname(__FILE__);
+	$arr_full_path = explode('app',$full_path);
+	$root_path = '/';
+	if(isset($arr_full_path[0])) $root_path = $arr_full_path[0];
+	$root_path .= 'apps/magento/htdocs/'; // Surender - 04/01/2017 - Fix for windows
+
 	$columnsLimit = $block->getColumnsLimit() ?: 0;
 	$_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
 	$_config = $this->helper('Sm\Market\Helper\Data');
+	
+	//Create html file of $_menu
+	$_menu = '<nav class="navigation-mobile"><ul>' . $_menu . '</ul></nav>';
+	file_put_contents($root_path.'pub/static/frontend/Sm/market/'.$locale.'/Magento_Theme/nav-mobile.html',$_menu);
+	
+	$url_static = $_config->getUrlStatic();
+	$nav_mobile_file = $url_static . 'frontend/Sm/market/'.$locale.'/Magento_Theme/nav-mobile.html';
+
 ?>
 
 <!--COLLAPSE-->
@@ -27,14 +44,13 @@
 		<div class="btn-mobile">
 			<a id="collapse-button" class="button-mobile collapse-nav" title="<?php echo __('Categories')?>"><i class="fa fa-bars"></i><span class="hidden"><?php echo __('Categories')?></span></a>
 		</div>
-		<nav class="navigation-mobile">
-			<ul>
-				<?php /* @escapeNotVerified */ echo $_menu; ?>
-			</ul>
-		</nav>
 		
-		<script>
-			jQuery(document).ready(function($) {
+		<div w3-include-html="<?php /* @escapeNotVerified */ echo $nav_mobile_file ?>"></div>
+		
+		<script type="text/javascript">
+			require([
+				'jquery'
+			], function ($) {
 				$('#collapse-button').click(function(){
 					$('.navigation-mobile').slideToggle(200);
 					$(this).toggleClass('active');
@@ -59,14 +75,14 @@
 		<div class="btn-mobile">
 			<a id="sidebar-button" class="button-mobile sidebar-nav" title="<?php echo __('Categories')?>"><i class="fa fa-bars"></i><span class="hidden"><?php echo __('Categories')?></span></a>
 		</div>
-		<nav class="navigation-mobile">
-			<ul>
-				<?php /* @escapeNotVerified */ echo $_menu; ?>
-			</ul>
-		</nav>
 		
-		<script>
-			jQuery(document).ready(function($) {
+		<div w3-include-html="<?php /* @escapeNotVerified */ echo $nav_mobile_file ?>"></div>
+		
+		<script type="text/javascript">
+			w3.includeHTML();
+			require([
+				'jquery'
+			], function ($) {
 				$('#sidebar-button').click(function(){
 					$('body').toggleClass('navbar-active');
 					$(this).toggleClass('active');
