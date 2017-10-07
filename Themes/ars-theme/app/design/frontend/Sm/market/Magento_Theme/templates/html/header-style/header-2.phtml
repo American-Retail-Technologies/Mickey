@@ -1,4 +1,26 @@
-<?php $welcomeMessage = $block->getWelcome(); ?>
+<?php 
+	$_config = $this->helper('Sm\Market\Helper\Data');
+	$locale = $_config->getLocale();
+
+	$full_path =  dirname(__FILE__);
+	$arr_full_path = explode('app',$full_path);
+	$root_path = '/';
+	if(isset($arr_full_path[0])) $root_path = $arr_full_path[0];
+	$root_path .= 'apps/magento/htdocs/'; // Surender - 04/01/2017 - Fix for windows
+	
+	$megamenu_vertical = $block->getChildHtml('navigation-header-megamenu');
+	
+	//Absolute Path
+	$megamenu_vertical_path = $root_path.'pub/static/frontend/Sm/market/'.$locale.'/Magento_Theme/megamenu-vertical.html';
+	if(!file_exists($megamenu_vertical_path)){
+		file_put_contents($megamenu_vertical_path,$megamenu_vertical);
+	}
+	
+	//path from url. changes each time static-content is deployed
+	$url_static = $_config->getUrlStatic();
+	$megamenu_vertical_file = $url_static . 'frontend/Sm/market/'.$locale.'/Magento_Theme/megamenu-vertical.html';
+	
+	$welcomeMessage = $block->getWelcome(); ?>
 
 <div class="header-container header-style-2">
 	<div class="header-top">
@@ -93,10 +115,9 @@
 						</div>
 						
 						<div class="menu-ver-content">
-							<?php
-								if($_config->getGeneral('menu_style') == 'megamenu'){
-									echo $block->getChildHtml('navigation-header-megamenu');
-								} else {
+							<?php if($_config->getGeneral('menu_style') == 'megamenu'){ ?>
+									<div w3-include-html="<?php /* @escapeNotVerified */ echo $megamenu_vertical_file ?>"></div>
+							<?php } else {
 									echo $block->getChildHtml('navigation-header');
 								}
 							?>
