@@ -29,10 +29,15 @@
 	$_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
 	$_config = $this->helper('Sm\Market\Helper\Data');
 	
-	//Create html file of $_menu
+	//Due to css issue, need to add <nav> & <ul> tag in the beginning & end
 	$_menu = '<nav class="navigation-mobile"><ul>' . $_menu . '</ul></nav>';
-	file_put_contents($root_path.'pub/static/frontend/Sm/market/'.$locale.'/Magento_Theme/nav-mobile.html',$_menu);
 	
+	//Absolute Path
+	$nav_mobile_path = $root_path.'pub/static/frontend/Sm/market/'.$locale.'/Magento_Theme/nav-mobile.html';
+	if(!file_exists($nav_mobile_path)){
+		file_put_contents($nav_mobile_path,$_menu);
+	}
+	//path from url. changes each time static-content is deployed
 	$url_static = $_config->getUrlStatic();
 	$nav_mobile_file = $url_static . 'frontend/Sm/market/'.$locale.'/Magento_Theme/nav-mobile.html';
 
