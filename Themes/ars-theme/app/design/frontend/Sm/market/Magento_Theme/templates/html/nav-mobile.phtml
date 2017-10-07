@@ -81,10 +81,8 @@
 			<a id="sidebar-button" class="button-mobile sidebar-nav" title="<?php echo __('Categories')?>"><i class="fa fa-bars"></i><span class="hidden"><?php echo __('Categories')?></span></a>
 		</div>
 		
-		<div w3-include-html="<?php /* @escapeNotVerified */ echo $nav_mobile_file ?>"></div>
-		
+		<div w3-include-html="<?php /* @escapeNotVerified */ echo $nav_mobile_file ?>">
 		<script type="text/javascript">
-			w3.includeHTML();
 			require([
 				'jquery'
 			], function ($) {
@@ -103,6 +101,8 @@
 
 			});
 		</script>
+		</div>
+		<script>w3.includeHTML();</script>
 		
 	</div>
 <?php } ?>
