@@ -6,7 +6,8 @@
 	$store_id = $_config->getStoreId();
 	$locale = $_config->getLocale();
 	$config_href = $url_static . 'frontend/Sm/market/'.$locale.'/css/config_' . $store_id . '.css';
-	$art_custom_css = $url_static . 'frontend/Sm/market/'.$locale.'/css/art-custom-css.css';
+	//TODO:Check if css minify and switch between art-custom-css.css && art-custom-css.min.css
+	$art_custom_css = $url_static . 'frontend/Sm/market/'.$locale.'/css/art-custom-css.min.css';
 ?>
 
 <?php
