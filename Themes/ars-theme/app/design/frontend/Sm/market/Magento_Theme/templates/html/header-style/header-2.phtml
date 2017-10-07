@@ -116,7 +116,7 @@
 						
 						<div class="menu-ver-content">
 							<?php if($_config->getGeneral('menu_style') == 'megamenu'){ ?>
-									<div w3-include-html="<?php /* @escapeNotVerified */ echo $megamenu_vertical_file ?>"></div>
+									<div art-include-html="<?php /* @escapeNotVerified */ echo $megamenu_vertical_file ?>"></div>
 							<?php } else {
 									echo $block->getChildHtml('navigation-header');
 								}
