@@ -18,29 +18,27 @@
 <?php
 	$_config = $this->helper('Sm\Market\Helper\Data');
 	$locale = $_config->getLocale();
-
+	
 	$full_path =  dirname(__FILE__);
 	$arr_full_path = explode('app',$full_path);
 	$root_path = '/';
 	if(isset($arr_full_path[0])) $root_path = $arr_full_path[0];
 	$root_path .= 'apps/magento/htdocs/'; // Surender - 04/01/2017 - Fix for windows
 
-	$columnsLimit = $block->getColumnsLimit() ?: 0;
-	$_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
-	$_config = $this->helper('Sm\Market\Helper\Data');
-	
-	//Due to css issue, need to add <nav> & <ul> tag in the beginning & end
-	$_menu = '<nav class="navigation-mobile"><ul>' . $_menu . '</ul></nav>';
-	
 	//Absolute Path
 	$nav_mobile_path = $root_path.'pub/static/frontend/Sm/market/'.$locale.'/Magento_Theme/nav-mobile.html';
+	
 	if(!file_exists($nav_mobile_path)){
+		$columnsLimit = $block->getColumnsLimit() ?: 0;
+		$_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
+		
+		//Due to css issue, need to add <nav> & <ul> tag in the beginning & end
+		$_menu = '<nav class="navigation-mobile"><ul>' . $_menu . '</ul></nav>';
 		file_put_contents($nav_mobile_path,$_menu);
 	}
 	//path from url. changes each time static-content is deployed
 	$url_static = $_config->getUrlStatic();
 	$nav_mobile_file = $url_static . 'frontend/Sm/market/'.$locale.'/Magento_Theme/nav-mobile.html';
-
 ?>
 
 <!--COLLAPSE-->

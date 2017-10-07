@@ -8,11 +8,11 @@
 	if(isset($arr_full_path[0])) $root_path = $arr_full_path[0];
 	$root_path .= 'apps/magento/htdocs/'; // Surender - 04/01/2017 - Fix for windows
 	
-	$megamenu_vertical = $block->getChildHtml('navigation-header-megamenu');
-	
 	//Absolute Path
 	$megamenu_vertical_path = $root_path.'pub/static/frontend/Sm/market/'.$locale.'/Magento_Theme/megamenu-vertical.html';
+	
 	if(!file_exists($megamenu_vertical_path)){
+		$megamenu_vertical = $block->getChildHtml('navigation-header-megamenu');
 		file_put_contents($megamenu_vertical_path,$megamenu_vertical);
 	}
 	
