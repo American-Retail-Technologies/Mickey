@@ -65,3 +65,5 @@ ExtractProductItems/Products-0002-1172.txt-3-price-tiers.csv
 ExtractProductItems/file1.txt-1-price-tiers.csv
 ExtractProductItems/file1.txt-1.csv
 ExtractProductItems/file1.txt-categories.csv
+GetEporiaOrders/obj/
+GetEporiaOrders/bin/
