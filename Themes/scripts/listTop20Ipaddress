@@ -6,3 +6,5 @@ zcat access_log-20170827.gz | awk '{ print $1,$4 }' | awk -F'[:]' '{print $2}' |
 zcat access_log-20170827.gz | awk '{ print $1,$4 }' | awk -F'[:]' '{print $1}' | awk -F'[ ]' '{print $2}' | sort -V | uniq -c | sort -nr
 #list all rows that match the ip address
 cat access_log | awk '$1 ~ /^71\.223\.80\.122/'
+#move all content that match pattern to another file
+grep "08\/Oct\/2017" access_log > 20171008_accesslog
