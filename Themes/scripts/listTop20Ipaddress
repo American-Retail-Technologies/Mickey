@@ -8,3 +8,5 @@ zcat access_log-20170827.gz | awk '{ print $1,$4 }' | awk -F'[:]' '{print $1}' |
 cat access_log | awk '$1 ~ /^71\.223\.80\.122/'
 #move all content that match pattern to another file
 grep "08\/Oct\/2017" access_log > 20171008_accesslog
+#hide/exclude rows that match the pattern
+cat access_log | grep -v -e "pub" -e "search" > rows_cleaned
