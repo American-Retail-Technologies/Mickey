@@ -62,31 +62,6 @@
 		</div>
 		
 		<div art-include-html="<?php /* @escapeNotVerified */ echo $nav_mobile_file ?>">
-		<!--NAV MOBILE / CSS MENU-->
-		<script type="text/javascript">art.includeHTML();</script>
-		<script type="text/javascript">
-			require([
-				'jquery'
-			], function ($) {
-				<?php if($_config->getGeneral('responsive_menu') == 'sidebar'){ ?>
-				$('#sidebar-button').click(function(){
-					$('body').toggleClass('navbar-active');
-					$(this).toggleClass('active');
-				});
-				<?php }else{ ?>
-				$('#collapse-button').click(function(){
-					$('.navigation-mobile').slideToggle(200);
-					$(this).toggleClass('active');
-				});
-				<?php } ?>
-				$('.navigation-mobile > ul li').has('ul').append( '<span class="touch-button"><span>open</span></span>' );
-				$('.touch-button').click(function(){
-					$(this).prev().slideToggle(200);
-					$(this).toggleClass('active');
-					$(this).parent().toggleClass('parent-active');
-				});
-			});
-		</script>
 		</div>
 		
 	</div>
