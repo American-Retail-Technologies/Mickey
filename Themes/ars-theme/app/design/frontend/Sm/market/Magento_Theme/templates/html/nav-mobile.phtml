@@ -33,22 +33,11 @@
 		$_menu = $block->getHtml('level-top', 'submenu', $columnsLimit);
 		
 		//Due to css issue, need to add <nav> & <ul> tag in the beginning & end
-		$_menu = '<nav class="navigation-mobile"><ul>' . $_menu . '</ul></nav> ';
-		$_menu .= '\n<script type="text/javascript">\n';
-		$_menu .= '	require([\n';
-		$_menu .= '		\'jquery\'\n';
-		$_menu .= '	], function ($) {\n';
-		$_menu .= '		$(\'#collapse-button\').click(function(){\n';
-		$_menu .= '			$(\'.navigation-mobile\').slideToggle(200);\n';
-		$_menu .= '			$(this).toggleClass(\'active\');\n';
-		$_menu .= '		});\n';
-		$_menu .= '		$(\'.navigation-mobile > ul li\').has(\'ul\').append( \'<span class="touch-button"><span>open</span></span>\');\n';
-		$_menu .= '		$(\'.touch-button\').click(function(){\n';
-		$_menu .= '			$(this).prev().slideToggle(200);\n';
-		$_menu .= '			$(this).toggleClass(\'active\');\n';
-		$_menu .= '			$(this).parent().toggleClass(\'parent-active\');\n';
-		$_menu .= '		});\n';
-		$_menu .= '	});</script>\n';
+		$_menu = '<nav class="navigation-mobile"><ul>' . $_menu . '</ul></nav> ' . PHP_EOL;
+		$_menu .= "<script type=\"text/javascript\">".PHP_EOL;
+		$_menu .= "require(['jquery'], function ($) {".PHP_EOL;
+		//$_menu .= "	$('.navigation-mobile > ul li').has('ul').append( '<span class=\"touch-button\"><span>open</span></span>' );".PHP_EOL;
+		$_menu .= "});</script>".PHP_EOL;
 		file_put_contents($nav_mobile_path,$_menu);
 	}
 	//path from url. changes each time static-content is deployed
@@ -63,7 +52,7 @@
 			<a id="collapse-button" class="button-mobile collapse-nav" title="<?php echo __('Categories')?>"><i class="fa fa-bars"></i><span class="hidden"><?php echo __('Categories')?></span></a>
 		</div>
 		
-		<div w3-include-html="<?php /* @escapeNotVerified */ echo $nav_mobile_file ?>"></div>
+		<div art-include-html="<?php /* @escapeNotVerified */ echo $nav_mobile_file ?>"></div>
 		
 		
 	</div>
@@ -77,8 +66,32 @@
 		</div>
 		
 		<div art-include-html="<?php /* @escapeNotVerified */ echo $nav_mobile_file ?>">
+		<!--NAV MOBILE / CSS MENU-->
+		<script type="text/javascript">art.includeHTML();</script>
+		<script type="text/javascript">
+			require([
+				'jquery'
+			], function ($) {
+				<?php if($_config->getGeneral('responsive_menu') == 'sidebar'){ ?>
+				$('#sidebar-button').click(function(){
+					$('body').toggleClass('navbar-active');
+					$(this).toggleClass('active');
+				});
+				<?php }else{ ?>
+				$('#collapse-button').click(function(){
+					$('.navigation-mobile').slideToggle(200);
+					$(this).toggleClass('active');
+				});
+				<?php } ?>
+				$('.navigation-mobile > ul li').has('ul').append( '<span class="touch-button"><span>open</span></span>' );
+				$('.touch-button').click(function(){
+					$(this).prev().slideToggle(200);
+					$(this).toggleClass('active');
+					$(this).parent().toggleClass('parent-active');
+				});
+			});
+		</script>
 		</div>
-		<script>art_includeHTML();</script>
 		
 	</div>
 <?php } ?>
