@@ -34,10 +34,6 @@
 		
 		//Due to css issue, need to add <nav> & <ul> tag in the beginning & end
 		$_menu = '<nav class="navigation-mobile"><ul>' . $_menu . '</ul></nav> ' . PHP_EOL;
-		$_menu .= "<script type=\"text/javascript\">".PHP_EOL;
-		$_menu .= "require(['jquery'], function ($) {".PHP_EOL;
-		//$_menu .= "	$('.navigation-mobile > ul li').has('ul').append( '<span class=\"touch-button\"><span>open</span></span>' );".PHP_EOL;
-		$_menu .= "});</script>".PHP_EOL;
 		file_put_contents($nav_mobile_path,$_menu);
 	}
 	//path from url. changes each time static-content is deployed
