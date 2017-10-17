@@ -53,13 +53,13 @@ if (!empty($list)) { ?>
 						<div class="box-info">
 
                             <?php if ((int)$this->_getConfig('product_title_display', 1)) { ?>
-                                <h2 class="product name product-item-name product-name clamped ellipsis2Line">
+                                <div class="product name product-item-name product-name clamped ellipsis2Line">
                                     <a href="<?php echo $_product->link; ?>" title="<?php echo $_product->title; ?>"
                                         <?php echo $helper->parseTarget($this->_getConfig('target')); ?>
                                         >
                                         <?php echo $helper->truncate($_product->title, $this->_getConfig('product_title_maxlength')); ?>
                                     </a>
-                                </h2>
+                                </div>
                             <?php } ?>
 							
 							<?php if ($this->_getConfig('product_source') != 'media') { ?>
