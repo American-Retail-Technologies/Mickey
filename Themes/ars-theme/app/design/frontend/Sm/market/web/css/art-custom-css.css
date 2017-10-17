@@ -637,6 +637,17 @@ div#social-login-popup button.mfp-close{
     height: 44px !important;
 }
 
+.social-login-title .login-title,
+.social-login-title .forgot-pass-title,
+.social-login-title .create-account-title{
+    margin: 0;
+    padding-left: 40px;
+    background-position: 12px center;
+    background-repeat: no-repeat;
+    color: #fff;
+    font-size: 24px;
+}
+
 /*Mobile*/
 @media screen and (max-width: 320px){ 
 
