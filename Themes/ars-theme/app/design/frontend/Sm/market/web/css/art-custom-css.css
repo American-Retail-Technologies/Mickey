@@ -72,6 +72,11 @@
 }
 
 /*Footer*/
+.footer-container .footer-block .footer-block-title {
+ font-weight: 700;
+ font-size: 116.67%;
+}
+
 .socials-wrap{
  display:inline-block !important;
 }
