@@ -11,7 +11,7 @@
  */
 ?>
 <?php $storeName = $block->getThemeName() ? $block->getThemeName() : $block->getLogoAlt();?>
-<h1 class="logo-content">
+<div class="logo-content">
     <strong class="logo">
 		<a class="logo" href="<?php echo $block->getUrl(''); ?>" title="<?php /* @escapeNotVerified */ echo $storeName ?>">
 			<img src="<?php /* @escapeNotVerified */ echo $block->getLogoSrc() ?>"
@@ -22,5 +22,5 @@
 
 		</a>
 	</strong>
-</h1>
+</div>
 
