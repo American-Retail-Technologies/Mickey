@@ -296,6 +296,11 @@ ul.art-bullet-list > li::before{
 .store-supplies-subcat-content{
 	margin-left:100px;
 }
+
+.shop-by-store .store-supplies-subcat-content h2{
+	font-size:1.3333em;
+}
+
 @media screen and (max-width: 1199px) {
 .sm-imageslider-inner.theme2 .item .item-info .item-desc .item-desc-inner{
 	font-size:10px;
