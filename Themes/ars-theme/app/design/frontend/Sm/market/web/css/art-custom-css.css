@@ -993,3 +993,13 @@ border-top:0;
 .info-box-detail .product-info-stock-sku .sku{
 display:inline;
 }
+
+.product-info-main .art-min-qty,
+.product-info-main .product.pricing{
+	display: inline-block;
+    font-size: 1.1em;
+    color: #e74c3c;
+}
+.product-info-main .product.pricing{
+	padding-bottom: 20px;
+}
