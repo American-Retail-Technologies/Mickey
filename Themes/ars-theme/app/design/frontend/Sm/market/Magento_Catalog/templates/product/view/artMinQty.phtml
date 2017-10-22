@@ -1,0 +1,17 @@
+<?php
+/**
+ * Copyright © 2017 American Retail Supply. All rights reserved.
+ * See COPYING.txt for license details.
+ 
+ Tenzin - Showing default qty for products that must order above 1
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+
+if ($block->getProductDefaultQty() > 1): ?>
+	<div class="art-min-qty">
+		<?php /* @escapeNotVerified */ echo __('Must order a Minimum Quantity of %1.', $block->getProductDefaultQty()) ?>
+	</div>
+<?php endif ?>

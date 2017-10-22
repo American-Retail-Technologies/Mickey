@@ -106,6 +106,7 @@
 							<block class="Magento\Catalog\Block\Product\View" name="product.info.addto" as="addto" template="product/view/addto.phtml"/>
 							<block class="Magento\Catalog\Block\Product\View" name="product.info.mailto" template="product/view/mailto.phtml"/>
 						</container>
+						<block class="Magento\Catalog\Block\Product\View" name="art.min.qty" as="artMinQty" template="product/view/artMinQty.phtml" before="product.info.extrahint.qtyincrements"/>
 					</container>
 					
 				</container>
