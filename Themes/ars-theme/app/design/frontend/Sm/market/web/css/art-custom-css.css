@@ -996,7 +996,6 @@ display:inline;
 
 .product-info-main .art-min-qty,
 .product-info-main .product.pricing{
-	display: inline-block;
     font-size: 1.1em;
     color: #e74c3c;
 }
