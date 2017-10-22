@@ -27,6 +27,7 @@
 		<move element="page.main.title" destination="product.info.main" before="-"/>
 		<move element="catalog.product.related" destination="related.product"/>
 		<move element="product.info.upsell" destination="upsell.product"/>
+		<move element="product.info.extrahint.qtyincrements" destination="product.info.price"/>
 		
         <referenceBlock name="root">
             <arguments>
@@ -71,7 +72,7 @@
 								<argument name="add_attribute" xsi:type="string">itemprop="description"</argument>
 							</arguments>
 						</block>
-						
+						<block class="Magento\Catalog\Block\Product\View" name="art.min.qty" as="artMinQty" template="product/view/artMinQty.phtml" before="product.info.extrahint.qtyincrements"/>
 					</container>
 					<block class="Magento\Catalog\Pricing\Render" name="product.price.tier" after="product.info.price">
 						<arguments>
@@ -106,7 +107,6 @@
 							<block class="Magento\Catalog\Block\Product\View" name="product.info.addto" as="addto" template="product/view/addto.phtml"/>
 							<block class="Magento\Catalog\Block\Product\View" name="product.info.mailto" template="product/view/mailto.phtml"/>
 						</container>
-						<block class="Magento\Catalog\Block\Product\View" name="art.min.qty" as="artMinQty" template="product/view/artMinQty.phtml" before="product.info.extrahint.qtyincrements"/>
 					</container>
 					
 				</container>
