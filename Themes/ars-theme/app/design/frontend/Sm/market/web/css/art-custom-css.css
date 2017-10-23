@@ -179,6 +179,9 @@ font-weight: 700;
 .footer-style-4 .footer-top .block-subscribe-footer .form.subscribe .input-box{
         min-width: 190px;
       }
+.page-products .art.category-image{
+	display:none;
+}
 }
 
 /*Product Details Page*/
@@ -809,20 +812,6 @@ display:none;
 
 .popularCategories{
     font-size: 13px;
-}
-
-.page-products .art.category-image{
-   display:block;
-}
-
-}
-
-/*Laptop*/
-
-@media  only screen and (min-width: 1025px){
-
-.page-products .art.category-image{
-   display:block;
 }
 
 }
