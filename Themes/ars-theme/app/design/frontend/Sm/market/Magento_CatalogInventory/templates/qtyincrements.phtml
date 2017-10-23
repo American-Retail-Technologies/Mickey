@@ -1,0 +1,17 @@
+<?php
+/**
+ * Copyright © 2017 American Retail Supply, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Magento\CatalogInventory\Block\Qtyincrements
+ */
+?>
+<?php if ($block->getProductQtyIncrements()) : ?>
+		<div class="product pricing">
+			<?php /* @escapeNotVerified */ echo __('Available to buy in increments of %1', $block->getProductQtyIncrements()) ?>
+		</div>
+<?php endif ?>
