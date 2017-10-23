@@ -217,7 +217,7 @@ font-weight: 700;
 
 /*Category Page*/
 
-.category-view .category-image img,
+.page-products .art.category-image,
 .art-fr{
  float:right;
 }
@@ -811,7 +811,7 @@ display:none;
     font-size: 13px;
 }
 
-.category-view .category-image{
+.page-products .art.category-image{
    display:block;
 }
 
@@ -821,7 +821,7 @@ display:none;
 
 @media  only screen and (min-width: 1025px){
 
-.category-view .category-image{
+.page-products .art.category-image{
    display:block;
 }
 
