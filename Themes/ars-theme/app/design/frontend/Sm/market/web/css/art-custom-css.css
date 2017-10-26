@@ -384,7 +384,8 @@ ul.art-bullet-list > li::before{
   font-size: 125%;
 }
 
-.art-megamenu-image a.btn{
+.art-megamenu-image a.btn,
+.art-copyright{
   color:white;
 }
 
