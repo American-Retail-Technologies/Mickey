@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © 2017 American Retail Supply. All rights reserved.
+ * See COPYING.txt for license details.
+ 
+ Tenzin - Showing specific icons if products are:
+			1. Shipped within 24 hours
+			2. Best Seller
+			3. Need to be assembled by customer
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+
+$artProduct = $block->getProduct();
+$enable_shipping_icon = $artProduct->getAttributeText('ars_shipping_24hours'); 
+$enable_best_seller = $artProduct->getAttributeText('ars_best_seller'); ?>
+
+<?php if( $enable_shipping_icon === "Yes") { ?>
+	<img class="art-shipping-24hours" title="Shipped within 24 hours!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/shipping-24.png"/>
+<?php } ?>
+
+<?php if( $enable_best_seller === "Yes") { ?>
+	<img class="art-best-seller" title="Best Selling Item" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/best-seller.png"/>
+<?php } ?>
