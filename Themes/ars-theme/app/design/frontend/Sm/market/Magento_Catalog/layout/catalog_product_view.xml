@@ -61,17 +61,22 @@
 								</arguments>
 							</block>
 						</container>
-						
-						<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.overview" template="product/view/attribute.phtml" group="detailed_info" after="product.info.extrahint">
-							<arguments>
-								<argument name="at_call" xsi:type="string">getShortDescription</argument>
-								<argument name="at_code" xsi:type="string">short_description</argument>
-								<argument name="css_class" xsi:type="string">overview art-product-short-description</argument>
-								<argument name="at_label" translate="true" xsi:type="string">none</argument>
-								<argument name="title" translate="true" xsi:type="string">Overview</argument>
-								<argument name="add_attribute" xsi:type="string">itemprop="description"</argument>
-							</arguments>
-						</block>
+						<!-- 2017-11-02 Tenzin: Created a container to add icons before short description-->
+						<container name="art.description.icons" htmlTag="div" htmlClass="art-description-icons" group="detailed_info" after="product.info.extrahint" >
+							<!-- 2017-11-02 Tenzin: Show Product Features by Icons-->
+							<block class="Magento\Catalog\Block\Product\View" name="art.product.icon" as="artProductIcon" template="product/view/artProductIcon.phtml" />
+							<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.overview" template="product/view/attribute.phtml" after="art.product.icon">
+								<arguments>
+									<argument name="at_call" xsi:type="string">getShortDescription</argument>
+									<argument name="at_code" xsi:type="string">short_description</argument>
+									<argument name="css_class" xsi:type="string">overview art-product-short-description</argument>
+									<argument name="at_label" translate="true" xsi:type="string">none</argument>
+									<argument name="title" translate="true" xsi:type="string">Overview</argument>
+									<argument name="add_attribute" xsi:type="string">itemprop="description"</argument>
+								</arguments>
+							</block>
+						</container>
+						<!-- 2017-10-22 Tenzin: Add Minimum Qty Text if above 1-->
 						<block class="Magento\Catalog\Block\Product\View" name="art.min.qty" as="artMinQty" template="product/view/artMinQty.phtml" before="product.info.extrahint.qtyincrements"/>
 					</container>
 					<block class="Magento\Catalog\Pricing\Render" name="product.price.tier" after="product.info.price">
@@ -89,11 +94,12 @@
 						<block class="Magento\Framework\View\Element\Template" name="product.info.form.options" as="options_container">
 							<block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper" as="product_options_wrapper" template="product/view/options/wrapper.phtml">
 								<block class="Magento\Catalog\Block\Product\View\Options" name="product.info.options" as="product_options" template="product/view/options.phtml">
-									<block class="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" as="default" template="product/view/options/type/default.phtml"/>
-									<block class="Magento\Catalog\Block\Product\View\Options\Type\Text" as="text" template="product/view/options/type/text.phtml"/>
-									<block class="Magento\Catalog\Block\Product\View\Options\Type\File" as="file" template="product/view/options/type/file.phtml"/>
-									<block class="Magento\Catalog\Block\Product\View\Options\Type\Select" as="select" template="product/view/options/type/select.phtml"/>
-									<block class="Magento\Catalog\Block\Product\View\Options\Type\Date" as="date" template="product/view/options/type/date.phtml"/>
+									<!--https://github.com/magento/magento2/commit/1f4528e7251cc52b463d1650a515d8dc316d46d9-->
+									<block class="Magento\Catalog\Block\Product\View\Options\Type\DefaultType" name="product.info.options.default" as="default" template="product/view/options/type/default.phtml"/>
+									<block class="Magento\Catalog\Block\Product\View\Options\Type\Text" name="product.info.options.text" as="text" template="product/view/options/type/text.phtml"/>
+									<block class="Magento\Catalog\Block\Product\View\Options\Type\File" name="product.info.options.file" as="file" template="product/view/options/type/file.phtml"/>
+									<block class="Magento\Catalog\Block\Product\View\Options\Type\Select" name="product.info.options.select" as="select" template="product/view/options/type/select.phtml"/>
+									<block class="Magento\Catalog\Block\Product\View\Options\Type\Date" name="product.info.options.date" as="date" template="product/view/options/type/date.phtml"/>
 								</block>
 								<block class="Magento\Framework\View\Element\Html\Calendar" name="html_calendar" as="html_calendar" template="Magento_Theme::js/calendar.phtml"/>
 							</block>
