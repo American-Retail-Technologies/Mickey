@@ -123,7 +123,16 @@ class SubscriberEncoded extends AbstractModel
             $couponCode = $this->_createCoupon();
             $data['coupon'] = $couponCode;
 
-            // subscribe to mailchimp list
+            //2017-11-1 Tenzin: Get Coupon Expire Date
+            $rule = $this->_getPopup()->getCoupon();
+            if ($rule && $rule->getId() && $rule->getIsActive()) {
+             $ruleData = $rule->getData();
+             $expireDate = $ruleData['to_date'];
+             $expireDate = date_format(date_create_from_format('Y-m-d', $expireDate), 'm/d/Y');
+             $data['expire'] = $expireDate;
+            }
+
+              // subscribe to mailchimp list
             $this->_subscribeToMailchimp($email, $data);
 
             // send email
@@ -159,7 +168,7 @@ class SubscriberEncoded extends AbstractModel
                     $mergeVars[$tag] = $data[$key];
                 }
             }
-
+            
             foreach ($list as $id) {
                 if (array_key_exists($id, $mailchimpLists)) {
                     $this->_adminhtmlHelper->getMcapi()->listSubscribe(
@@ -261,7 +270,7 @@ class SubscriberEncoded extends AbstractModel
         if (!$data) {
             $customerName = (string)__('Visitor');
         }
-
+        //2017-11-01 Tenzin: Add expire date in email template
         $this->_transportBuilder->setTemplateIdentifier(
             $this->_getPopup()->getEmailTemplate()
         )->setTemplateOptions(
@@ -270,7 +279,8 @@ class SubscriberEncoded extends AbstractModel
                 'store' => $this->_storeManager->getStore()->getId(),
             ]
         )->setTemplateVars(
-            ['code'    => $couponCode]
+            ['code'    => $couponCode,
+             'expire'  => $data['expire']]
         )->setFrom(
             $this->_scopeConfig->getValue(
                 Subscriber::XML_PATH_SUCCESS_EMAIL_IDENTITY,

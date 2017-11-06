@@ -47,6 +47,7 @@ class FieldsTag extends Value
         'region '       => 'STATE',
         'postcode'      => 'ZIPCODE',
         'coupon'        => 'COUPON',
+        'expire'        => 'EXPIRE'
     ];
 
     protected $_dataHelper;
