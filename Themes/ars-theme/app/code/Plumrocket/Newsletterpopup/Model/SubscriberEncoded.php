@@ -130,8 +130,21 @@ class SubscriberEncoded extends AbstractModel
              $expireDate = $ruleData['to_date'];
              $expireDate = date_format(date_create_from_format('Y-m-d', $expireDate), 'm/d/Y');
              $data['expire'] = $expireDate;
-            }
+			 //Log Coupon Data in debug.log
+			 \Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class)->debug(json_encode($ruleData));
 
+			//2017-11-7 Tenzin: Get Discount Amount
+			 if($ruleData['simple_action'] == 'cart_fixed'){
+				$data['discount_amount'] = '$' . round($ruleData['discount_amount']);
+			 }elseif($ruleData['simple_action'] == 'by_percent'){
+				$data['discount_amount'] = round($ruleData['discount_amount']) . '%';
+			 }elseif($ruleData['simple_action'] == 'by_fixed') {
+				$data['discount_amount'] = '$' . round($ruleData['discount_amount']) . '/Qty';
+			 }else{
+				$data['discount_amount'] = 'Buy ' . $ruleData['discount_step'] . ' get ' . ($ruleData['discount_step'] + 1) . 'th $' . round($ruleData['discount_amount']) . ' Off';
+			 }
+            }
+			
               // subscribe to mailchimp list
             $this->_subscribeToMailchimp($email, $data);
 
