@@ -264,6 +264,40 @@ ul.art-bullet-list > li::before{
 	display:none;
 }
 
+.art-best-seller-icon-row{
+    background-color: lightcoral;
+    position: absolute;
+    z-index: 1;
+    top: 55px;
+    font-size: 17px;
+    left: -30px;
+    max-width: 90px;
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+    /* IE */
+    -ms-transform: rotate(-90deg);
+    /* Opera */
+    -o-transform: rotate(-90deg);
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.art-best-seller-icon-container{
+    padding: 0 10px 0 15px;
+    height: 26px;
+    line-height: 26px;
+}
+.art-best-seller-icon-label{
+    color: white;
+    font-size: 13px;
+}
+
+.art-product-listing-sku{
+	font-size: 75%;
+}
+
 @media screen and (max-width:479px){
 .sm-categories.cat05-2 .cat-wrap .content-box{
 	padding: 0 15px 0 0;
