@@ -23,7 +23,11 @@ implements \Magento\Widget\Block\BlockInterface
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->setTemplate('widget/custom_widget.phtml');
+		if($data['cc_title'] === "Request Catalog"){
+			$this->setTemplate('widget/custom_widget.phtml');
+		}elseif($data['cc_title'] === "Request Custom Packaging"){
+			$this->setTemplate('widget/custom_packaging.phtml');
+		}
     }
 
     /**

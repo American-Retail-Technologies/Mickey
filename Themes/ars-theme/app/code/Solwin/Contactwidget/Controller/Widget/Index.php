@@ -143,11 +143,23 @@ class Index extends \Magento\Framework\App\Action\Action
             if (!\Zend_Validate::is(trim($data['comment']), 'NotEmpty')) {
                 $error = true;
             }
+			
+			if ( isset( $data['product-name'] ) || isset( $data['custom-packaging-sku'] ) || isset( $data['dimensions'] ) ) {
+				if (!\Zend_Validate::is(trim($data['product-name']), 'NotEmpty')) {
+					$error = true;
+				}
+				if (!\Zend_Validate::is(trim($data['custom-packaging-sku']), 'NotEmpty')) {
+					$error = true;
+				}
+				if (!\Zend_Validate::is(trim($data['dimensions']), 'NotEmpty')) {
+					$error = true;
+				}
+			}
 
             if ($error) {
                 throw new \Exception();
             }
-
+			//Change Email Template based on form template used
             // send mail to recipients
             $this->_inlineTranslation->suspend();
             $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;

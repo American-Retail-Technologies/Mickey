@@ -188,7 +188,9 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 									</div>
 									<div class="bottom-action">
 										<?php if($enable_custom_packaging) { ?>
-											<button title="Custom Packaging" class="art-custom-button primary btn-action ellipsis1Line clamped"><span>Customize this Item</span></button>
+											<a href="https://dev.americanretailsupply.com/custom-packaging/?product-name=<?php /* @escapeNotVerified */ echo htmlspecialchars($_helper->productAttribute($_product, $_product->getName(), 'name'));?>&custom-packaging-sku=<?php /* @escapeNotVerified */ echo $_product->getData('sku')?>&dimensions=<?php /* @escapeNotVerified */ echo htmlspecialchars($_product->getResource()->getAttribute('ars_dims')->getFrontend()->getValue($_product))?>">
+												<button title="Custom Packaging" class="art-custom-button primary btn-action ellipsis1Line clamped"><span>Customize this Item</span></button>
+											</a>
 										<?php } ?>
 										<?php if($_config->getAdvanced('show_addtocart_button')){?>
 											<?php if ($_product->isSaleable()): ?>
