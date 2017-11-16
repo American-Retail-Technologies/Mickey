@@ -147,11 +147,8 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 									//Combining Packaging Recyclable and Shipment Type values to only loop through once
 									$enable_packaging_shipping = $enable_packaging_recyclable . ',' . $enable_shipping_icon;
 									//Checking if any of the icons are enabled
-									if($enable_custom_packaging || $enable_ready_to_assemble || $enable_product_question || !empty($enable_packaging_shipping) ) { ?>
+									if($enable_ready_to_assemble || $enable_product_question || !empty($enable_packaging_shipping) ) { ?>
 									<div class="art-description-icons">
-									<?php if($enable_custom_packaging) { ?>
-											<img class="art-custom-packaging" title="Customize this item with your own logo/design. Click here to fill out a form!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Box_Icon_Green.png" />
-									<?php } ?>
 									<?php if($enable_ready_to_assemble) { ?>
 											<img class="art-ready-to-assemble" title="This item will come disassembled and needs to be put together by you!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Display_Case_Icon_Red.png" />
 									<?php } ?>
@@ -190,6 +187,9 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 										<?php endif; ?>
 									</div>
 									<div class="bottom-action">
+										<?php if($enable_custom_packaging) { ?>
+											<button title="Custom Packaging" class="art-custom-button primary btn-action ellipsis1Line clamped"><span>Customize this Item</span></button>
+										<?php } ?>
 										<?php if($_config->getAdvanced('show_addtocart_button')){?>
 											<?php if ($_product->isSaleable()): ?>
 												<?php $postParams = $block->getAddToCartPostParams($_product); ?>
