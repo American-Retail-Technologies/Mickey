@@ -58,6 +58,18 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 					<div class="product-item-info" data-container="product-grid">
 						<div class="item-inner">
 							<div class="box-image">
+								<!--2017/11/13 Tenzin: Display Best Seller Badge -->
+								<?php
+								$enable_best_seller = $_product->getAttributeText('ars_best_seller') === "Yes" ? TRUE:FALSE;
+								if($enable_best_seller) { ?>
+									<div class="art-best-seller-icon-row">
+										<span class="art-best-seller-icon-container">
+											<span class="art-best-seller-icon-label">
+												<?php /* @escapeNotVerified */ echo $_product->getResource()->getAttribute('ars_best_seller')->getStoreLabel() ?>
+											</span>
+										</span>
+									</div>
+								<?php } ?>
 								<?php $productImage = $block->getImage($_product, $image);?>
 								
 								<!--LABEL PRODUCT-->
@@ -111,7 +123,45 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 										<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
 									</a>
 								</h2>
-								<span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
+								<!-- 2017/11/13 Tenzin: Add icons per product -->
+								<?php
+								//https://magento.stackexchange.com/questions/132098/magento-2-how-to-display-custom-attribute-in-catalog
+								//Attributes must be configured to Yes for "Use in Product Listing"
+								$enable_custom_packaging = $_product->getAttributeText('ars_custom_packaging') === "Yes" ? TRUE:FALSE;
+								$enable_ready_to_assemble = $_product->getAttributeText('ars_ready_to_assemble') === "Yes" ? TRUE:FALSE;
+								$enable_product_question = $_product->getAttributeText('ars_product_question') === "Yes" ? TRUE:FALSE;
+								//Next two attributes returns string of all values joined by commas
+								$enable_packaging_recyclable = $_product->getResource()->getAttribute('ars_packaging_recyclable')->getFrontend()->getValue($_product);
+								$enable_shipping_icon = $_product->getResource()->getAttribute('ars_shipping_type')->getFrontend()->getValue($_product);
+								//Combining Packaging Recyclable and Shipment Type values to only loop through once
+								$enable_packaging_shipping = $enable_packaging_recyclable . ',' . $enable_shipping_icon;
+								//Checking if any of the icons are enabled
+								if($enable_ready_to_assemble || $enable_product_question || !empty($enable_packaging_shipping) ) { ?>
+								<div class="art-description-icons">
+								<?php if($enable_ready_to_assemble) { ?>
+										<img class="art-ready-to-assemble" title="This item will come disassembled and needs to be put together by you!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Display_Case_Icon_Red.png" />
+								<?php } ?>
+								<?php if($enable_product_question) { ?>
+										<img class="art-product-question" title="Have any question about this item? Click here to request help!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/IT_Consulting_Icon_Yellow.png" />
+								<?php } ?>
+								<?php if(!empty($enable_packaging_shipping)) {
+									//convert list of values into array
+									//remove any white space in front and end of each value
+									$enable_packaging_shipping_array = array_map('trim', explode( ',', $enable_packaging_shipping ));
+									foreach($enable_packaging_shipping_array as $type) {
+										if($type === "24 Hours") { ?>
+											<img class="art-shipping-24hours" title="It will take, at most, 24 Hours to ship this product." src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/shipping-24.png" />
+										<?php } elseif($type === "LTL Shipment") { ?>
+											<img class="art-ltl-freight" title="This item requires LTL Freight instead of Ground." src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/General_Store_Operations_Icon_Red.png" />
+										<?php } elseif($type === "40% Recycled") { ?>
+											<img class="art-packaging-recycled" title="This item is made of 40% recycled material!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Shopping_Bag_Icon_Green.png" />
+										<?php } elseif($type === "Reusable") { ?>
+											<img class="art-packaging-reusable" title="This item can be used more than once!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Label_Sticker_Icon_1_Green.png" />
+										<?php } ?>
+									<?php } ?>
+								<?php } ?>
+								</div>
+								<?php } ?>
 								
 								<?php if ($showReview):?>
 									<?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>
@@ -166,6 +216,7 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 										</a>
 									<?php } ?>
 								</div>
+								<span class="art-product-listing-sku">SKU: <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
 							</div>
 						</div>
 					</div>
