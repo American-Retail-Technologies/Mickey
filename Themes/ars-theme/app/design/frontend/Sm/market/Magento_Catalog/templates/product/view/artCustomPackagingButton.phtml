@@ -1,0 +1,9 @@
+<?php 
+$artProduct = $block->getProduct();
+$enable_custom_packaging = $artProduct->getAttributeText('ars_custom_packaging') === "Yes" ? TRUE:FALSE;
+
+if($enable_custom_packaging) { ?>
+	<a href="/custom-packaging/?product-name=<?php /* @escapeNotVerified */ echo htmlspecialchars($artProduct->getName());?>&custom-packaging-sku=<?php /* @escapeNotVerified */ echo $artProduct->getData('sku')?>&dimensions=<?php /* @escapeNotVerified */ echo htmlspecialchars($artProduct->getResource()->getAttribute('ars_dims')->getFrontend()->getValue($artProduct))?>">
+		<button title="Custom Packaging" class="art-custom-button primary btn-action ellipsis1Line clamped"><span>Customize this Item</span></button>
+	</a>
+<?php } ?>

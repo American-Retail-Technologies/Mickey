@@ -289,6 +289,9 @@ ul.art-bullet-list > li::before{
     /* Internet Explorer */
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
+.product.media .art-best-seller-icon-row{
+    left: -14px;
+}
 
 .art-best-seller-icon-container{
     padding: 0 10px 0 15px;
@@ -304,19 +307,23 @@ ul.art-bullet-list > li::before{
 	font-size: 75%;
 }
 
-.products-grid .item .item-inner .box-info .bottom-action .art-custom-button{
+.products-grid .item .item-inner .box-info .bottom-action .art-custom-button,
+.art-custom-button{
     margin-bottom: 10px;
     padding: 0 10px 0 10px !important;
     max-width: 160px;
     background-color: #fe0000;
+	border: 1px solid #ddd !important;
 }
 
-.products-grid .item .item-inner .box-info .bottom-action .art-custom-button:hover{
+.products-grid .item .item-inner .box-info .bottom-action .art-custom-button:hover,
+.art-custom-button:hover{
     background-color: white;
 	border-color: #fe0000 !important;
 }
 
-.products-grid .item .item-inner .box-info .bottom-action .art-custom-button:hover span{
+.products-grid .item .item-inner .box-info .bottom-action .art-custom-button:hover span,
+.art-custom-button:hover span{
 	color: #fe0000;
 }
 
