@@ -1,0 +1,31 @@
+#!/bin/bash
+#Date: 2017-11-21
+#Recreate url rewrite for product type to show breacrumb
+
+if [ "$#" -lt 1 ]; then
+ echo "Usage: ./fixBreadcrumb [prod,staging,dev]" >&2
+ exit 1
+fi
+
+if [[ $1 == prod ]]; then
+	BACKUP_HOST=ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com
+	BACKUP_DBNAME=ars_prod_magento1
+elif [[ $1 == staging ]]; then
+	BACKUP_HOST=ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com
+	BACKUP_DBNAME=ars_staging_magento1
+elif [[ $1 == dev ]]; then
+	BACKUP_HOST=localhost
+	BACKUP_DBNAME=ars_prod_magento1
+fi
+	BACKUP_USER=ars_dbroot
+	BACKUP_PASSWORD=`echo QW1lcmljYW4xCg== | base64 --decode`
+
+#Get category_id associated to the product
+#CAT_ID="(SELECT category_id FROM catalog_category_product WHERE product_id=u.entity_id)"
+#Get all products that only has 1 parent category
+#PROD_LIST="SELECT product_id from catalog_category_product group by product_id having count(product_id) = 1"
+
+CMD="UPDATE url_rewrite u SET target_path=CONCAT(target_path,'/category/',(SELECT category_id FROM catalog_category_product WHERE product_id=u.entity_id)) WHERE entity_type='product' AND request_path NOT LIKE '%/%' AND target_path NOT LIKE '%category%' AND redirect_type=0 and u.entity_id in (SELECT product_id from catalog_category_product group by product_id having count(product_id) = 1);"
+#CMD="SELECT * FROM url_rewrite u WHERE u.entity_type='product' AND u.request_path NOT LIKE '%/%' AND u.target_path NOT LIKE '%category%' AND u.redirect_type=0 and u.entity_id in (SELECT product_id from catalog_category_product group by product_id having count(product_id) >1);"
+
+mysql --host=$BACKUP_HOST --user=$BACKUP_USER --password=$BACKUP_PASSWORD $BACKUP_DBNAME -e "$CMD"
