@@ -16,7 +16,7 @@ use Magento\Framework\App\Area;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
-
+    const CUSTOM_EMAIL_TEMPLATE_ID = 'contactwidget_section/emailsend/custom_email_id';
     const EMAIL_TEMPLATE = 'contactwidget_section/emailsend/emailtemplate';
     const EMAIL_SENDER = 'contactwidget_section/emailsend/emailsenderto';
     const XML_PATH_EMAIL_RECIPIENT = 'contactwidget_section/emailsend/emailto';
@@ -61,8 +61,10 @@ class Index extends \Magento\Framework\App\Action\Action
         StateInterface $inlineTranslation,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Solwin\Contactwidget\Helper\Data $helper
+        \Solwin\Contactwidget\Helper\Data $helper,
+		\Magento\Framework\Filesystem $fileSystem
     ) {
+		$this->_filesystem = $fileSystem;
         parent::__construct($context);
         $this->_transportBuilder = $transportBuilder;
         $this->_inlineTranslation = $inlineTranslation;
@@ -79,6 +81,9 @@ class Index extends \Magento\Framework\App\Action\Action
                 FILTER_SANITIZE_STRING
                 );
         $data = $this->getRequest()->getParams();
+		
+		//Find form data in debug.log
+		//\Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class)->debug(json_encode($data));
         $resultRedirect = $this->resultRedirectFactory->create();
         $redirectUrl = $data['currUrl'];
         $secretkey = $this->_helper
@@ -118,78 +123,154 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         try {
+			// Undefined | Multiple Files | $_FILES Corruption Attack
+			// If this request falls under any of them, treat it invalid.
+			if( parse_url($data['currUrl'], PHP_URL_PATH) !== "/free-catalog-request/" ) {
+				if( is_uploaded_file( $_FILES['file-upload']['tmp_name'] ) ){
+					if (
+						!isset($_FILES['file-upload']['error']) ||
+						is_array($_FILES['file-upload']['error'])
+					) {
+						throw new \RuntimeException('Invalid parameters.');
+					}
+					
+						// Check $_FILES['file-upload']['error'] value.
+					switch ($_FILES['file-upload']['error']) {
+						case UPLOAD_ERR_OK:
+							break;
+						case UPLOAD_ERR_NO_FILE:
+							throw new \RuntimeException('No file sent.');
+						case UPLOAD_ERR_INI_SIZE:
+						case UPLOAD_ERR_FORM_SIZE:
+							throw new \RuntimeException('Exceeded filesize limit. Must be less than 1MB.');
+						default:
+							throw new \RuntimeException('Unknown errors.');
+					}
 
-            $postObject = new \Magento\Framework\DataObject();
-            $postObject->setData($data);
-
-            $error = false;
-
-            if (!\Zend_Validate::is(trim($data['name']), 'NotEmpty')) {
-                $error = true;
-            }
-
-            if (!\Zend_Validate::is(trim($data['email']), 'NotEmpty')) {
-                $error = true;
-            }
-
-            if (!\Zend_Validate::is(trim($data['address']), 'NotEmpty')) {
-                $error = true;
-            }
-			
-			if (!\Zend_Validate::is(trim($data['address2']), 'NotEmpty')) {
-                $error = true;
-            }
-
-            if (!\Zend_Validate::is(trim($data['comment']), 'NotEmpty')) {
-                $error = true;
-            }
-			
-			if ( isset( $data['product-name'] ) || isset( $data['custom-packaging-sku'] ) || isset( $data['dimensions'] ) ) {
-				if (!\Zend_Validate::is(trim($data['product-name']), 'NotEmpty')) {
-					$error = true;
-				}
-				if (!\Zend_Validate::is(trim($data['custom-packaging-sku']), 'NotEmpty')) {
-					$error = true;
-				}
-				if (!\Zend_Validate::is(trim($data['dimensions']), 'NotEmpty')) {
-					$error = true;
+					// You should also check filesize here. 
+					if ($_FILES['file-upload']['size'] > 1048576) {
+						throw new \RuntimeException('Exceeded filesize limit. Must be less than 1MB.');
+					}
+					
+					if (!in_array(pathinfo($_FILES['file-upload']['name'], PATHINFO_EXTENSION), array('img', 'jpg', 'jpeg', 'ai', 'eps', 'pdf'))) {
+						throw new \RuntimeException('Unacceptable file type...');
+					}
+					
+					//https://www.metagento.com/blog/upload-image-in-magento-2-programmatically.html
+					$uploader = $this->_objectManager->create(
+						'Magento\MediaStorage\Model\File\Uploader',
+						['fileId' => 'file-upload']
+					);
+					//TODO: add all allowable extensions
+					$uploader->setAllowedExtensions(['img', 'jpg', 'jpeg', 'ai', 'eps', 'pdf', 'png']);
+					$uploader->setAllowRenameFiles(true);
+					$uploader->setFilesDispersion(true);
+					
+					$mediaDirectory = $this->_filesystem->getDirectoryRead('media');
+					$result = $uploader->save($mediaDirectory->getAbsolutePath() . 'custom_product', md5($data['email'] . time()));
+					$media_path = $this ->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA );
+					$data['image-path'] = $media_path . 'custom_product' . $result['file'];
+					//Path to where the image is uploaded.
+					\Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class)->debug(json_encode($data['image-path']));
 				}
 			}
 
-            if ($error) {
-                throw new \Exception();
+            $postObject = new \Magento\Framework\DataObject();
+            $postObject->setData($data);
+            
+			$errorMessage = '';
+            $error = false;
+
+            if (!\Zend_Validate::is(trim($data['name']), 'NotEmpty')) {
+                $errorMessage .= 'Name is empty, ';
+				$error = true;
             }
+
+            if (!\Zend_Validate::is(trim($data['email']), 'NotEmpty')) {
+                $errorMessage .= 'Email is empty, ';
+				$error = true;
+            }
+ 
+			if ( !isset($data['cc_title']) && !\Zend_Validate::is(trim($data['comment']), 'NotEmpty')) {
+                $errorMessage .= 'Comment is empty , ';
+				$error = true;
+            }
+
+            if ( isset( $data['address'] ) && !\Zend_Validate::is(trim($data['address']), 'NotEmpty') ) {
+				$errorMessage .= 'Address is empty , ';
+                $error = true;
+            }
+
+			if ( isset( $data['address2'] ) && !\Zend_Validate::is(trim($data['address2']), 'NotEmpty') ) {
+				$errorMessage .= 'Address2 is empty , ';
+				$error = true;
+            }
+
+            if ($error) {
+                throw new \Exception($errorMessage);
+            }
+
 			//Change Email Template based on form template used
             // send mail to recipients
-            $this->_inlineTranslation->suspend();
             $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
-            $transport = $this->_transportBuilder->setTemplateIdentifier(
-                            $this->_scopeConfig->getValue(
-                                    self::EMAIL_TEMPLATE,
-                                    $storeScope
-                                    )
-                    )->setTemplateOptions(
-                            [
-                                'area' => Area::AREA_FRONTEND,
-                                'store' => $this->_storeManager
-                                        ->getStore()
-                                        ->getId(),
-                            ]
-                    )->setTemplateVars(['data' => $postObject])
-                    ->setFrom($this->_scopeConfig->getValue(
-                            self::EMAIL_SENDER, $storeScope
-                            ))
-                    ->addTo($this->_scopeConfig->getValue(
-                            self::XML_PATH_EMAIL_RECIPIENT, $storeScope
-                            ))
-                    ->getTransport();
+
+			if ( parse_url($data['currUrl'], PHP_URL_PATH) !== "/free-catalog-request/" ){
+				$this->_inlineTranslation->suspend();
+				
+				$transport = $this->_transportBuilder->setTemplateIdentifier(
+							$this->_scopeConfig->getValue(
+									self::CUSTOM_EMAIL_TEMPLATE_ID,
+									$storeScope
+									))
+					->setTemplateOptions(
+							[
+								'area' => Area::AREA_FRONTEND,
+								'store' => $this->_storeManager
+										->getStore()
+										->getId(),
+							]
+					)->setTemplateVars(['data' => $postObject])
+					->setFrom($this->_scopeConfig->getValue(
+							self::EMAIL_SENDER, $storeScope
+							))
+					->addTo( $data['email'] )
+					->addBcc( $this->_scopeConfig->getValue(
+							self::XML_PATH_EMAIL_RECIPIENT, $storeScope
+							) )
+					->getTransport();
+			}else {
+				$this->_inlineTranslation->suspend();
+				$transport = $this->_transportBuilder->setTemplateIdentifier(
+							$this->_scopeConfig->getValue(
+									self::EMAIL_TEMPLATE,
+									$storeScope
+									)
+					)->setTemplateOptions(
+							[
+								'area' => Area::AREA_FRONTEND,
+								'store' => $this->_storeManager
+										->getStore()
+										->getId(),
+							]
+					)->setTemplateVars(['data' => $postObject])
+					->setFrom($this->_scopeConfig->getValue(
+							self::EMAIL_SENDER, $storeScope
+							))
+					->addTo($this->_scopeConfig->getValue(
+							self::XML_PATH_EMAIL_RECIPIENT, $storeScope
+							))
+					->getTransport();
+			}
 
             $transport->sendMessage();
             $this->_inlineTranslation->resume();
-
-            $this->messageManager->addSuccess(__('Contact Us request has been '
+            $this->messageManager->addSuccess(__('Request has been '
                     . 'received. We\'ll respond to you very soon.'));
-            return $resultRedirect->setUrl($redirectUrl);
+			
+            //Url with Query String is from Product Listing
+			//Otherwise, the user came to the page directly
+			$pathToPage = empty(parse_url($redirectUrl,PHP_URL_QUERY)) ? "?success=1" : "&success=1";
+            return $resultRedirect->setUrl($redirectUrl . $pathToPage);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $this->messageManager->addError($e->getMessage());
         } catch (\RuntimeException $e) {

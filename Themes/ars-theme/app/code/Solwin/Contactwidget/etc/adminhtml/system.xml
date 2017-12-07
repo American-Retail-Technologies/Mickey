@@ -68,6 +68,9 @@
                     <label>Email Template</label>
                     <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
                 </field>
+                <field id="custom_email_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template ID for Customization Page</label>
+                </field>
             </group>
         </section>
     </system>

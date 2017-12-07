@@ -24,6 +24,7 @@
                 <emailto><![CDATA[hello@example.com]]></emailto>
                 <emailsenderto>custom2</emailsenderto>
                 <emailtemplate>contactwidget_section_emailsend_emailtemplate</emailtemplate>
+                <custom_email_id><![CDATA[12]]></custom_email_id>
             </emailsend>
         </contactwidget_section>
     </default>

@@ -1,0 +1,189 @@
+<?php
+/**
+ * Solwin Infotech
+ * Solwin Contact Form Widget Extension
+ *
+ * @category   Solwin
+ * @package    Solwin_Contactwidget
+ * @copyright  Copyright © 2006-2016 Solwin (https://www.solwininfotech.com)
+ * @license    https://www.solwininfotech.com/magento-extension-license/ 
+ */
+$widgetEnable = $this->getConfigValue('contactwidget_section/general/enable');
+$captchaSitekey = $this->getConfigValue('contactwidget_section/recaptcha/recaptcha_sitekey');
+$captchaTheme = $this->getConfigValue('contactwidget_section/recaptcha/recaptcha_theme');
+$formActionUrl = $this->getFormActionUrl();
+$helper = $this->helper('Solwin\Contactwidget\Helper\Data');
+$currPageUrl = $helper->getCurrentUrls();
+$title = $this->getData('cc_title');
+$cc_content = $this->getData('cc_content');
+
+?>
+<?php if($widgetEnable){?>
+<form class="form contact container-fluid" action="<?php echo $formActionUrl;?>" id="contact-form" method="post" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>" enctype="multipart/form-data" data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset row mb25">
+        <legend class="legend col-sm-12"><p><?php /* @escapeNotVerified */ echo __('What Tissue Paper or Gift Wrap(s) do You Want to Customize?') ?></p><div class="tip title-tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Not sure? Submit this request form with as much information as you can or Call Us ') ?></span><span class="art-red"><?php /* @escapeNotVerified */ echo __('1-800-426-5708') ?></span></div></legend>
+        <div class="field product-name col-sm-6">
+            <label class="label" for="product-name"><span><?php /* @escapeNotVerified */ echo __('Do you know the product name(s) that you want to customize?') ?></span></label>
+            <div class="control">
+                <input name="product-name" id="product-name" title="<?php /* @escapeNotVerified */ echo __('Product Name (s)') ?>" class="input-text" type="text" value="<?php echo ((isset($_GET["product-name"]))?htmlspecialchars($_GET["product-name"]):""); ?>" placeholder="(You can browse items on website. Seperate items by comma)"/>
+            </div>
+        </div>
+        <div class="field color col-sm-6">
+            <label class="label" for="color"><span><?php /* @escapeNotVerified */ echo __('Do you know the color(s) for tissue / gift wrap to customize?') ?></span></label>
+            <div class="control">
+                <input name="color" id="color" title="<?php /* @escapeNotVerified */ echo __('Color (s)') ?>" class="input-text" type="text" value="<?php echo ((isset($_GET["color"]))?htmlspecialchars($_GET["color"]):""); ?>" placeholder="(Optional)"/>
+            </div>
+        </div>
+        <div class="field dimensions col-sm-6">
+            <label class="label" for="dimensions"><span><?php /* @escapeNotVerified */ echo __('Do you know the size(s) for tissue / gift wrap to customize?') ?></span></label>
+            <div class="control">
+                <input name="dimensions" id="dimensions" title="<?php /* @escapeNotVerified */ echo __('Dimension (s)') ?>" class="input-text" type="text" value="<?php echo ((isset($_GET["dimensions"]))?htmlspecialchars($_GET["dimensions"]):""); ?>" placeholder="(Optional)"/>
+            </div>
+        </div>
+        <div class="field custom-packaging-sku col-sm-6">
+            <label class="label" for="custom-packaging-sku"><span><?php /* @escapeNotVerified */ echo __('Do you know the SKU number(s)?') ?></span></label>
+            <div class="control">
+                <input name="custom-packaging-sku" id="custom-packaging-sku" title="<?php /* @escapeNotVerified */ echo __('SKU (s)') ?>" class="input-text" type="text" value="<?php echo ((isset($_GET["custom-packaging-sku"]))?htmlspecialchars($_GET["custom-packaging-sku"]):""); ?>" placeholder="(Optional)"/>
+            </div>
+        </div>
+        <div class="field bags-per-month col-sm-6">
+            <label class="label" for="bags-per-month"><p class="mb5"><?php /* @escapeNotVerified */ echo __('How many tissue / gift wrap sheets do you use monthly?') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Give us an estimate to better quote your tissue / gift wrap. Ask for quantity breaks.') ?></span></div></label>
+            <div class="control">
+                <input name="bags-per-month" id="bags-per-month" title="<?php /* @escapeNotVerified */ echo __('How many tissue / gift wrap sheets do you use monthly?') ?>" class="input-text" type="text" placeholder="2000 sheets per month"/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset row mb25">
+        <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Tell us how You want to Customize Your Tissue / Gift Wrap(s)?') ?></span></legend>
+		<div class="field have-logo col-sm-12">
+            <label class="label" for="have-logo"><p class="mb5"><?php /* @escapeNotVerified */ echo __('Do you have Logo?') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Don’t worry, if you don’t we can help with that.') ?></span></div></label>
+            <div class="control">
+                <input name="have-logo" id="have-logo-yes" title="<?php /* @escapeNotVerified */ echo __('Yes') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('Yes') ?>" checked />
+				<label for="have-logo-yes" class="radio-label"><?php /* @escapeNotVerified */ echo __('Yes') ?></label>
+				<input name="have-logo" id="have-logo-no" title="<?php /* @escapeNotVerified */ echo __('No, Need Help!') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('No') ?>"/>
+				<label for="have-logo-no" class="radio-label"><?php /* @escapeNotVerified */ echo __('No, Need Help!') ?></label>
+            </div>
+        </div>
+		<div class="field logo-color col-sm-12">
+            <label class="label" for="logo-color"><span><?php /* @escapeNotVerified */ echo __('Number of Colors on Your Logo or Design?') ?></span></label>
+            <div class="control">
+                <input name="logo-color" id="logo-color-1" title="<?php /* @escapeNotVerified */ echo __('1 Color') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('1 Color') ?>" checked />
+				<label for="logo-color-1" class="radio-label"><?php /* @escapeNotVerified */ echo __('1 Color') ?></label>
+                <input name="logo-color" id="logo-color-2" title="<?php /* @escapeNotVerified */ echo __('2 Color') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('2 Color') ?>"/>
+				<label for="logo-color-2" class="radio-label"><?php /* @escapeNotVerified */ echo __('2 Color') ?></label>
+				<input name="logo-color" id="logo-color-multi" title="<?php /* @escapeNotVerified */ echo __('Multi-Color') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('Multi-Color') ?>"/>
+				<label for="logo-color-multi" class="radio-label"><?php /* @escapeNotVerified */ echo __('Multi-Color') ?></label>
+				<input name="logo-color" id="logo-color-no" title="<?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?>"/>
+				<label for="logo-color-no" class="radio-label"><?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?></label>
+            </div>
+        </div>
+        <div class="field side-to-print-tissue col-sm-12">
+            <label class="label" for="side-to-print-tissue"><p class="mb5"><?php /* @escapeNotVerified */ echo __('Do you want your logo / design scattered or centered for your Tissue Paper / Gift Wrap(s)?') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Scatter is mini logo / design repeated all over the tissue, while, Centered is one logo / design placed in the center of the sheet / gift wrap.') ?></span></div></label>
+            <div class="control">
+                <input name="side-to-print-tissue" id="side-to-print-1" title="<?php /* @escapeNotVerified */ echo __('Scattered') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('Scattered') ?>" checked />
+				<label for="side-to-print-1" class="radio-label"><?php /* @escapeNotVerified */ echo __('Scattered') ?></label>
+				<input name="side-to-print-tissue" id="side-to-print-2" title="<?php /* @escapeNotVerified */ echo __('Centered') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('Centered') ?>" />
+				<label for="side-to-print-2" class="radio-label"><?php /* @escapeNotVerified */ echo __('Centered') ?></label>
+				<input name="side-to-print-tissue" id="side-to-print-no" title="<?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?>"/>
+				<label for="side-to-print-no" class="radio-label"><?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?></label>
+            </div>
+        </div>
+        <div class="field file-upload col-sm-12">
+            <label class="label" for="file-upload"><p class="mb5"><?php /* @escapeNotVerified */ echo __('Upload Your Logo or Design') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('File Size < 1 MB. Desired File Formats - AI, EPS, PDF. If you have JPEG or PNG, still send us your file & we can help you.') ?></span></div></label>
+            <div class="control">
+                <input name="file-upload" id="file-upload" title="<?php /* @escapeNotVerified */ echo __('Upload Your Logo or Design') ?>" class="input-text" type="file" />
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset row mb25">
+        <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Tell us more about Your Business') ?></span></legend>
+		<div class="field about-store col-sm-12">
+            <label class="label" for="about-store"><span><?php /* @escapeNotVerified */ echo __('In few words, tell us about Your Store & Products. It helps us better recommend you the type of packaging for your store.') ?></span></label>
+            <div class="control">
+                <textarea name="about-store" id="about-store" title="<?php /* @escapeNotVerified */ echo __('About their store and/or product') ?>" class="input-text" cols="5" rows="2" placeholder="I own an apparel store and we sell womens clothing and accessories."></textarea>
+            </div>
+        </div>
+        <div class="field number-of-stores col-sm-12">
+            <label class="label" for="number-of-stores"><span><?php /* @escapeNotVerified */ echo __('How many stores do you have?') ?></span></label>
+            <div class="control">
+                <input name="number-of-stores" id="number-of-stores-1" title="<?php /* @escapeNotVerified */ echo __('1 Store') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('1 Store') ?>" checked />
+				<label for="number-of-stores-1" class="radio-label"><?php /* @escapeNotVerified */ echo __('1') ?></label>
+				<input name="number-of-stores" id="number-of-stores-2" title="<?php /* @escapeNotVerified */ echo __('2 Store') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('2 Store') ?>"/>
+				<label for="number-of-stores-2" class="radio-label"><?php /* @escapeNotVerified */ echo __('2') ?></label>
+				<input name="number-of-stores" id="number-of-stores-3-5" title="<?php /* @escapeNotVerified */ echo __('3-5 Store') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('3-5 Store') ?>" />
+				<label for="number-of-stores-3-5" class="radio-label"><?php /* @escapeNotVerified */ echo __('3-5') ?></label>
+				<input name="number-of-stores" id="number-of-stores-5-10" title="<?php /* @escapeNotVerified */ echo __('5-10 Store') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('5-10 Store') ?>"/>
+				<label for="number-of-stores-5-10" class="radio-label"><?php /* @escapeNotVerified */ echo __('5-10') ?></label>
+				<input name="number-of-stores" id="number-of-stores-10" title="<?php /* @escapeNotVerified */ echo __('10+ Store') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('10+ Store') ?>"/>
+				<label for="number-of-stores-10" class="radio-label"><?php /* @escapeNotVerified */ echo __('10+') ?></label>
+            </div>
+        </div>
+        <div class="field name required col-sm-6">
+            <label class="label" for="name"><span><?php /* @escapeNotVerified */ echo __('Name') ?></span></label>
+            <div class="control">
+                <input name="name" id="name" title="<?php /* @escapeNotVerified */ echo __('Name') ?>" class="input-text" type="text" data-validate="{required:true}"/>
+            </div>
+        </div>
+        <div class="field business-name col-sm-6">
+            <label class="label" for="business-name"><span><?php /* @escapeNotVerified */ echo __('Business Name') ?></span></label>
+            <div class="control">
+                <input name="business-name" id="business-name" title="<?php /* @escapeNotVerified */ echo __('Business Name') ?>" class="input-text" type="text" />
+            </div>
+        </div>
+        <div class="field email required col-sm-6">
+            <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
+            <div class="control">
+                <input name="email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+            </div>
+        </div>
+        <?php
+            if ($this->getData('cc_enable_phoneno')) {
+                ?>
+        <div class="field telephone col-sm-6">
+            <label class="label" for="telephone"><span><?php /* @escapeNotVerified */ echo __('Phone Number') ?></span></label>
+            <div class="control">
+                <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */ echo __('Phone Number') ?>" value="" class="input-text" type="text" />
+            </div>
+        </div>
+        <?php } ?>
+		<div class="field comment col-sm-12">
+            <label class="label" for="comment"><span><?php /* @escapeNotVerified */ echo __('Anything else, we missed to ask you') ?></span></label>
+            <div class="control">
+                <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('Anything else, we missed to ask you') ?>" class="input-text" cols="5" rows="2"></textarea>
+            </div>
+        </div>
+		 <?php
+		if ($this->getData('cc_enable_recaptcha')) {
+			?>
+		<div class="field required col-sm-12" >
+            <label class="label" for="captcha"><span><?php /* @escapeNotVerified */ echo __('ReCaptcha') ?></span></label>
+            <div class="control">
+                <script src="https://www.google.com/recaptcha/api.js"></script>
+                <div class="g-recaptcha" data-sitekey="<?php echo $captchaSitekey;?>" data-theme="<?php echo $captchaTheme; ?>"></div>
+            </div>
+        </div>    
+        <?php } ?>
+		<div class="col-sm-12">
+			<div class="primary">
+				<input type="hidden" name="currUrl" id="currUrl" value="<?php echo $currPageUrl; ?>" />
+				<input type="hidden" name="cc_title" id="cc_title" value="<?php echo $title; ?>" />
+				<input type="hidden" name="enablerecaptcha" id="currUrl" value="<?php echo $this->getData('cc_enable_recaptcha'); ?>" />
+				<button type="submit" title="<?php /* @escapeNotVerified */ echo __('Get Your Quote') ?>" class="action submit primary art-round-button">
+					<span><?php /* @escapeNotVerified */ echo __('Click Here To Get Your Quote') ?></span>
+				</button>
+			</div>
+		</div>
+	</fieldset>
+</form>
+<?php 
+if (isset($_GET["success"])) { ?>
+<div class="art-confirmation newspopup-message-success"><span class="newspopup-message-icon"></span> <div class="newspopup-message-content"><p>Thank you for your request!</p>
+</div><button class="newspopup-message-close">Ok</button></div>
+<?php 
+}
+?>
+<?php 
+}
+?>
+
+

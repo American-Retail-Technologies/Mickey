@@ -73,8 +73,6 @@
 								<argument name="add_attribute" xsi:type="string">itemprop="description"</argument>
 							</arguments>
 						</block>
-						<!-- 2017-11-17 Tenzin: Display Custom Packaging Button for Products-->
-						<block class="Magento\Catalog\Block\Product\View" name="art.custom.packaging.button" as="artCustomPackagingButton" template="product/view/artCustomPackagingButton.phtml" after="product.info.overview" />
 						<!-- 2017-10-22 Tenzin: Add Minimum Qty Text if above 1-->
 						<block class="Magento\Catalog\Block\Product\View" name="art.min.qty" as="artMinQty" template="product/view/artMinQty.phtml" before="product.info.extrahint.qtyincrements"/>
 					</container>
@@ -113,7 +111,10 @@
 							<block class="Magento\Catalog\Block\Product\View" name="product.info.mailto" template="product/view/mailto.phtml"/>
 						</container>
 					</container>
-					
+					<!-- 2017-11-17 Tenzin: Display Custom Packaging Button for Products-->
+					<container name="art.custom.button.container" as="artCustomButtonContainer" htmlTag="div" htmlClass="art-custom-button-container art-fl mt10" label="A button to request to Customization" after="product.info.social">
+						<block class="Magento\Catalog\Block\Product\View" name="art.custom.packaging.button" as="artCustomPackagingButton" template="product/view/artCustomPackagingButton.phtml" />
+					</container>
 				</container>
 				
 				<container name="product.info.media" htmlTag="div" htmlClass="product media" after="product.info.main">

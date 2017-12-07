@@ -43,6 +43,17 @@ define( [ "jquery" ], function ( $ ) {
 		// Bind event listener
 		$(window).resize(checkScreenSize);
 		
+		//Hide Confirmation Popup at Customization Form Page
+		$('.art-confirmation .newspopup-message-close').on('click',function(){
+			$('.art-confirmation').hide();
+		});
 		
+		//Hide file-upload option on Custimization Form Page if the user doesn't have a logo
+		$("input[name$='have-logo']").on('click', function (){
+			var $selected = $(this).val();
+			var $temp = ($selected === "No") ? $(".file-upload").hide() : $(".file-upload").show();
+			console.log($temp);
+		});
 	});
+	
 });

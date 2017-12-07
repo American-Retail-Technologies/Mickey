@@ -14,6 +14,11 @@ class ContactUsWidget
 extends \Magento\Framework\View\Element\Template
 implements \Magento\Widget\Block\BlockInterface
 {
+	/**
+     * Determine which form is used
+     */
+    protected $formTitle;
+
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param array $data
@@ -23,10 +28,15 @@ implements \Magento\Widget\Block\BlockInterface
         array $data = []
     ) {
         parent::__construct($context, $data);
-		if($data['cc_title'] === "Request Catalog"){
+		$formTitle = $data['cc_title'];
+		if($formTitle === "Request Catalog"){
 			$this->setTemplate('widget/custom_widget.phtml');
-		}elseif($data['cc_title'] === "Request Custom Packaging"){
-			$this->setTemplate('widget/custom_packaging.phtml');
+		}elseif($formTitle === "Request Custom Tissue and Gift Wraps"){
+			$this->setTemplate('widget/custom_tissue.phtml');
+		}elseif($formTitle === "Request Custom Label and Sticker"){
+			$this->setTemplate('widget/custom_label.phtml');
+		}elseif($formTitle === "Request Custom Packaging"){
+			$this->setTemplate('widget/custom_bags.phtml');
 		}
     }
 
@@ -34,7 +44,7 @@ implements \Magento\Widget\Block\BlockInterface
      * Get form action url
      */
     public function getFormActionUrl() {
-        return $this->getUrl('contactwidget/widget/index');
+		return $this->getUrl('contactwidget/widget/index');
     }
 
     /**

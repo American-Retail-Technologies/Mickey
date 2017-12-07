@@ -127,42 +127,35 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 								<?php
 								//https://magento.stackexchange.com/questions/132098/magento-2-how-to-display-custom-attribute-in-catalog
 								//Attributes must be configured to Yes for "Use in Product Listing"
-								$enable_custom_packaging = $_product->getAttributeText('ars_custom_packaging') === "Yes" ? TRUE:FALSE;
+								$custom_packaging = $_product->getAttributeText('ars_custom_packaging_type');
+								$enable_ready_to_ship = $_product->getAttributeText('ars_ready_to_ship') === "In Stock" ? TRUE:FALSE;
 								$enable_ready_to_assemble = $_product->getAttributeText('ars_ready_to_assemble') === "Yes" ? TRUE:FALSE;
 								$enable_product_question = $_product->getAttributeText('ars_product_question') === "Yes" ? TRUE:FALSE;
 								//Next two attributes returns string of all values joined by commas
-								$enable_packaging_recyclable = $_product->getResource()->getAttribute('ars_packaging_recyclable')->getFrontend()->getValue($_product);
-								$enable_shipping_icon = $_product->getResource()->getAttribute('ars_shipping_type')->getFrontend()->getValue($_product);
+								$enable_packaging_recyclable = $_product->getResource()->getAttribute('ars_packaging_recyclable')->getFrontend()->getValue($_product) === "Yes" ? TRUE:FALSE;
+								$enable_shipping_icon = $_product->getResource()->getAttribute('ars_ltl_shipment')->getFrontend()->getValue($_product)=== "Yes" ? TRUE:FALSE;
 								//Combining Packaging Recyclable and Shipment Type values to only loop through once
-								$enable_packaging_shipping = $enable_packaging_recyclable . ',' . $enable_shipping_icon;
+								//$enable_packaging_shipping = $enable_packaging_recyclable . ',' . $enable_shipping_icon;
 								//Checking if any of the icons are enabled
-								if($enable_ready_to_assemble || $enable_product_question || !empty($enable_packaging_shipping) ) { ?>
+								if( $enable_ready_to_assemble || $enable_product_question || $enable_ready_to_ship || $enable_packaging_recyclable || $enable_shipping_icon ) { ?>
 								<div class="art-description-icons">
-								<?php if($enable_ready_to_assemble) { ?>
+								<?php if( $enable_ready_to_ship ) { ?>
+										<span style="color:green; font-size: 16px;">In Stock!</span>
+								<?php } ?>
+								<?php if( $enable_packaging_recyclable ) { ?>
+										<img class="art-packaging-recyclable" title="This item can be used more than once!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Label_Sticker_Icon_1_Green.png" />
+								<?php } ?>
+								<?php if( $enable_shipping_icon ) { ?>
+										<img class="art-shipping" title="It will take, at most, 24 Hours to ship this product." src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/shipping-24.png" />
+								<?php } ?>
+								<?php if( $enable_ready_to_assemble ) { ?>
 										<img class="art-ready-to-assemble" title="This item will come disassembled and needs to be put together by you!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Display_Case_Icon_Red.png" />
 								<?php } ?>
-								<?php if($enable_product_question) { ?>
+								<?php if( $enable_product_question ) { ?>
 										<img class="art-product-question" title="Have any question about this item? Click here to request help!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/IT_Consulting_Icon_Yellow.png" />
-								<?php } ?>
-								<?php if(!empty($enable_packaging_shipping)) {
-									//convert list of values into array
-									//remove any white space in front and end of each value
-									$enable_packaging_shipping_array = array_map('trim', explode( ',', $enable_packaging_shipping ));
-									foreach($enable_packaging_shipping_array as $type) {
-										if($type === "24 Hours") { ?>
-											<img class="art-shipping-24hours" title="It will take, at most, 24 Hours to ship this product." src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/shipping-24.png" />
-										<?php } elseif($type === "LTL Shipment") { ?>
-											<img class="art-ltl-freight" title="This item requires LTL Freight instead of Ground." src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/General_Store_Operations_Icon_Red.png" />
-										<?php } elseif($type === "40% Recycled") { ?>
-											<img class="art-packaging-recycled" title="This item is made of 40% recycled material!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Shopping_Bag_Icon_Green.png" />
-										<?php } elseif($type === "Reusable") { ?>
-											<img class="art-packaging-reusable" title="This item can be used more than once!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Label_Sticker_Icon_1_Green.png" />
-										<?php } ?>
-									<?php } ?>
 								<?php } ?>
 								</div>
 								<?php } ?>
-								
 								<?php if ($showReview):?>
 									<?php echo $block->getReviewsSummaryHtml($_product, $templateType,true); ?>
 								<?php endif; ?>
@@ -179,11 +172,6 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 								</div>
 								
 								<div class="bottom-action">
-									<?php if($enable_custom_packaging) { ?>
-										<a href="/custom-shopping-bags/?product-name=<?php /* @escapeNotVerified */ echo htmlspecialchars($_helper->productAttribute($_product, $_product->getName(), 'name'));?>&custom-packaging-sku=<?php /* @escapeNotVerified */ echo $_product->getData('sku')?>&dimensions=<?php /* @escapeNotVerified */ echo htmlspecialchars($_product->getResource()->getAttribute('ars_dims')->getFrontend()->getValue($_product))?>">
-											<button title="Custom Packaging" class="art-custom-button primary btn-action ellipsis1Line clamped"><span>Customize this Item</span></button>
-										</a>
-									<?php } ?>
 									<?php if($_config->getAdvanced('show_addtocart_button')){?>
 										<?php if ($_product->isSaleable()): ?>
 											<?php $postParams = $block->getAddToCartPostParams($_product); ?>
@@ -218,6 +206,27 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 										<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
 										<a href="#"  class="action tocompare btn-action link-compare"  title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"  data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button">
 											<span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+										</a>
+									<?php } ?>
+									<?php if ( $custom_packaging !== "Not Applicable" && $custom_packaging ) {
+										//attributes to send to form
+										$name = $_helper->productAttribute($_product, $_product->getName(), 'name');
+										$sku = $_product->getData('sku');
+										$dimensions = $_product->getResource()->getAttribute('ars_dims')->getFrontend()->getValue($_product);
+										$color = $_product->getResource()->getAttribute('ars_color')->getFrontend()->getValue($_product);
+										
+										//Custom Page
+										if ( $custom_packaging === "Custom Shopping Bags" ) {
+											$href = "/custom-shopping-bags/";
+										}elseif ( $custom_packaging === "Custom Tissue" ) {
+											$href = "/custom-tissue-paper-and-gift-wraps/";
+										}elseif ( $custom_packaging === "Custom Tags & Labels" ) {
+											$href = "/custom-labels-and-stickers/";
+										}
+										$href .= "?product-name=" . htmlspecialchars($name) . "&custom-packaging-sku=" . htmlspecialchars($sku) . "&dimensions=" .  htmlspecialchars($dimensions) . "&color=" . htmlspecialchars($color);
+										?>
+										<a href="<?php /* @escapeNotVerified */ echo htmlspecialchars($href);?>" target="_blank">
+											<button title="Customize this item by adding your logo." class="art btn-action btn-cart art-custom-button primary btn-action ellipsis1Line clamped"><span>Add Your Logo</span></button>
 										</a>
 									<?php } ?>
 								</div>
@@ -290,6 +299,12 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 											<?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
 										</a>
 									</h2>
+									<!-- 2017/11/13 Tenzin: Add icons per product -->
+									<?php
+									//https://magento.stackexchange.com/questions/132098/magento-2-how-to-display-custom-attribute-in-catalog
+									//Attributes must be configured to Yes for "Use in Product Listing"
+									$custom_packaging = $_product->getAttributeText('ars_custom_packaging_type');
+									<?php } ?>
 									<span>SKU # <?php /* @escapeNotVerified */ echo $_product->getData('sku') ?></span>
 								
 									<?php if ($showReview):?>
@@ -343,6 +358,27 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 												<?php $compareHelper = $this->helper('Magento\Catalog\Helper\Product\Compare'); ?>
 												<a href="#"  class="action tocompare btn-action link-compare"  title="<?php echo $block->escapeHtml(__('Add to Compare')); ?>" aria-label="<?php echo $block->escapeHtml(__('Add to Compare')); ?>"  data-post='<?php /* @escapeNotVerified */ echo $compareHelper->getPostDataParams($_product); ?>' role="button">
 													<span><?php /* @escapeNotVerified */ echo __('Add to Compare') ?></span>
+												</a>
+											<?php } ?>
+											<?php if ( $custom_packaging !== "Not Applicable" && $custom_packaging ) {
+												//attributes to send to form
+												$name = $_helper->productAttribute($_product, $_product->getName(), 'name');
+												$sku = $_product->getData('sku');
+												$dimensions = $_product->getResource()->getAttribute('ars_dims')->getFrontend()->getValue($_product);
+												$color = $_product->getResource()->getAttribute('ars_color')->getFrontend()->getValue($_product);
+												
+												//Custom Page
+												if ( $custom_packaging === "Custom Shopping Bags" ) {
+													$href = "/custom-shopping-bags/";
+												}elseif ( $custom_packaging === "Custom Tissue" ) {
+													$href = "/custom-tissue-paper-and-gift-wraps/";
+												}elseif ( $custom_packaging === "Custom Tags & Labels" ) {
+													$href = "/custom-labels-and-stickers/";
+												}
+												$href .= "?product-name=" . htmlspecialchars($name) . "&custom-packaging-sku=" . htmlspecialchars($sku) . "&dimensions=" .  htmlspecialchars($dimensions) . "&color=" . htmlspecialchars($color);
+												?>
+												<a href="<?php /* @escapeNotVerified */ echo htmlspecialchars($href);?>" target="_blank">
+													<button title="Customize this item by adding your logo." class="art btn-action btn-cart art-custom-button primary btn-action ellipsis1Line clamped"><span>Add Your Logo</span></button>
 												</a>
 											<?php } ?>
 										</div>
