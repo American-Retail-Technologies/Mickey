@@ -346,17 +346,20 @@ ul.art-bullet-list > li::before{
 .products-grid .item .item-inner .box-info .bottom-action .art-custom-button,
 .products-list .item .item-inner .box-info-list .bottom-action .btn-action.art-custom-button,
 .art-custom-button{
+    border: 1px solid #08357a!important;
     max-width: 160px;
 	background-color: #08357a;
 }
 
 .products-grid .item .item-inner .box-info .bottom-action .btn-action.btn-cart.art-custom-button span,
+.catalog-product-view .art-custom-button-container .art-custom-button:hover span,
 .art-custom-button span{
 	color:white;
 	font-weight: 700;
 }
 
 .products-grid .item .item-inner .box-info .bottom-action .btn-action.btn-cart.art-custom-button:hover,
+.catalog-product-view .art-custom-button-container .art-custom-button:hover,
 .art-custom-button:hover{
     background-color: #444;
 	border-color: #444 !important;
@@ -496,6 +499,10 @@ ul.art-bullet-list > li::before{
   font-weight: bold !important;
   -webkit-box-shadow: none;
   box-shadow: none;
+}
+
+.art-custom-form label{
+	white-space: initial;
 }
 	
 /*Menu*/
@@ -890,6 +897,9 @@ img.popularCategoryIcon{
 .products-grid .item .item-inner .box-info .bottom-action .art.btn-action.btn-cart span{
    font-size:11px;
 }
+.control .radio-label{
+  padding: 6px 8px !important;
+}
 }
 
 @media screen and (min-width: 376px) and (max-width: 425px) { 
@@ -1012,6 +1022,10 @@ padding: 15px 0 0;
 .block-viewed-products-list{
     display:none;
 }
+
+ .art-confirmation{
+	margin: 30% auto 5% -190px
+ }
 }
 
 /*Tablet*/

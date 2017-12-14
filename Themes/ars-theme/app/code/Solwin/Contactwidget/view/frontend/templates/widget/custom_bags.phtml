@@ -18,8 +18,8 @@ $title = $this->getData('cc_title');
 $cc_content = $this->getData('cc_content');
 
 ?>
-<?php if($widgetEnable){?>
-<form class="form contact container-fluid" action="<?php echo $formActionUrl;?>" id="contact-form" method="post" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>" enctype="multipart/form-data" data-mage-init='{"validation":{}}'>
+<?php if($widgetEnable){ ?>
+<form class="form contact container-fluid art-custom-form art-custom-form-bag" action="<?php echo $formActionUrl;?>" id="contact-form" method="post" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>" enctype="multipart/form-data" data-mage-init='{"validation":{}}'>
     <fieldset class="fieldset row mb25">
         <legend class="legend col-sm-12"><p><?php /* @escapeNotVerified */ echo __('What Shopping Bag(s) do You Want to Customize?') ?></p><div class="tip title-tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Not sure? Submit this request form with as much information as you can or Call Us ') ?></span><span class="art-red"><?php /* @escapeNotVerified */ echo __('1-800-426-5708') ?></span></div></legend>
         <div class="field product-name col-sm-6">
@@ -29,13 +29,13 @@ $cc_content = $this->getData('cc_content');
             </div>
         </div>
         <div class="field color col-sm-6">
-            <label class="label" for="color"><span><?php /* @escapeNotVerified */ echo __('What bag color(s) you want to customize?') ?></span></label>
+            <label class="label" for="color"><span><?php /* @escapeNotVerified */ echo __('Do you know the color for the bag(s) to customize?') ?></span></label>
             <div class="control">
                 <input name="color" id="color" title="<?php /* @escapeNotVerified */ echo __('Color (s)') ?>" class="input-text" type="text" value="<?php echo ((isset($_GET["color"]))?htmlspecialchars($_GET["color"]):""); ?>" placeholder="(Optional)"/>
             </div>
         </div>
         <div class="field dimensions col-sm-6">
-            <label class="label" for="dimensions"><span><?php /* @escapeNotVerified */ echo __('What bag size(s) do you need to customize?') ?></span></label>
+            <label class="label" for="dimensions"><span><?php /* @escapeNotVerified */ echo __('Do you know the size for the bag(s) to customize?') ?></span></label>
             <div class="control">
                 <input name="dimensions" id="dimensions" title="<?php /* @escapeNotVerified */ echo __('Dimension (s)') ?>" class="input-text" type="text" value="<?php echo ((isset($_GET["dimensions"]))?htmlspecialchars($_GET["dimensions"]):""); ?>" placeholder="(Optional)"/>
             </div>
@@ -46,10 +46,10 @@ $cc_content = $this->getData('cc_content');
                 <input name="custom-packaging-sku" id="custom-packaging-sku" title="<?php /* @escapeNotVerified */ echo __('SKU (s)') ?>" class="input-text" type="text" value="<?php echo ((isset($_GET["custom-packaging-sku"]))?htmlspecialchars($_GET["custom-packaging-sku"]):""); ?>" placeholder="(Optional)"/>
             </div>
         </div>
-        <div class="field bags-per-month col-sm-6">
-            <label class="label" for="bags-per-month"><p class="mb5"><?php /* @escapeNotVerified */ echo __('How many bags do you use monthly?') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Give us an estimate to better quote your bags. Ask for quantity breaks.') ?></span></div></label>
+        <div class="field per-month col-sm-6">
+            <label class="label" for="per-month"><p class="mb5"><?php /* @escapeNotVerified */ echo __('How many bags do you use monthly?') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Give us an estimate to better quote your bags.') ?></span></div></label>
             <div class="control">
-                <input name="bags-per-month" id="bags-per-month" title="<?php /* @escapeNotVerified */ echo __('How many bags do you use per Month?') ?>" class="input-text" type="text" placeholder="1000 bags per month" />
+                <input name="per-month" id="per-month" title="<?php /* @escapeNotVerified */ echo __('How many bags do you use per Month?') ?>" class="input-text" type="text" placeholder="1000 bags per month" />
             </div>
         </div>
     </fieldset>
@@ -88,8 +88,19 @@ $cc_content = $this->getData('cc_content');
 				<label for="side-to-print-no" class="radio-label"><?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?></label>
             </div>
         </div>
+        <div class="field side-to-print-label col-sm-12">
+            <label class="label" for="side-to-print-label"><p class="mb5"><?php /* @escapeNotVerified */ echo __('What kind of imprint do you need for your logo or design for the Labels / Stickers?') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Hot Stamp is the process of applying pressure and heat, with a layer of foil in between the plate and bag. Imprint applies ink to the plate and stamps the logo / design onto the bag.') ?></span></div></label>
+            <div class="control">
+                <input name="side-to-print-label" id="side-to-print-label-1" title="<?php /* @escapeNotVerified */ echo __('Hot Stamp') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('Hot Stamp') ?>" checked />
+				<label for="side-to-print-label-1" class="radio-label"><?php /* @escapeNotVerified */ echo __('Hot Stamp') ?></label>
+				<input name="side-to-print-label" id="side-to-print-label-2" title="<?php /* @escapeNotVerified */ echo __('Imprinted') ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __('Imprinted') ?>" />
+				<label for="side-to-print-label-2" class="radio-label"><?php /* @escapeNotVerified */ echo __('Imprinted') ?></label>
+				<input name="side-to-print-label" id="side-to-print-label-no" title="<?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?>" class="input-radio" type="radio" value="<?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?>"/>
+				<label for="side-to-print-label-no" class="radio-label"><?php /* @escapeNotVerified */ echo __("Don't Know Yet") ?></label>
+            </div>
+        </div>
         <div class="field file-upload col-sm-12">
-            <label class="label" for="file-upload"><p class="mb5"><?php /* @escapeNotVerified */ echo __('Upload Your Logo or Design') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('File Size < 1 MB. Desired File Formats - AI, EPS, PDF. If you have JPEG or PNG, still send us your file & we can help you.') ?></span></div></label>
+            <label class="label" for="file-upload"><p class="mb5"><?php /* @escapeNotVerified */ echo __('Upload Your Logo or Design') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('File Size < 1 MB. Vector .AI art will be required for final order. For quoting, these files can be uploaded (PDF, EPS, JPEG/JPG or PNG) and we can help you.') ?></span></div></label>
             <div class="control">
                 <input name="file-upload" id="file-upload" title="<?php /* @escapeNotVerified */ echo __('Upload Your Logo or Design') ?>" class="input-text" type="file" />
             </div>
@@ -133,7 +144,7 @@ $cc_content = $this->getData('cc_content');
         <div class="field email required col-sm-6">
             <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
             <div class="control">
-                <input name="email" id="email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}" />
+                <input name="email" id="form_email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}" />
             </div>
         </div>
         <?php
@@ -167,9 +178,9 @@ $cc_content = $this->getData('cc_content');
 			<div class="primary">
 				<input type="hidden" name="currUrl" id="currUrl" value="<?php echo $currPageUrl; ?>" />
 				<input type="hidden" name="cc_title" id="cc_title" value="<?php echo $title; ?>" />
-				<input type="hidden" name="enablerecaptcha" id="currUrl" value="<?php echo $this->getData('cc_enable_recaptcha'); ?>" />
-				<button type="submit" title="<?php /* @escapeNotVerified */ echo __('Get Your Quote') ?>" class="action submit primary art-round-button">
-					<span><?php /* @escapeNotVerified */ echo __('Click Here To Get Your Quote') ?></span>
+				<input type="hidden" name="enablerecaptcha" id="currUrl1" value="<?php echo $this->getData('cc_enable_recaptcha'); ?>" />
+				<button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit Request') ?>" class="action submit primary art-round-button">
+					<span><?php /* @escapeNotVerified */ echo __('Submit Your Request') ?></span>
 				</button>
 			</div>
 		</div>
@@ -177,8 +188,16 @@ $cc_content = $this->getData('cc_content');
 </form>
 <?php 
 if (isset($_GET["success"])) { ?>
-<div class="art-confirmation newspopup-message-success"><span class="newspopup-message-icon"></span> <div class="newspopup-message-content"><p>Thank you for your request!</p>
-</div><button class="newspopup-message-close">Ok</button></div>
+	<div class="art-confirmation newspopup-message-success">
+		<div class="cross close" title="Close Popup">✕</div>
+		<span class="newspopup-message-icon"></span>
+		<div class="newspopup-message-content">
+			<p>Thank you! Our Sales Team will shortly contact you with more information. Cheers!</p>
+		</div>
+		<a href="<?php echo $this->getBaseUrl() ?>">
+			<button class="newspopup-message-close">Go To Home Page</button>
+		</a>
+	</div>
 <?php 
 }
 ?>

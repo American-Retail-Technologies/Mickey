@@ -16,7 +16,10 @@ use Magento\Framework\App\Area;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
-    const CUSTOM_EMAIL_TEMPLATE_ID = 'contactwidget_section/emailsend/custom_email_id';
+    const CUSTOM_BAG_EMAIL_TEMPLATE_ID = 'contactwidget_section/emailsend/custom_bag_email_id';
+    const CUSTOM_LABEL_EMAIL_TEMPLATE_ID = 'contactwidget_section/emailsend/custom_label_email_id';
+    const CUSTOM_TISSUE_EMAIL_TEMPLATE_ID = 'contactwidget_section/emailsend/custom_tissue_email_id';
+    const CUSTOM_BOX_EMAIL_TEMPLATE_ID = 'contactwidget_section/emailsend/custom_box_email_id';
     const EMAIL_TEMPLATE = 'contactwidget_section/emailsend/emailtemplate';
     const EMAIL_SENDER = 'contactwidget_section/emailsend/emailsenderto';
     const XML_PATH_EMAIL_RECIPIENT = 'contactwidget_section/emailsend/emailto';
@@ -83,9 +86,9 @@ class Index extends \Magento\Framework\App\Action\Action
         $data = $this->getRequest()->getParams();
 		
 		//Find form data in debug.log
-		//\Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class)->debug(json_encode($data));
         $resultRedirect = $this->resultRedirectFactory->create();
         $redirectUrl = $data['currUrl'];
+		$currUrlPath = parse_url($data['currUrl'], PHP_URL_PATH);
         $secretkey = $this->_helper
                 ->getConfigValue(
                         'contactwidget_section/recaptcha/recaptcha_secretkey'
@@ -125,7 +128,7 @@ class Index extends \Magento\Framework\App\Action\Action
         try {
 			// Undefined | Multiple Files | $_FILES Corruption Attack
 			// If this request falls under any of them, treat it invalid.
-			if( parse_url($data['currUrl'], PHP_URL_PATH) !== "/free-catalog-request/" ) {
+			if( $currUrlPath !== "/free-catalog-request/" ) {
 				if( is_uploaded_file( $_FILES['file-upload']['tmp_name'] ) ){
 					if (
 						!isset($_FILES['file-upload']['error']) ||
@@ -151,9 +154,10 @@ class Index extends \Magento\Framework\App\Action\Action
 					if ($_FILES['file-upload']['size'] > 1048576) {
 						throw new \RuntimeException('Exceeded filesize limit. Must be less than 1MB.');
 					}
-					
-					if (!in_array(pathinfo($_FILES['file-upload']['name'], PATHINFO_EXTENSION), array('img', 'jpg', 'jpeg', 'ai', 'eps', 'pdf'))) {
-						throw new \RuntimeException('Unacceptable file type...');
+					$acceptedFileType = array('img', 'jpg', 'jpeg', 'ai', 'eps', 'pdf', 'png');
+					$uploadedFileType = strtolower(pathinfo($_FILES['file-upload']['name'], PATHINFO_EXTENSION));
+					if ( !in_array( $uploadedFileType, $acceptedFileType ) ) {
+						throw new \RuntimeException("Unacceptable file type...");
 					}
 					
 					//https://www.metagento.com/blog/upload-image-in-magento-2-programmatically.html
@@ -171,7 +175,7 @@ class Index extends \Magento\Framework\App\Action\Action
 					$media_path = $this ->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA );
 					$data['image-path'] = $media_path . 'custom_product' . $result['file'];
 					//Path to where the image is uploaded.
-					\Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class)->debug(json_encode($data['image-path']));
+					//\Magento\Framework\App\ObjectManager::getInstance()->get(\Psr\Log\LoggerInterface::class)->debug(json_encode($data['image-path']));
 				}
 			}
 
@@ -213,13 +217,22 @@ class Index extends \Magento\Framework\App\Action\Action
 			//Change Email Template based on form template used
             // send mail to recipients
             $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
-
-			if ( parse_url($data['currUrl'], PHP_URL_PATH) !== "/free-catalog-request/" ){
-				$this->_inlineTranslation->suspend();
+			if ( $currUrlPath !== "/free-catalog-request/" ){
+				//Use different email template based on which page the user came from
+				if( $currUrlPath === "/custom-shopping-bags/" ) {
+					$templateIdPath = self::CUSTOM_BAG_EMAIL_TEMPLATE_ID;
+				} elseif ( $currUrlPath === "/custom-labels-and-stickers/" ) {
+					$templateIdPath = self::CUSTOM_LABEL_EMAIL_TEMPLATE_ID;
+				} elseif ( $currUrlPath === "/custom-tissue-paper-and-gift-wraps/" ) {
+					$templateIdPath = self::CUSTOM_TISSUE_EMAIL_TEMPLATE_ID;
+				} elseif ( $currUrlPath === "/custom-boxes/" ) {
+					$templateIdPath = self::CUSTOM_BOX_EMAIL_TEMPLATE_ID;
+				}
 				
+				$this->_inlineTranslation->suspend();
 				$transport = $this->_transportBuilder->setTemplateIdentifier(
 							$this->_scopeConfig->getValue(
-									self::CUSTOM_EMAIL_TEMPLATE_ID,
+									$templateIdPath,
 									$storeScope
 									))
 					->setTemplateOptions(
@@ -266,11 +279,14 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->_inlineTranslation->resume();
             $this->messageManager->addSuccess(__('Request has been '
                     . 'received. We\'ll respond to you very soon.'));
-			
-            //Url with Query String is from Product Listing
-			//Otherwise, the user came to the page directly
-			$pathToPage = empty(parse_url($redirectUrl,PHP_URL_QUERY)) ? "?success=1" : "&success=1";
-            return $resultRedirect->setUrl($redirectUrl . $pathToPage);
+			if ( $currUrlPath !== "/free-catalog-request/" ){
+				//Url with Query String is from Product Listing
+				//Otherwise, the user came to the page directly
+				$pathToPage = empty(parse_url($redirectUrl,PHP_URL_QUERY)) ? "?success=1" : "&success=1";
+				return $resultRedirect->setUrl($redirectUrl . $pathToPage);
+			}else {
+				return $resultRedirect->setUrl($redirectUrl);
+			}
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $this->messageManager->addError($e->getMessage());
         } catch (\RuntimeException $e) {

@@ -35,11 +35,12 @@ implements \Magento\Widget\Block\BlockInterface
 			$this->setTemplate('widget/custom_tissue.phtml');
 		}elseif($formTitle === "Request Custom Label and Sticker"){
 			$this->setTemplate('widget/custom_label.phtml');
-		}elseif($formTitle === "Request Custom Packaging"){
+		}elseif($formTitle === "Request Custom Bags"){
 			$this->setTemplate('widget/custom_bags.phtml');
+		}elseif($formTitle === "Request Custom Boxes"){
+			$this->setTemplate('widget/custom_box.phtml');
 		}
     }
-
     /**
      * Get form action url
      */

@@ -44,7 +44,7 @@ define( [ "jquery" ], function ( $ ) {
 		$(window).resize(checkScreenSize);
 		
 		//Hide Confirmation Popup at Customization Form Page
-		$('.art-confirmation .newspopup-message-close').on('click',function(){
+		$('.art-confirmation .cross.close').on('click',function(){
 			$('.art-confirmation').hide();
 		});
 		
@@ -53,6 +53,17 @@ define( [ "jquery" ], function ( $ ) {
 			var $selected = $(this).val();
 			var $temp = ($selected === "No") ? $(".file-upload").hide() : $(".file-upload").show();
 			console.log($temp);
+		});
+		
+		//Hide imprint option if multi-color selected for custom bags
+		$(".art-custom-form-bag input[name$='logo-color']").on('click', function (){
+			var $selected = $(this).val();
+			if ( $selected === "Multi-Color" ){
+				$(".side-to-print-label").hide();
+				$("input[name$='side-to-print-label']").prop('checked' , false);
+			} else{
+				$(".side-to-print-label").show();
+			}
 		});
 	});
 	

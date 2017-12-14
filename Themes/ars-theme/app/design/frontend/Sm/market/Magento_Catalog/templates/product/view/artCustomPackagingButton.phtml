@@ -8,16 +8,26 @@ if ( $custom_packaging !== "Not Applicable" && $custom_packaging) {
 	$dimensions = $artProduct->getResource()->getAttribute('ars_dims')->getFrontend()->getValue($artProduct);
 	$color = $artProduct->getResource()->getAttribute('ars_color')->getFrontend()->getValue($artProduct);
 
-	//Custom Shopping Bags Page
-	if ( $custom_packaging === "Custom Shopping Bags" ) { ?>
-	<a href="/custom-shopping-bags/?product-name=<?php /* @escapeNotVerified */ echo htmlspecialchars($name); ?>&custom-packaging-sku=<?php /* @escapeNotVerified */ echo $sku ?>&dimensions=<?php /* @escapeNotVerified */ echo htmlspecialchars($dimensions) ?>&color=<?php /* @escapeNotVerified */ echo htmlspecialchars($color) ?>" target="_blank">
-	<?php }elseif ( $custom_packaging === "Custom Tissue" ) {
-	//Custom Tissue Page ?>
-		<a href="/custom-tissue-paper-and-gift-wraps/?product-name=<?php /* @escapeNotVerified */ echo htmlspecialchars($name); ?>&custom-packaging-sku=<?php /* @escapeNotVerified */ echo $sku ?>&dimensions=<?php /* @escapeNotVerified */ echo htmlspecialchars($dimensions) ?>&color=<?php /* @escapeNotVerified */ echo htmlspecialchars($color) ?>" target="_blank">
-	<?php }elseif ( $custom_packaging === "Custom Tags & Labels" ) {
-	//Custom Tissue Page ?>
-		<a href="/custom-labels-and-stickers/?product-name=<?php /* @escapeNotVerified */ echo htmlspecialchars($name); ?>&custom-packaging-sku=<?php /* @escapeNotVerified */ echo $sku ?>&dimensions=<?php /* @escapeNotVerified */ echo htmlspecialchars($dimensions) ?>&color=<?php /* @escapeNotVerified */ echo htmlspecialchars($color) ?>" target="_blank">
-	<?php } ?>
-		<button title="Customize this item by adding your logo." class="art btn-action btn-cart art-custom-button primary btn-action ellipsis1Line clamped mb10"><span>Add Your Logo</span></button>
+	//Custom Pages
+	if ( $custom_packaging === "Custom Shopping Bags" ) {
+		$href = "/custom-shopping-bags/";
+	}elseif ( $custom_packaging === "Custom Tissue" ) {
+		$href = "/custom-tissue-paper-and-gift-wraps/";
+	}elseif ( $custom_packaging === "Custom Tags & Labels" ) {
+		$href = "/custom-labels-and-stickers/";
+	}elseif ( $custom_packaging === "Custom Boxes" ) {
+		$href = "/custom-boxes/";
+	}
+
+	$href .= "?product-name=" . urlencode($name) 
+			. "&custom-packaging-sku=" . urlencode($sku)
+			. "&dimensions=" .  urlencode($dimensions) 
+			. "&color=" . urlencode($color);
+	
+	//Change type of double quote that is acceptable in input value at form page
+	$href = str_replace ('%26quot%3B','%22', $href);
+	?>
+	<a href="<?php /* @escapeNotVerified */ echo htmlentities($href);?>" target="_blank">
+		<button title="Customize this item by adding your logo." class="art btn-action btn-cart art-custom-button primary btn-action ellipsis1Line clamped"><span>Add Your Logo</span></button>
 	</a>
 <?php } ?>

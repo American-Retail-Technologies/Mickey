@@ -229,10 +229,15 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 												$href = "/custom-tissue-paper-and-gift-wraps/";
 											}elseif ( $custom_packaging === "Custom Tags & Labels" ) {
 												$href = "/custom-labels-and-stickers/";
+											}elseif ( $custom_packaging === "Custom Boxes" ) {
+												$href = "/custom-boxes/";
 											}
-											$href .= "?product-name=" . htmlspecialchars($name) . "&custom-packaging-sku=" . htmlspecialchars($sku) . "&dimensions=" .  htmlspecialchars($dimensions) . "&color=" . htmlspecialchars($color);
+											$href .= "?product-name=" . urlencode($name) . "&custom-packaging-sku=" . urlencode($sku) . "&dimensions=" .  urlencode($dimensions) . "&color=" . urlencode($color);
+											
+											//Change type of double quote that is acceptable in input value at form page
+											$href = str_replace ('%26quot%3B','%22', $href);
 											?>
-											<a href="<?php /* @escapeNotVerified */ echo htmlspecialchars($href);?>" target="_blank">
+											<a href="<?php /* @escapeNotVerified */ echo htmlentities($href);?>" target="_blank">
 												<button title="Customize this item by adding your logo." class="art btn-action btn-cart art-custom-button primary btn-action ellipsis1Line clamped"><span>Add Your Logo</span></button>
 											</a>
 										<?php } ?>
@@ -376,10 +381,15 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 														$href = "/custom-tissue-paper-and-gift-wraps/";
 													}elseif ( $custom_packaging === "Custom Tags & Labels" ) {
 														$href = "/custom-labels-and-stickers/";
+													}elseif ( $custom_packaging === "Custom Boxes" ) {
+														$href = "/custom-boxes/";
 													}
-													$href .= "?product-name=" . htmlspecialchars($name) . "&custom-packaging-sku=" . htmlspecialchars($sku) . "&dimensions=" .  htmlspecialchars($dimensions) . "&color=" . htmlspecialchars($color);
+													$href .= "?product-name=" . urlencode($name) . "&custom-packaging-sku=" . urlencode($sku) . "&dimensions=" .  urlencode($dimensions) . "&color=" . urlencode($color);
+													
+													//Change type of double quote that is acceptable in input value at form page
+													$href = str_replace ('%26quot%3B','%22', $href);
 													?>
-													<a href="<?php /* @escapeNotVerified */ echo htmlspecialchars($href);?>" target="_blank">
+													<a href="<?php /* @escapeNotVerified */ echo htmlentities($href);?>" target="_blank">
 														<button title="Customize this item by adding your logo." class="art btn-action btn-cart art-custom-button primary btn-action ellipsis1Line clamped"><span>Add Your Logo</span></button>
 													</a>
 												<?php } ?>

@@ -68,8 +68,17 @@
                     <label>Email Template</label>
                     <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
                 </field>
-                <field id="custom_email_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Email Template ID for Customization Page</label>
+                <field id="custom_bag_email_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Bag Email Template ID</label>
+                </field>
+                <field id="custom_label_email_id" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Label Email Template ID</label>
+                </field>
+                <field id="custom_tissue_email_id" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Tissue Email Template ID</label>
+                </field>
+                <field id="custom_box_email_id" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Box Email Template ID</label>
                 </field>
             </group>
         </section>
