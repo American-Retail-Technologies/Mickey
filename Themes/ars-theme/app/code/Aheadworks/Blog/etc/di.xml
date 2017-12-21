@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2016 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Aheadworks\Blog\Model\Template\FilterProvider">
+        <arguments>
+            <argument name="filterClassName" xsi:type="string">Magento\Widget\Model\Template\Filter</argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Sitemap\Model\Sitemap" type="Aheadworks\Blog\Model\Sitemap" />
+    <preference for="Aheadworks\Blog\Api\CategoryRepositoryInterface" type="Aheadworks\Blog\Model\ResourceModel\CategoryRepository" />
+    <preference for="Aheadworks\Blog\Api\PostRepositoryInterface" type="Aheadworks\Blog\Model\ResourceModel\PostRepository" />
+    <preference for="Aheadworks\Blog\Api\TagRepositoryInterface" type="Aheadworks\Blog\Model\ResourceModel\TagRepository" />
+    <preference for="Aheadworks\Blog\Api\TagCloudItemRepositoryInterface" type="Aheadworks\Blog\Model\ResourceModel\TagCloudItemRepository" />
+    <preference for="Aheadworks\Blog\Api\CommentsServiceInterface" type="Aheadworks\Blog\Model\DisqusCommentsService" />
+    <preference for="Aheadworks\Blog\Api\Data\CategoryInterface" type="Aheadworks\Blog\Model\Data\Category" />
+    <preference for="Aheadworks\Blog\Api\Data\ConditionInterface" type="Aheadworks\Blog\Model\Data\Condition" />
+    <preference for="Aheadworks\Blog\Api\Data\PostInterface" type="Aheadworks\Blog\Model\Data\Post" />
+    <preference for="Aheadworks\Blog\Api\Data\TagInterface" type="Aheadworks\Blog\Model\Data\Tag" />
+    <preference for="Aheadworks\Blog\Api\Data\TagCloudItemInterface" type="Aheadworks\Blog\Model\Data\TagCloudItem" />
+    <preference for="Aheadworks\Blog\Api\Data\CategorySearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\Blog\Api\Data\PostSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\Blog\Api\Data\TagSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\Blog\Api\Data\TagCloudItemSearchResultsInterface" type="Aheadworks\Blog\Model\ResourceModel\TagCloudItem\SearchResults" />
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aw_blog_category_listing_data_source" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Category\Grid\Collection</item>
+                <item name="aw_blog_post_listing_data_source" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Blog\Model\ResourceModel\Category\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">aw_blog_category</argument>
+            <argument name="resourceModel" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Category</argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\Blog\Model\ResourceModel\Post\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">aw_blog_post</argument>
+            <argument name="resourceModel" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post</argument>
+        </arguments>
+    </type>
+    <virtualType name="BlogGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="BlogCategoryGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Aheadworks\Blog\Model\ResourceModel\Category\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">BlogGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="BlogPostGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Aheadworks\Blog\Model\ResourceModel\Post\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">BlogGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Aheadworks\Blog\Api\Data\CategoryInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">aw_blog_category</item>
+                    <item name="identifierField" xsi:type="string">id</item>
+                </item>
+                <item name="Aheadworks\Blog\Api\Data\PostInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">aw_blog_post</item>
+                    <item name="identifierField" xsi:type="string">id</item>
+                </item>
+                <item name="Aheadworks\Blog\Api\Data\TagInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="string">aw_blog_tag</item>
+                    <item name="identifierField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\Operation\ExtensionPool">
+        <arguments>
+            <argument name="extensionActions" xsi:type="array">
+                <item name="Aheadworks\Blog\Api\Data\CategoryInterface" xsi:type="array">
+                    <item name="read" xsi:type="array">
+                        <item name="storeReader" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Category\Relation\Store\ReadHandler</item>
+                    </item>
+                    <item name="create" xsi:type="array">
+                        <item name="storeCreator" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Category\Relation\Store\SaveHandler</item>
+                    </item>
+                    <item name="update" xsi:type="array">
+                        <item name="storeUpdater" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Category\Relation\Store\SaveHandler</item>
+                    </item>
+                </item>
+                <item name="Aheadworks\Blog\Api\Data\PostInterface" xsi:type="array">
+                    <item name="read" xsi:type="array">
+                        <item name="storeReader" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Store\ReadHandler</item>
+                        <item name="categoryReader" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Category\ReadHandler</item>
+                        <item name="tagReader" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Tag\ReadHandler</item>
+                        <item name="relatedProductReader" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\RelatedProduct\ReadHandler</item>
+                    </item>
+                    <item name="create" xsi:type="array">
+                        <item name="storeCreator" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Store\SaveHandler</item>
+                        <item name="categoryCreator" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Category\SaveHandler</item>
+                        <item name="tagCreator" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Tag\SaveHandler</item>
+                    </item>
+                    <item name="update" xsi:type="array">
+                        <item name="storeUpdater" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Store\SaveHandler</item>
+                        <item name="categoryUpdater" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Category\SaveHandler</item>
+                        <item name="tagUpdater" xsi:type="string">Aheadworks\Blog\Model\ResourceModel\Post\Relation\Tag\SaveHandler</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="awBlogProductPlugin" type="\Aheadworks\Blog\Model\Plugin\Product" />
+    </type>
+</config>

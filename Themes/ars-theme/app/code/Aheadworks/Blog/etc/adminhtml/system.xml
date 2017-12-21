@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2016 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="aheadworks" translate="label" sortOrder="300">
+            <label>Aheadworks Extensions</label>
+        </tab>
+        <section id="aw_blog" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Blog</label>
+            <tab>aheadworks</tab>
+            <resource>Aheadworks_Blog::config_aw_blog</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="route_to_blog" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Route to Blog</label>
+                    <validate>required-entry</validate>
+                    <comment><![CDATA[For example, "blog" makes the blog accessible at <u>domain.com/blog/</u>]]></comment>
+                </field>
+                <field id="blog_title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Blog Title</label>
+                </field>
+                <field id="posts_per_page" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Posts per page</label>
+                    <validate>required-entry integer validate-greater-than-zero</validate>
+                </field>
+                <field id="display_sharing_buttons_at" translate="label" type="multiselect" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Display Sharing Buttons At</label>
+                    <source_model>Aheadworks\Blog\Model\Source\Post\SharingButtons\DisplayAt</source_model>
+                    <can_be_empty>0</can_be_empty>
+                </field>
+                <field id="comments_enabled" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Comments Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="disqus_forum_code" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Disqus Forum Code</label>
+                    <comment><![CDATA[<a href="http://confluence.aheadworks.com/display/EUDOC/Blog+-+Magento+2#Blog-Magento2-RegisteringDisqus" target="_blank">How to set it up?</a>]]></comment>
+                </field>
+                <field id="disqus_secret_key" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Disqus Secret Key</label>
+                </field>
+            </group>
+            <group id="sidebar" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Sidebar</label>
+                <field id="recent_posts" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Number of Recent Posts to Display</label>
+                    <validate>required-entry integer validate-greater-than-zero</validate>
+                </field>
+                <field id="popular_tags" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Number of Most Popular Tags to Display</label>
+                    <validate>required-entry integer validate-greater-than-zero</validate>
+                </field>
+                <field id="highlight_popular_tags" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Highlight Popular Tags</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cms_block" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sidebar CMS Block</label>
+                    <source_model>Aheadworks\Blog\Model\Source\Config\Cms\Block</source_model>
+                </field>
+            </group>
+            <group id="seo" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>SEO</label>
+                <field id="meta_description" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Blog Meta Description</label>
+                    <comment>Recommended max length is 156 characters</comment>
+                </field>
+            </group>
+            <group id="related_products" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Related Products</label>
+                <field id="display_posts_on_product_page" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Blog Posts Tab on Product Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="block_position" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Related Products Block on Post Page</label>
+                    <source_model>Aheadworks\Blog\Model\Source\Config\Related\BlockPosition</source_model>
+                </field>
+                <field id="block_layout" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Related Products Block Layout</label>
+                    <source_model>Aheadworks\Blog\Model\Source\Config\Related\BlockLayout</source_model>
+                    <depends>
+                        <field id="block_position" separator=",">after_post,after_comments</field>
+                    </depends>
+                </field>
+                <field id="products_limit" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max Products to Display</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="block_position" separator=",">after_post,after_comments</field>
+                        <field id="block_layout" separator=",">multiple_rows,slider</field>
+                    </depends>
+                </field>
+                <field id="display_add_to_cart" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display "Add to Cart" Button</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="block_position" separator=",">after_post,after_comments</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="wordpress_import" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Wordpress Import</label>
+                <field id="can_override" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Override existing posts with the same URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="import_file" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Import file</label>
+                    <frontend_model>\Aheadworks\Blog\Block\Adminhtml\System\Config\Field\WordpressImport</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

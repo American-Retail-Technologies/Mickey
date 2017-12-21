@@ -1,0 +1,117 @@
+//
+//  Variables
+//  _____________________________________________
+
+@warning__color: @color-tomato-brick;
+@fieldset__background-color: @color-white-fog2;
+@draft__color: @color-tomato-brick;
+@scheduled__color: @color-blue-dodger;
+@publication__color: @color-dark-green1;
+
+//
+//  Blog edit
+//  ---------------------------------------------
+
+.aw-blog-admin-post-edit {
+    div[data-index='conditions'] {
+        .admin__collapsible-title {
+            border-top: 1px solid #ccc;
+        }
+    }
+    #rule_conditions_fieldset .legend {
+        border-bottom: none;
+        margin: 0;
+    }
+    #rule_conditions_fieldset {
+        padding: 0;
+    }
+    #rule_conditions_fieldset .legend + br {
+        display: none;
+    }
+    .admin__control-wysiwig {
+        padding-top: 1em;
+    }
+
+    fieldset {
+        ._has-datepicker.admin__control-text {
+            width: 30rem;
+        }
+        & > .admin__field {
+            margin-bottom: 0;
+
+            & > .admin__field-label,
+            & > .admin__field-control {
+                float: none;
+
+                .admin__control-text._hasDatepicker {
+                    width: 60%;
+                }
+            }
+
+            & > .admin__field-control {
+                width: ~'calc( (100%) * 1 - 30px )';
+
+                & > .note._warning {
+                    color: @warning__color;
+                }
+
+                select {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    .admin__fieldset-wrapper.left {
+        float: left;
+        padding-bottom: 1.9rem;
+        width: ~'calc( (100%) * .67)';
+    }
+
+    .admin__fieldset-wrapper.right {
+        background: @fieldset__background-color;
+        float: right;
+        padding: 2em;
+        margin-bottom: 1.9rem;
+        width: ~'calc( (100%) * .33 - 30px )';
+    }
+
+    .admin__field.status-label {
+        .admin__field-control {
+            font-weight: 600;
+            line-height: 3.2rem;
+            width: 50%;
+            .draft {
+                color: @draft__color;
+            }
+            .scheduled {
+                 color: @scheduled__color;
+            }
+            .publication {
+                color: @publication__color;
+            }
+        }
+
+        .admin__field-label {
+            float: left;
+            line-height: 3rem;
+            padding-right: 2em;
+            text-align: left;
+            width: 7.5rem;
+        }
+    }
+}
+.aw-blog-admin-post-index {
+    .post-status {
+        .draft {
+            color: @draft__color;
+        }
+        .scheduled {
+            color: @scheduled__color;
+        }
+        .publication {
+            color: @publication__color;
+        }
+    }
+}
+

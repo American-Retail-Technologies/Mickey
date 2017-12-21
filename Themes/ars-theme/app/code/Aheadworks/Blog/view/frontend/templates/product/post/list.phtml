@@ -1,0 +1,21 @@
+<?php
+/**
+* Copyright 2016 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+
+// @codingStandardsIgnoreFile
+
+/** @var \Aheadworks\Blog\Block\Product\PostList $block */
+?>
+<?php if ($posts = $block->getPosts()): ?>
+    <ul>
+        <?php foreach ($posts as $post): ?>
+            <li>
+                <a href="<?php /* @noEscape */ echo $block->escapeXssInUrl($block->getPostUrl($post)) ?>" target="_blank">
+                    <?php echo $block->escapeHtml($post->getTitle()) ?>
+                </a>
+            </li>
+        <?php endforeach ?>
+    </ul>
+<?php endif; ?>
