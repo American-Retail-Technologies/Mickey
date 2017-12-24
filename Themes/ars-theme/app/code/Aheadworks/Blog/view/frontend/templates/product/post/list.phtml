@@ -12,7 +12,7 @@
     <ul>
         <?php foreach ($posts as $post): ?>
             <li>
-                <a href="<?php /* @noEscape */ echo $block->escapeXssInUrl($block->getPostUrl($post)) ?>" target="_blank">
+                <a class="art_alink" href="<?php /* @noEscape */ echo $block->escapeXssInUrl($block->getPostUrl($post)) ?>" target="_blank">
                     <?php echo $block->escapeHtml($post->getTitle()) ?>
                 </a>
             </li>

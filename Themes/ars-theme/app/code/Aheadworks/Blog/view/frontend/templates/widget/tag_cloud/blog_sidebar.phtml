@@ -13,8 +13,10 @@
     $title = $block->getTitle() ? : 'Tags';
 ?>
 <?php if ($block->isEnabled() && count($tagCloudItems)): ?>
-    <div id="blog-sidebar-tag-cloud" class="blog-sidebar-block">
-        <h3 class="blog-sidebar-block-title"><?php echo __($block->escapeHtml($title)) ?></h3>
+    <div id="blog-sidebar-tag-cloud" class="blog-sidebar-block block">
+		<div class="block-title">
+			<h3 class="blog-sidebar-block-title"><strong><?php echo __($block->escapeHtml($title)) ?></strong></h3>
+		</div>
         <div class="blog-sidebar-block-content">
             <div class="blog-tags blog-tags-<?php if ($block->isCloudMode()): ?>cloud<?php else: ?>plain<?php endif; ?>">
                 <?php foreach ($tagCloudItems as $tagCloudItem): ?>
