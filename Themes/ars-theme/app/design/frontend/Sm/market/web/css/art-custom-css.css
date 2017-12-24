@@ -550,7 +550,8 @@ ul.art-bullet-list > li::before{
 	color:#e74c3c;
 }
 
-.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > .sm_megamenu_title > a > .sm_megamenu_title_lv-3:hover{
+.art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > .sm_megamenu_title > a > .sm_megamenu_title_lv-3:hover,
+.footer-container .footer-bottom .copyright-footer a.art-copyright{
 	text-decoration: underline;
 }
 
@@ -561,7 +562,7 @@ ul.art-bullet-list > li::before{
 }
 
 .art-megamenu-image a.btn,
-.art-copyright{
+.footer-container .footer-bottom .copyright-footer a.art-copyright{
   color:white;
 }
 
