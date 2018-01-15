@@ -38,6 +38,7 @@ define([
             }
             , firstId = 0
             , prevCursorY = 0
+            , facebookLike = 0
             , _this = this;
 
         var _dublicateClasses = ['newspopup-blur', 'newspopup_ov_hidden'];
@@ -66,6 +67,20 @@ define([
         }
 
         this.load = function () {
+            //for facebook like button
+            window.addEventListener("message", function(event) {
+                //console.log("Inside Popup JS: " + event.data);
+                if( event.data === "Facebook Liked" ){
+                    
+                    facebookLike = 1;
+                    
+                    $(".facebook-like").removeClass("mage-error");
+                    $(".facebook-like-container .mage-error").hide();
+                }else{
+                    
+                    facebookLike = 0;
+                }
+            });
 
             if (window.navigator
                 && window.navigator.userAgent
@@ -125,7 +140,24 @@ define([
         }
 
         if (areaSettings.area != 'account') {
-            this.load();
+            if (typeof sections == 'undefined') {
+                var count = 0;
+                var timerId = setInterval(function() {
+                    if (typeof sections == 'undefined') {
+                        if (count <= 6) {
+                            count++;
+                        } else {
+                            clearInterval(timerId);
+                            this.load();
+                        }
+                    } else {
+                        clearInterval(timerId);
+                        this.load();
+                    }
+                }.bind(this), 500);
+            } else {
+                this.load();
+            }
         }
 
         this.updateSettings = function (settings) {
@@ -297,6 +329,9 @@ define([
             }
 
             $form.submit(function () {
+
+                //console.log("Inside Popup Submit: " + facebookLike);
+
                 if (isFormBlocked(settings.id)) {
                     return false;
                 }
@@ -307,8 +342,14 @@ define([
                     jQuery('.validation-advice').mouseenter(function(){ jQuery(this).fadeOut(); });
                     return false;
                 }*/
-
+                
                 if (pjQuery($form.get(0)).validation() && pjQuery($form.get(0)).validation('isValid')) {
+                    
+                    if(!facebookLike){
+                        $(".facebook-like").addClass("mage-error");
+                        $(".facebook-like-container div.mage-error").css('display', 'inline-block');
+                        return false;
+                    }
                     send(globalSettings.action_url, 'Subscribe', function (data) {
                         return data + '&' + $form.serialize();
                     }, function (messages, action) {
@@ -326,7 +367,15 @@ define([
                         }
                     });
                 } else {
+                    if(!facebookLike){
+                        $(".facebook-like").addClass("mage-error");
+                        $(".facebook-like-container .mage-error").css('display', 'inline-block');
+                    }else{
+                        $(".facebook-like").removeClass("mage-error");
+                        $(".facebook-like-container .mage-error").hide();
+                    }
                     jQuery('.newspopup_up_bg div.mage-error').mouseenter(function() { jQuery(this).fadeOut(); });
+                    
                 }
 
                 return false;
