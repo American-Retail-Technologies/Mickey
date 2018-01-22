@@ -115,7 +115,7 @@ $cc_content = $this->getData('cc_content');
             </div>
         </div>
     </fieldset>
-    <fieldset class="fieldset row mb25">
+    <fieldset class="fieldset row mb10">
         <legend class="legend">
 			<span><?php /* @escapeNotVerified */ echo __('Tell us more about Your Business') ?></span>
 		</legend>
@@ -158,10 +158,12 @@ $cc_content = $this->getData('cc_content');
                 <input name="business-name" id="business-name" title="<?php /* @escapeNotVerified */ echo __('Business Name') ?>" class="input-text" type="text" />
             </div>
         </div>
+    </fieldset>
+    <fieldset class="fieldset row mb10">
         <div class="field email required col-sm-6">
             <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email') ?></span></label>
             <div class="control">
-                <input name="email" id="form_email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+                <input name="email" id="form_email" title="<?php /* @escapeNotVerified */ echo __('Email') ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}" />
             </div>
         </div>
         <?php
@@ -174,6 +176,34 @@ $cc_content = $this->getData('cc_content');
             </div>
         </div>
         <?php } ?>
+    </fieldset>
+    <fieldset class="fieldset row mb10">
+		<div class="field address col-sm-3">
+            <label class="label" for="address"><p><?php /* @escapeNotVerified */ echo __('Shipping Address') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Based on your location, we can find the lowest freight/shipping cost for you.') ?></span></div></label>
+            <div class="control">
+                <input name="address" id="address" title="<?php /* @escapeNotVerified */ echo __('Shipping Address') ?>" class="input-text" type="text"/>
+            </div>
+        </div>
+		<div class="field address2 col-sm-3">
+            <label class="label" for="address2"><span><?php /* @escapeNotVerified */ echo __('City') ?></span></label>
+            <div class="control">
+                <input name="address2" id="address2" title="<?php /* @escapeNotVerified */ echo __('City') ?>" class="input-text" type="text"/>
+            </div>
+        </div>
+		<div class="field state col-sm-3">
+            <label class="label" for="state"><span><?php /* @escapeNotVerified */ echo __('State') ?></span></label>
+            <div class="control">
+                <input name="state" id="state" title="<?php /* @escapeNotVerified */ echo __('State') ?>" class="input-text" type="text"/>
+            </div>
+        </div>
+		<div class="field zipcode col-sm-3 required">
+            <label class="label" for="zipcode"><span><?php /* @escapeNotVerified */ echo __('Zipcode') ?></span></label>
+            <div class="control">
+                <input name="zipcode" id="zipcode" title="<?php /* @escapeNotVerified */ echo __('Zipcode') ?>" class="input-text" type="text" data-validate="{required:true}"/>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset row mb25">
 		<div class="field comment col-sm-12">
             <label class="label" for="comment"><span><?php /* @escapeNotVerified */ echo __('Anything else, we missed to ask you') ?></span></label>
             <div class="control">

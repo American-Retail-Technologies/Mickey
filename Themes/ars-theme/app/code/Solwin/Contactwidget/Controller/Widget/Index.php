@@ -171,7 +171,8 @@ class Index extends \Magento\Framework\App\Action\Action
 					$uploader->setFilesDispersion(true);
 					
 					$mediaDirectory = $this->_filesystem->getDirectoryRead('media');
-					$result = $uploader->save($mediaDirectory->getAbsolutePath() . 'custom_product', md5($data['email'] . time()));
+					$uploadedFileName = md5($data['email'] . time()) . "." . $uploadedFileType;
+					$result = $uploader->save($mediaDirectory->getAbsolutePath() . 'custom_product', $uploadedFileName);
 					$media_path = $this ->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA );
 					$data['image-path'] = $media_path . 'custom_product' . $result['file'];
 					//Path to where the image is uploaded.
@@ -195,17 +196,22 @@ class Index extends \Magento\Framework\App\Action\Action
 				$error = true;
             }
  
+			if ( isset( $data['zipcode'] ) && !\Zend_Validate::is(trim($data['zipcode']), 'NotEmpty')) {
+                $errorMessage .= 'Zipcode is empty, ';
+				$error = true;
+            }
+ 
 			if ( !isset($data['cc_title']) && !\Zend_Validate::is(trim($data['comment']), 'NotEmpty')) {
                 $errorMessage .= 'Comment is empty , ';
 				$error = true;
             }
 
-            if ( isset( $data['address'] ) && !\Zend_Validate::is(trim($data['address']), 'NotEmpty') ) {
+            if ( !isset($data['cc_title']) && ( isset( $data['address'] ) && !\Zend_Validate::is(trim($data['address']), 'NotEmpty')) ) {
 				$errorMessage .= 'Address is empty , ';
                 $error = true;
             }
 
-			if ( isset( $data['address2'] ) && !\Zend_Validate::is(trim($data['address2']), 'NotEmpty') ) {
+			if ( !isset($data['cc_title']) && ( isset( $data['address2'] ) && !\Zend_Validate::is(trim($data['address2']), 'NotEmpty')) ) {
 				$errorMessage .= 'Address2 is empty , ';
 				$error = true;
             }
@@ -219,13 +225,13 @@ class Index extends \Magento\Framework\App\Action\Action
             $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
 			if ( $currUrlPath !== "/free-catalog-request/" ){
 				//Use different email template based on which page the user came from
-				if( $currUrlPath === "/custom-shopping-bags/" ) {
+				if( $currUrlPath === "/custom-shopping-bags/" || $currUrlPath === "/custom-shopping-bags" ) {
 					$templateIdPath = self::CUSTOM_BAG_EMAIL_TEMPLATE_ID;
-				} elseif ( $currUrlPath === "/custom-labels-and-stickers/" ) {
+				} elseif ( $currUrlPath === "/custom-labels-and-stickers/" || $currUrlPath === "/custom-labels-and-stickers" ) {
 					$templateIdPath = self::CUSTOM_LABEL_EMAIL_TEMPLATE_ID;
-				} elseif ( $currUrlPath === "/custom-tissue-paper-and-gift-wraps/" ) {
+				} elseif ( $currUrlPath === "/custom-tissue-paper-and-gift-wraps/" || $currUrlPath === "/custom-tissue-paper-and-gift-wraps" ) {
 					$templateIdPath = self::CUSTOM_TISSUE_EMAIL_TEMPLATE_ID;
-				} elseif ( $currUrlPath === "/custom-boxes/" ) {
+				} elseif ( $currUrlPath === "/custom-boxes/" || $currUrlPath === "/custom-boxes" ) {
 					$templateIdPath = self::CUSTOM_BOX_EMAIL_TEMPLATE_ID;
 				}
 				
