@@ -16,6 +16,19 @@
             <p><?php echo __('Your order # is: <span>%1</span>.', $block->escapeHtml($block->getOrderId())) ?></p>
         <?php endif;?>
             <p><?php /* @escapeNotVerified */ echo __('We\'ll email you an order confirmation with details and one of our trusted Business Advisor will call you to complete your order.') ?></p>
+        <?php $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+          $orderData = $objectManager->create('Magento\Sales\Model\Order')->loadByIncrementId($block->getOrderId());
+          //echo "<pre>";print_r($orderData->getData());
+        ?>
+        <script>
+        function GetRevenueValue()
+       {
+          return <?php /* @escapeNotVerified */ echo $orderData->getData('grand_total'); ?>;
+        }
+        
+        window.uetq = window.uetq || [];
+        window.uetq.push({ 'gv': GetRevenueValue(), 'gc': 'USD'});
+        </script>
     <?php endif;?>
 
     <?php echo $block->getAdditionalInfoHtml() ?>
