@@ -166,10 +166,13 @@ $cc_content = $this->getData('cc_content');
     </fieldset>
     <fieldset class="fieldset row mb10">
 		<div class="field address col-sm-3">
-            <label class="label" for="address"><p><?php /* @escapeNotVerified */ echo __('Shipping Address') ?></p><div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Based on your location, we can find the lowest freight/shipping cost for you.') ?></span></div></label>
+            <label class="label" for="address">
+				<span><?php /* @escapeNotVerified */ echo __('Shipping Address') ?></span>
+			</label>
             <div class="control">
                 <input name="address" id="address" title="<?php /* @escapeNotVerified */ echo __('Shipping Address') ?>" class="input-text" type="text"/>
             </div>
+			<div class="tip"><span class="art-bold"><?php /* @escapeNotVerified */ echo __('Tip: ') ?></span><span><?php /* @escapeNotVerified */ echo __('Helps us calculate the lowest shipping cost for you.') ?></span></div>
         </div>
 		<div class="field address2 col-sm-3">
             <label class="label" for="address2"><span><?php /* @escapeNotVerified */ echo __('City') ?></span></label>
@@ -194,7 +197,7 @@ $cc_content = $this->getData('cc_content');
 		<div class="field comment col-sm-12">
             <label class="label" for="comment"><span><?php /* @escapeNotVerified */ echo __('Anything else, we missed to ask you') ?></span></label>
             <div class="control">
-                <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('Anything else, we missed to ask you') ?>" class="input-text" cols="5" rows="2" ></textarea>
+                <textarea name="comment" id="comment" title="<?php /* @escapeNotVerified */ echo __('Anything else, we missed to ask you') ?>" class="input-text" cols="5" rows="2" placeholder="Plate and setup charges will apply. Not sure what that means? Ask us here and our reps will provide you with more details." ></textarea>
             </div>
         </div>
 		 <?php
