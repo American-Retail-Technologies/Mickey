@@ -1,0 +1,18 @@
+#!/bin/sh
+#Tenzin
+#Date: 2017-10-16
+
+if [ "$#" -ne 4 ]; then
+ echo "  Usage: ./updateBlock identifier search replace password" >&2
+ echo "  Example: ./updateBlock about-footer h3 div xxxx" >&2
+ exit 1
+fi
+
+HOST="ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com"
+PASSWORD=$4
+ID="'$1'"
+SEARCH="'$2'"
+REPLACE="'$3'"
+CMD="UPDATE cms_block SET content = REPLACE(content, $SEARCH, $REPLACE) WHERE cms_block.identifier = $ID;"
+
+mysql --host=$HOST -u ars_dbroot -D ars_dev_magento1 -e "$CMD" -p$PASSWORD

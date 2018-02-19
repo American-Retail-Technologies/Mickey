@@ -1,0 +1,4 @@
+cd ..
+composer require mailchimp/mc-magento2
+php bin/magento module:enable Ebizmarts_MailChimp
+scripts/regen

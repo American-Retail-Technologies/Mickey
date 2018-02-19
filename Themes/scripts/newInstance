@@ -1,0 +1,16 @@
+#!/bin/bash
+#Date: 2017-12-28
+#Run whena new instance is created from AMI
+
+if [ "$#" -lt 1 ]; then
+ echo "Usage: ./newInstance [staging,dev]" >&2
+ exit 1
+fi
+
+if [[ $1 == staging ]]; then
+	/opt/bitnami/apps/magento/htdocs/scripts/latestDB_staging
+	/opt/bitnami/apps/magento/htdocs/scripts/updateUrlstaging
+elif [[ $1 == dev ]]; then
+	/opt/bitnami/apps/magento/htdocs/scripts/latestDB_dev
+	/opt/bitnami/apps/magento/htdocs/scripts/updateUrldev
+fi

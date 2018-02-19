@@ -1,0 +1,30 @@
+#!/bin/sh
+#Instructions from PageTraffic to Clean up Architecture
+#Tenzin
+#2017-10-16
+cd /opt/bitnami/apps/magento/htdocs/scripts
+#STEP V
+./updateContent block home-page-categories pricing-tagging.html pricing-guns-tagging-guns.html American1
+./updateContent block home-page-categories point-of-sale-pos-system-accessories.html retail-point-of-sale-pos-system-accessories.html American1
+./updateContent block home-page-categories Shopping-Bags/Christmas-Holiday-Packaging.html christmas-holiday-packaging.html American1
+./updateContent block home-page-categories shopping-bags/christmas-holiday-packaging.html christmas-holiday-packaging.html American1
+
+#STEP VII
+./updateContent block about-footer h3 div American1
+./updateContent block customer-services-footer h3 div American1
+./updateContent block payment-shipping-footer h3 div American1
+./updateContent block contact-footer h3 div American1
+
+#STEP 1
+./updateContent block request-catalog-home h2 h1 American1
+
+#STEP 5
+./updateContent block apparel-store-supplies h4 h2 American1
+./updateContent block pet-store-supplies h4 h2 American1
+./updateContent block jewelry-store-supplies h4 h2 American1
+./updateContent block gift-shop-store-supplies h4 h2 American1
+./updateContent block convenience-stores-supplies h4 h2 American1
+
+CMD="UPDATE cms_page SET content_heading = 'Contact Us' WHERE cms_page.identifier = 'contact-us';"
+mysql --host=ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com -u ars_dbroot -D ars_prod_magento1 -e "$CMD" -p
+./regen

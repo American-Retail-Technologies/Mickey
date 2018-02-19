@@ -1,5 +1,5 @@
 #!/bin/sh
-#sudo rm -rf /opt/bitnami/apps/magento/htdocs/var/view_preprocessed/* /opt/bitnami/apps/magento/htdocs/var/cache/* /opt/bitnami/apps/magento/htdocs/var/page_cache/* /opt/bitnami/apps/magento/htdocs/var/generation/* /opt/bitnami/apps/magento/htdocs/pub/static/*
+sudo rm -rf /opt/bitnami/apps/magento/htdocs/var/view_preprocessed/* /opt/bitnami/apps/magento/htdocs/var/cache/* /opt/bitnami/apps/magento/htdocs/var/page_cache/* /opt/bitnami/apps/magento/htdocs/var/generation/* /opt/bitnami/apps/magento/htdocs/pub/static/*
 /opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento cache:flush
 /opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento setup:upgrade
 /opt/bitnami/php/bin/php /opt/bitnami/apps/magento/htdocs/bin/magento setup:di:compile

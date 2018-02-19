@@ -29,3 +29,4 @@ CMD="UPDATE url_rewrite u SET target_path=CONCAT(target_path,'/category/',(SELEC
 #CMD="SELECT * FROM url_rewrite u WHERE u.entity_type='product' AND u.request_path NOT LIKE '%/%' AND u.target_path NOT LIKE '%category%' AND u.redirect_type=0 and u.entity_id in (SELECT product_id from catalog_category_product group by product_id having count(product_id) >1);"
 
 mysql --host=$BACKUP_HOST --user=$BACKUP_USER --password=$BACKUP_PASSWORD $BACKUP_DBNAME -e "$CMD"
+/opt/bitnami/apps/magento/htdocs/scripts/mri

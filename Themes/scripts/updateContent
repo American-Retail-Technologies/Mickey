@@ -1,0 +1,25 @@
+#!/bin/sh
+#Tenzin
+#Date: 2017-10-16
+
+if [ "$#" -ne 5 ]; then
+ echo "  Usage: ./updateContent [block,page] identifier search replace password" >&2
+ echo "  Example: ./updateContent block about-footer h3 div xxxx" >&2
+ exit 1
+fi
+
+if [ "$1" = block ]; then
+TABLE="cms_block"
+else
+TABLE="cms_page"
+fi
+
+HOST="ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com"
+#HOST="ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com"
+PASSWORD=$5
+ID=$2
+SEARCH=$3
+REPLACE=$4
+CMD="UPDATE $TABLE SET content = REPLACE(content, '$SEARCH', '$REPLACE') WHERE $TABLE.identifier = '$ID';"
+
+mysql --host=$HOST -u ars_dbroot -D ars_prod_magento1 -e "$CMD" -p$PASSWORD
