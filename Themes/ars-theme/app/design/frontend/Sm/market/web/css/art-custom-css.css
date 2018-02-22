@@ -546,6 +546,7 @@ ul.art-bullet-list > li::before{
   padding: 3px 0;
 }
 .art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > a > .sm_megamenu_title_lv-3:hover,
+.art_category_title>.sm_megamenu_head_item>.sm_megamenu_title>a>.sm_megamenu_title_lv-3:hover::before,
 .art_category_title > .sm_megamenu_head_item > .sm_megamenu_title > .sm_megamenu_title > a > .sm_megamenu_title_lv-3:hover{
 	color:#e74c3c;
 }
@@ -577,7 +578,50 @@ ul.art-bullet-list > li::before{
 .sm_megamenu_wrapper_vertical_menu{
 	z-index: 1041;
 }
-
+.art_category_title>.sm_megamenu_head_item>.sm_megamenu_title>a>.sm_megamenu_title_lv-3::before {
+    color: #08357a;
+    content: '\f0da';
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    font-synthesis: weight style;
+    font-stretch: normal;
+    font-size-adjust: none;
+    font-language-override: normal;
+    font-kerning: auto;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 108.33%;
+    position: relative;
+    left: -11px;
+    display: inline-block;
+    width: 0;
+    top: 0px;
+}
+span.sm_megamenu_title_lv-3::before{
+    color: #08357a;
+    content: '\f105';
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    font-synthesis: weight style;
+    font-stretch: normal;
+    font-size-adjust: none;
+    font-language-override: normal;
+    font-kerning: auto;
+    font-feature-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 80%;
+    position: relative;
+    left: -11px;
+    display: inline-block;
+    width: 0;
+    top: -1.5px;
+}
 /*Ellipsis
 https://codepen.io/martinwolf/pen/qlFdp
 */
@@ -871,6 +915,10 @@ button.mb10{
     background-repeat: no-repeat;
     color: #fff;
     font-size: 2em;
+}
+
+.mfp-close:active{
+	top: 0px;
 }
 
 /*------------Blog------------*/
