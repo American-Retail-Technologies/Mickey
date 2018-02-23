@@ -622,6 +622,13 @@ span.sm_megamenu_title_lv-3::before{
     width: 0;
     top: -1.5px;
 }
+
+@media (min-width: 768px){
+    .block-search {
+        width: 100% !important;
+    }
+}
+
 /*Ellipsis
 https://codepen.io/martinwolf/pen/qlFdp
 */
