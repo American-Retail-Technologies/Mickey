@@ -625,7 +625,42 @@ span.sm_megamenu_title_lv-3::before{
 
 @media (min-width: 768px){
     .block-search {
-        width: 100% !important;
+        width: 100%;
+        padding: 0;
+    }
+}
+
+.block-search .label{
+    display: none;
+}
+
+.autocomplete-list .price-box .price{
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.autocomplete-list .price-box .price .minimal-price-link{
+    color: gray;
+    font-size: 80%;
+    font-style: italic;
+}
+.autocomplete-list .price-box .price .minimal-price-link .price-wrapper {
+    color: #e74c3c;
+}
+@media (max-width: 768px){
+    .block-search input{
+        left: 0;
+        margin: 0;
+        position: initial;
+    }
+    
+    .block-search .control {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+    .block-search{
+        margin-top:0;
     }
 }
 
@@ -1002,6 +1037,14 @@ a.action.blog-post-read-more.blog-post-read-more:hover,
 .blog-post-content ul{
 	list-style-type: disc;
 	padding: 0 0 0 40px;
+}
+/*------------------Mobile------------------*/
+.block .block-content.filter-content .filter-options-content .items li a::before,
+.block .block-content.filter-content .filter-options-content .items li a:hover::after {
+    display:none;
+}
+.block .block-content.filter-content .filter-options-content .items li a {
+    padding-left: 0;
 }
 
 /*Mobile*/
