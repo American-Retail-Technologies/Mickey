@@ -19,7 +19,7 @@ return array (
     array (
       'default' => 
       array (
-        'host' => 'ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com',
+        'host' => 'ars-mysql.clc0gpx5md5m.us-west-2.rds.amazonaws.com',
         'dbname' => 'ars_staging_magento1',
         'username' => 'ars_dbroot',
         'password' => 'American1',

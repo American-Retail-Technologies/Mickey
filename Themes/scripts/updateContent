@@ -15,7 +15,7 @@ TABLE="cms_page"
 fi
 
 HOST="ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com"
-#HOST="ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com"
+#HOST="ars-mysql.clc0gpx5md5m.us-west-2.rds.amazonaws.com"
 PASSWORD=$5
 ID=$2
 SEARCH=$3

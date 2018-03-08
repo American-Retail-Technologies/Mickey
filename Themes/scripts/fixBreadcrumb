@@ -11,7 +11,7 @@ if [[ $1 == prod ]]; then
 	BACKUP_HOST=ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com
 	BACKUP_DBNAME=ars_prod_magento1
 elif [[ $1 == staging ]]; then
-	BACKUP_HOST=ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com
+	BACKUP_HOST=ars-mysql.clc0gpx5md5m.us-west-2.rds.amazonaws.com
 	BACKUP_DBNAME=ars_staging_magento1
 elif [[ $1 == dev ]]; then
 	BACKUP_HOST=localhost

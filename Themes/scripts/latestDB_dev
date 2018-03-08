@@ -5,7 +5,7 @@
 BACKUP_FOLDER=/opt/bitnami/apps/magento/htdocs/var/backups
 BACKUP_FILENAME="latest_db.sql"
 BACKUP_HOST=localhost
-#BACKUP_HOST=ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com
+#BACKUP_HOST=ars-mysql.clc0gpx5md5m.us-west-2.rds.amazonaws.com
 BACKUP_DBNAME=ars_prod_magento1
 #BACKUP_DBNAME=ars_dev_magento1
 BACKUP_USER=ars_dbroot

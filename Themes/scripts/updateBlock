@@ -8,7 +8,7 @@ if [ "$#" -ne 4 ]; then
  exit 1
 fi
 
-HOST="ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com"
+HOST="ars-mysql.clc0gpx5md5m.us-west-2.rds.amazonaws.com"
 PASSWORD=$4
 ID="'$1'"
 SEARCH="'$2'"
