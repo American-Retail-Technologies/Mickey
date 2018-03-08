@@ -37,6 +37,7 @@ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
 	var currencyCode = '<?php echo $objectManager->get('Magento\Directory\Model\Currency')->getCurrencySymbol(); ?>';
 	var confirm_countdown_number = <?php echo $helper->_getConfig('confirm_countdown_number'); ?>;
 	
+    //2018-03-01 TODO: Move below functions to their own external js file
 	function loadaJax(){
 		if(enable_ajax_compare && enable_ajax_compare == 1)
 			_eventCompare();
@@ -124,7 +125,7 @@ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
 			$("#cartpro_process").addClass('cartpro-show');
 			var post = $(_e).data('post');
 			$.ajax({
-				url: '<?php echo $block->getBaseUrl().'cartpro/compare/remove'; ?>',
+				url: cartpro_baseurl + 'cartpro/compare/remove',
 				data : post.data,
 				type:'POST',
 				dataType:'json',
@@ -153,7 +154,7 @@ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
 			params = post.data;
 			params.form_key = $('input[name=form_key]').val();
 			$.ajax({
-				url: '<?php echo $block->getBaseUrl().'cartpro/compare/add'; ?>',
+				url: cartpro_baseurl + 'cartpro/compare/add',
 				data : params,
 				type:'POST',
 				dataType:'json',
@@ -164,7 +165,7 @@ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
 							var nb_items = json.items_markup.nb_items;
 							var catalog_compare_sidebar = json.items_markup.catalog_compare_sidebar;
 							$('.cpmodal-message').html(message);
-							$('.compare .counter.qty').html(nb_items+'<?php  echo __(' Items'); ?>');
+							$('.compare .counter.qty').html(nb_items+' Items');
 							$('.sidebar.sidebar-additional block.block-compare').replaceWith(catalog_compare_sidebar);
 						}
 					}
@@ -206,14 +207,14 @@ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
 		if(!params.product)
 			params.product = $(_e).closest('.product-item-info').find('.price-box').data('product-id'); 
 		$.ajax({
-			url: '<?php echo $block->getBaseUrl().'cartpro/cart/add'; ?>',
+			url: cartpro_baseurl + 'cartpro/cart/add',
 			data : params,
 			type: 'post',
 			dataType: 'json',
 			success:function(json){
 				if(typeof json.items_markup.success !== 'undefined' && json.items_markup.success){
 					$.ajax({
-						url: '<?php echo $block->getBaseUrl().'cartpro/product/view'; ?>',
+						url: cartpro_baseurl + 'cartpro/product/view',
 						data : params,
 						type: 'post',
 						dataType: 'json',
@@ -254,7 +255,7 @@ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
 					_addWishlist($(this));
 					return false;
 				}else{
-					var check =  confirm('<?php echo __('You must login first !') ?>');
+					var check =  confirm('You must login first !');
 					if(check == true){
 						return true;
 					} else {
@@ -268,7 +269,7 @@ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
 			e.preventDefault();
 			var post = $(this).data('post-remove');
 			$.ajax({
-				url: '<?php echo $block->getBaseUrl().'cartpro/wishlist/remove'; ?>',
+				url: cartpro_baseurl + 'cartpro/wishlist/remove',
 				data : post.data,
 				dataType:'json',
 				success:function(json){
@@ -295,7 +296,7 @@ $customerSession = $objectManager->create('Magento\Customer\Model\Session');
 		$("#cartpro_process").addClass('cartpro-show');		
 		var post = $(_e).data('post');
 		$.ajax({
-			url: '<?php echo $block->getBaseUrl().'cartpro/wishlist/add'; ?>',
+			url: cartpro_baseurl + 'cartpro/wishlist/add',
 			data : post.data,
 			dataType:'json',
 			success:function(json){

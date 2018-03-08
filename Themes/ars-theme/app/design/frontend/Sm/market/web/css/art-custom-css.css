@@ -240,7 +240,27 @@ font-weight: 700;
 	color: #08357a;
 }
 /*Category Page*/
+.products-grid .art-product-list .item .item-inner .box-info .bottom-action .towishlist.btn-action {
+    margin-right: 0;
+}
+.art-product-list .info-box-detail{
+    float: right;
+}
+.art-product-list .info-box-detail .fieldset>.field{
+    margin: 0 !important;
+}
+.art-product-list .info-box-detail .fieldset .control.control-qty-cart {
+    width: initial !important;
+    margin: 0;
+}
+.art-product-list .control-qty-cart input{
+    height: 30px;
+    width: 30px;
+}
 
+.art-product-list .control-qty-cart .control-qty{
+    float:right;
+}
 .page-products .art.category-image,
 .art-fr{
  float:right;
@@ -622,6 +642,48 @@ span.sm_megamenu_title_lv-3::before{
     width: 0;
     top: -1.5px;
 }
+
+@media (min-width: 768px){
+    .block-search {
+        width: 100%;
+        padding: 0;
+    }
+}
+
+.block-search .label{
+    display: none;
+}
+
+.autocomplete-list .price-box .price{
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.autocomplete-list .price-box .price .minimal-price-link{
+    color: gray;
+    font-size: 80%;
+    font-style: italic;
+}
+.autocomplete-list .price-box .price .minimal-price-link .price-wrapper {
+    color: #e74c3c;
+}
+@media (max-width: 768px){
+    .block-search input{
+        left: 0;
+        margin: 0;
+        position: initial;
+    }
+    
+    .block-search .control {
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+    .block-search{
+        margin-top:0;
+    }
+}
+
 /*Ellipsis
 https://codepen.io/martinwolf/pen/qlFdp
 */
@@ -996,6 +1058,14 @@ a.action.blog-post-read-more.blog-post-read-more:hover,
 	list-style-type: disc;
 	padding: 0 0 0 40px;
 }
+/*------------------Mobile------------------*/
+.block .block-content.filter-content .filter-options-content .items li a::before,
+.block .block-content.filter-content .filter-options-content .items li a:hover::after {
+    display:none;
+}
+.block .block-content.filter-content .filter-options-content .items li a {
+    padding-left: 0;
+}
 
 /*Mobile*/
 @media screen and (max-width: 320px){ 
@@ -1140,6 +1210,9 @@ padding: 15px 0 0;
   .footer-container .socials-wrap{
    top:156px;
   }
+  .products-grid .art-product-list .item .item-inner .box-info .bottom-action .towishlist.btn-action {
+    margin-right: 5px;
+   }
 }
 
 /*Mobile & Tablet*/

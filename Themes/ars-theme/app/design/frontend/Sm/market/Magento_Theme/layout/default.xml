@@ -48,7 +48,8 @@
 				<container name="language-header" label="Language" as="language-header" htmlTag="div" htmlClass="language-wrapper"/>
 				<container name="currency-header" label="Currency" as="currency-header" htmlTag="div" htmlClass="currency-wrapper"/>
 				<container name="logo-header" label="Search" as="logo-header" htmlTag="div" htmlClass="logo-wrapper"/>
-				
+				<!--
+                2018-02-23 TK & SM: Remove SM_SearchBox to enable Smile_ElasticSuite Search
 				<container name="search-header" label="Search" as="search-header" htmlTag="div" htmlClass="search-wrapper">
 					<block class="Magento\Framework\View\Element\Template" name="top.search" as="topSearch" template="Magento_Search::form.mini.phtml" />
 				</container>
@@ -56,7 +57,10 @@
 				<container name="search-header-pro" label="Search" as="search-header-pro" htmlTag="div" htmlClass="search-wrapper">
 					<block class="Sm\SearchBox\Block\SearchBox" name="searchbox" as="searchbox" template="Sm_SearchBox::searchbox.form.mini.phtml" />
 				</container>
-				
+                -->
+                <container name="header-wrapper" label="Search" as="search-header-pro" htmlTag="div" htmlClass="search-wrapper art">
+                </container>
+
 				<container name="cart-header" label="Mini Cart" as="cart-header" htmlTag="div" htmlClass="cart-wrapper"/>		
 					
 				<container name="slideshow-header" label="Slideshow Header" as="slideshow-header" htmlTag="div" htmlClass="slideshow-wrapper"/>

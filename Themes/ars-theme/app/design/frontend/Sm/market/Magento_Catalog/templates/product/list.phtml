@@ -1,5 +1,6 @@
 <?php
-/**
+/** THIS IS FOR SEARCH RESULT PAGE
+ *
  * Copyright © 2016 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
@@ -172,13 +173,65 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 								</div>
 								
 								<div class="bottom-action">
-									<?php if($_config->getAdvanced('show_addtocart_button')){?>
+                                <!-- 2018-02-23 TK & SM: Adding QTY to each product grid-->
+                                    <div class="info-box-detail">
+                                    <div class="box-tocart">
+                                    <div class="fieldset">
+                                    <div class="field qty">
+                                        <div class="control control-qty-cart">
+                                            <input type="number"
+                                                   name="qty"
+                                                   id="qty-<?php echo $_product->getData('sku'); ?>"
+                                                   maxlength="12"
+                                                   value="<?php echo ($this->getMinimalQty($_product)?$this->getMinimalQty($_product):1) ?>"
+                                                   title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="qty-default input-text qty"
+                                                   data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                                                   />
+                                                   
+                                            <div class="control-qty">
+                                                <span id="plus-<?php echo $_product->getData('sku'); ?>" class="quantity-controls quantity-plus"></span>
+                                                <span id="minus-<?php echo $_product->getData('sku'); ?>" class="quantity-controls quantity-minus"></span>
+
+                                                <script type="text/javascript">
+                                                    require([
+                                                        'jquery'
+                                                    ], function ($) {
+                                                        var product_id = '#qty-<?php echo $_product->getData('sku'); ?>';
+                                                        var product_plus = '#plus-<?php echo $_product->getData('sku'); ?>';
+                                                        var product_minus = '#minus-<?php echo $_product->getData('sku'); ?>';
+                                                        var form_qty = '#input-qty-<?php echo $_product->getData('sku'); ?>';
+                                                        
+                                                        
+                                                        $(product_plus).click(function () {
+                                                            var value = Number($(product_id).val()) + 1;
+                                                            $(product_id).val(value);
+                                                            $(form_qty).val(value);
+                                                        });
+                                                        
+                                                        $(product_minus).click(function () {
+                                                            var value = Number($(product_id).val()) - 1;
+                                                            if (value > 0) {
+                                                                $(product_id).val(value);
+                                                                $(form_qty).val(value);
+                                                            }
+                                                            
+                                                        });
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+									</div><!--fieldset-->
+                                    </div><!--box-tocart-->
+                                    </div> <!--info-box-detail-->
+                                    <?php if($_config->getAdvanced('show_addtocart_button')){?>
 										<?php if ($_product->isSaleable()): ?>
 											<?php $postParams = $block->getAddToCartPostParams($_product); ?>
 											<form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
 												<input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
 												<input type="hidden" name="<?php /* @escapeNotVerified */ echo Action::PARAM_NAME_URL_ENCODED; ?>" value="<?php /* @escapeNotVerified */ echo $postParams['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
-												<?php echo $block->getBlockHtml('formkey')?>
+												<input id="input-qty-<?php echo $_product->getData('sku'); ?>" type="hidden" name="qty" />
+                                                <?php echo $block->getBlockHtml('formkey')?>
 												<button type="submit"
 														title="<?php echo $block->escapeHtml(__('Add to Cart')); ?>"
 														class="action tocart primary btn-action btn-cart">
@@ -232,7 +285,7 @@ $_config = $this->helper('Sm\Market\Helper\Data');
 										$href = str_replace ('%26quot%3B','%22', $href);
 										?>
 										<a href="<?php /* @escapeNotVerified */ echo htmlentities($href);?>" target="_blank">
-											<button title="Customize this item by adding your logo." class="art btn-action btn-cart art-custom-button primary btn-action ellipsis1Line clamped"><span>Add Your Logo</span></button>
+											<button title="Customize this item by adding your logo." class="art btn-action btn-cart art-custom-button primary btn-action ellipsis1Line clamped"><span>Add Logo</span></button>
 										</a>
 									<?php } ?>
 								</div>
