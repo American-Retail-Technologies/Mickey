@@ -1,0 +1,5 @@
+#!/bin/sh
+#Create Custom Page and add button to all pages needed
+
+unzip -o /opt/bitnami/apps/ars_files/Custom_Page.zip -d /opt/bitnami/apps/magento/htdocs/
+/opt/bitnami/apps/magento/htdocs/scripts/regen

@@ -1,0 +1,15 @@
+#Count ip address
+zcat access_log-20170827.gz | awk '{ print $1 }' | sort -V | uniq -c | sort -nr | head -20
+#count ip address per hour
+zcat access_log-20170827.gz | awk '{ print $1,$4 }' | awk -F'[:]' '{print $2}' | sort -V | uniq -c | sort -nr
+#count ip address per date
+zcat access_log-20170827.gz | awk '{ print $1,$4 }' | awk -F'[:]' '{print $1}' | awk -F'[ ]' '{print $2}' | sort -V | uniq -c | sort -nr
+#list all rows that match the ip address
+cat access_log | awk '$1 ~ /^71\.223\.80\.122/'
+
+cat access_log | awk '{ print $1,$4 }' | head -10
+
+cat access_log | awk '$1 ~ /^208\.123\.148\.177/'
+cat access_log | awk '$1 ~ /^127\.0\.0\.1/'
+cat access_log | awk '$1 ~ /^104\.229\.170\.189/'
+104\.229\.170\.189

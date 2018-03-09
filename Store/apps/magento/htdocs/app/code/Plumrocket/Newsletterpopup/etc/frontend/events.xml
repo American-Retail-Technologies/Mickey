@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_Newsletterpopup
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_login">
+        <observer name="prnewsletterpopup_observer" instance="Plumrocket\Newsletterpopup\Observer\CustomerLoginObserver" />
+    </event>
+	<!-- https://magento.stackexchange.com/questions/169965/magento-2-which-event-is-dispatched-when-a-discount-is-applied -->
+	<event name="view_message_block_render_grouped_html_after">
+	   <observer name="art_add_coupon" instance="Plumrocket\Newsletterpopup\Observer\TrackCoupon"/>
+	</event>
+</config>

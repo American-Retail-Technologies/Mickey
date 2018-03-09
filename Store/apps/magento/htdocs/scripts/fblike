@@ -1,0 +1,23 @@
+#!/bin/sh
+#Create Custom Page and add button to all pages needed
+
+if [ "$#" -lt 1 ]; then
+ echo "Usage: ./blog [prod,staging,dev]" >&2
+ exit 1
+fi
+
+if [[ $1 == prod ]]; then
+	BACKUP_HOST=ars-aurora1-cluster-1.cluster-crymzjqricqv.us-west-2.rds.amazonaws.com
+	BACKUP_DBNAME=ars_prod_magento1
+elif [[ $1 == staging ]]; then
+	BACKUP_HOST=ars-mysql.crymzjqricqv.us-west-2.rds.amazonaws.com
+	BACKUP_DBNAME=ars_staging_magento1
+elif [[ $1 == dev ]]; then
+	BACKUP_HOST=localhost
+	BACKUP_DBNAME=ars_prod_magento1
+fi
+	BACKUP_USER=ars_dbroot
+	BACKUP_PASSWORD=`echo QW1lcmljYW4xCg== | base64 --decode`
+
+unzip -o /opt/bitnami/apps/ars_files/Facebook_Like.zip -d /opt/bitnami/apps/magento/htdocs/
+/opt/bitnami/apps/magento/htdocs/scripts/regen

@@ -1,0 +1,58 @@
+<?php
+/**
+ * Copyright © 2017 American Retail Supply. All rights reserved.
+ * See COPYING.txt for license details.
+ 
+ Tenzin - Showing specific icons if products are:
+			1. Shipped within 24 hours
+			2. Best Seller
+			3. Need to be assembled by customer
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+
+$artProduct = $block->getProduct();
+
+$enable_ready_to_ship = $artProduct->getAttributeText('ars_ready_to_ship') === "In Stock" ? TRUE:FALSE;
+$enable_ready_to_assemble = $artProduct->getAttributeText('ars_ready_to_assemble') === "Yes" ? TRUE:FALSE;
+$enable_product_question = $artProduct->getAttributeText('ars_product_question') === "Yes" ? TRUE:FALSE;
+//Next two attributes returns string of all values joined by commas
+$enable_packaging_recyclable = $artProduct->getResource()->getAttribute('ars_packaging_recyclable')->getFrontend()->getValue($artProduct) === "Yes" ? TRUE:FALSE;
+$enable_shipping_icon = $artProduct->getResource()->getAttribute('ars_ltl_shipment')->getFrontend()->getValue($artProduct)=== "Yes" ? TRUE:FALSE;
+
+?>
+<div class="art-description-icons">
+<?php if($enable_ready_to_assemble) { ?>
+	<div data-block="art-assemble">
+		<img class="art-ready-to-assemble" title="This item will come disassembled and needs to be put together by you!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Display_Case_Icon_Red.png" data-bind="scope: 'assemble_content'"/>
+		<div data-role="dropdownDialog"
+			 data-mage-init='{"dropdownDialog":{
+				 "appendTo": "[data-block=art-assemble]",
+				 "triggerTarget": ".art-ready-to-assemble",
+				 "timeout": "2000",
+				 "closeOnMouseLeave": false,
+				 "closeOnEscape": true,
+				 "triggerClass": "active",
+				 "parentClass": "active",
+				 "autoSize": true,
+				 "buttons": []}}'>
+			<div data-bind="scope: 'assemble_content'">Some Text. Some Text. Some Text. Some Text. </div>
+		</div>
+	</div>
+<?php } ?>
+<?php if( $enable_packaging_recyclable ) { ?>
+	<img class="art-packaging-recyclable" title="This item can be used more than once!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/Label_Sticker_Icon_1_Green.png" />
+<?php } ?>
+<?php if( $enable_shipping_icon ) { ?>
+	<img class="art-shipping" title="It will take, at most, 24 Hours to ship this product." src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/shipping-24.png" />
+<?php } ?>
+
+<?php if($enable_product_question) { ?>
+	<div class="field-tooltip">
+		<img class="art-product-question field-tooltip-action" tabindex="0" data-toggle="dropdown" data-bind="mageInit: {'dropdown': {'activeClass': '_active'}}" title="Have any question about this item? Click here to request help!" src="https://arsimages.azurewebsites.net/ars_files/images/wysiwyg/icon/IT_Consulting_Icon_Yellow.png" />
+		<div class="field-tooltip-content" data-target="dropdown">Some Text. Some Text. Some Text. Some Text. </div>
+	</div>
+<?php } ?>
+</div>

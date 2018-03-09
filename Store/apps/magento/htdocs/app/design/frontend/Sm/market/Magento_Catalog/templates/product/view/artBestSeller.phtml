@@ -1,0 +1,14 @@
+<!--2017/11/13 Tenzin: Display Best Seller Badge -->
+<?php
+$artProduct = $block->getProduct();
+$enable_best_seller = $artProduct->getAttributeText('ars_best_seller') === "Best Seller" ? TRUE:FALSE;
+if($enable_best_seller) { ?>
+	<div class="art-best-seller-icon-row">
+		<span class="art-best-seller-icon-container">
+			<span class="art-best-seller-icon-label">
+				<?php /* @escapeNotVerified */ echo __('Best ') ?>
+				<span><?php /* @escapeNotVerified */ echo __('Seller') ?></span>
+			</span>
+		</span>
+	</div>
+<?php } ?>

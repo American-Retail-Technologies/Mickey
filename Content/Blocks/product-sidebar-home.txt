@@ -1,0 +1,1 @@
+<p>{{block class="Sm\BasicProducts\Block\BasicProducts" template="Sm_BasicProducts::sidebar-product.phtml" title="Featured Products" product_limitation="4" img_width="100" img_height="100"}}</p>

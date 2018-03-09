@@ -1,0 +1,11 @@
+<div class="art-request-catalog-block block-subscribe-home">
+<div class="row">
+<div class="col-lg-12 col-sm-11 col-xs-10">
+<h2 class="newsletter-title">Request A Catalog</h2>
+</div>
+<div class="col-lg-12">
+<p class="description-newsletter">We are excited you are here! Our website has extensive list of our products. If you still need hard copy of our catalog, we will be HAPPY to mail you FREE copy</p>
+</div>
+<div class="col-lg-push-3 col-lg-5 col-xs-1 art-request-catalog-button"><a class="action primary" href="{{store url="free-catalog-request"}}"><span>Click Here </span></a></div>
+</div>
+</div>

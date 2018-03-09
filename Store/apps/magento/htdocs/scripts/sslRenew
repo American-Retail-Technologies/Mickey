@@ -1,0 +1,29 @@
+#!/bin/bash
+#Date: 2017-12-19
+#renewing ssl cert for staging, dev, and prod
+
+if [ "$#" -lt 1 ]; then
+ echo "Usage: ./sslRenew [prod,staging,dev]" >&2
+ echo "       prod: Renews existing cert" >&2
+ echo "       [staging, dev]: Creates new cert for staging/dev domain and creates link to apache" >&2
+ exit 1
+fi
+
+cd /tmp
+git clone https://github.com/certbot/certbot
+cd certbot
+
+#different cert for staging,dev, and prod
+if [[ $1 == prod ]]; then
+ sudo ./certbot-auto renew
+elif [[ $1 == staging ]]; then
+ ./certbot-auto certonly --allow-subset-of-names --webroot -w /opt/bitnami/apps/magento/htdocs/ -d staging.americanretailsupply.com
+ sudo ln -bs /etc/letsencrypt/live/staging.americanretailsupply.com/fullchain.pem /opt/bitnami/apache2/conf/server.crt
+ sudo ln -bs /etc/letsencrypt/live/staging.americanretailsupply.com/privkey.pem /opt/bitnami/apache2/conf/server.key
+elif [[ $1 == dev ]]; then
+ ./certbot-auto certonly --allow-subset-of-names --webroot -w /opt/bitnami/apps/magento/htdocs/ -d dev.americanretailsupply.com
+ sudo ln -bs /etc/letsencrypt/live/dev.americanretailsupply.com-0001/fullchain.pem /opt/bitnami/apache2/conf/server.crt
+ sudo ln -bs /etc/letsencrypt/live/dev.americanretailsupply.com-0001/privkey.pem /opt/bitnami/apache2/conf/server.key
+fi
+
+sudo /opt/bitnami/ctlscript.sh restart apache

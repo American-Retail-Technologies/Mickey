@@ -1,0 +1,29 @@
+<div class="home-style home-page-2">
+<div class="row">
+<div class="col-lg-9 col-lg-offset-3">
+<div class="image-slider-home">{{block class="Sm\ImageSlider\Block\ImageSlider" template="Sm_ImageSlider::default.phtml"}}</div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-9 col-lg-push-3 mb25">{{block class="Magento\\Cms\\Block\\Block" block_id="home-page-categories"}}</div>
+<div class="col-lg-3 col-lg-pull-9">
+<div class="row">
+<div class="col-lg-12 ">{{block class="Magento\\Cms\\Block\\Block" block_id="request-catalog-home"}}</div>
+<div class="col-lg-12 ">{{block class="Magento\Newsletter\Block\Subscribe" template="subscribe-home.phtml"}}</div>
+<div class="col-lg-12 ">{{block class="Magento\\Cms\\Block\\Block" block_id="product-sidebar-home"}}</div>
+</div>
+</div>
+</div>
+<div>{{block class="Magento\\Cms\\Block\\Block" block_id="home-page-testimonials"}}</div>
+<div class="row">
+<div class="testimonials-title">
+<h2>Other Business Divisions</h2>
+</div>
+<div class="col-md-6">
+<div class="static-image-block-2">{{block class="Magento\\Cms\\Block\\Block" block_id="ars-promotion-logo"}}</div>
+</div>
+<div class="col-md-6">
+<div class="static-image-block-2">{{block class="Magento\\Cms\\Block\\Block" block_id="american-retail-technologies-logo"}}</div>
+</div>
+</div>
+</div>
